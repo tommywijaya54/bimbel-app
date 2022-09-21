@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -38,5 +39,9 @@ class UserSeeder extends Seeder
         );
         $column = array('name', 'email', 'password');
         runSeederInBatch($seeder, $column, "users");
+
+
+        User::findByName('Tommy Saputra Wijaya')->assignRole('Super Admin');
+        User::findByName('Tony')->assignRole('Owner');
     }
 }
