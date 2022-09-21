@@ -7,10 +7,7 @@ import { Link } from '@inertiajs/inertia-react';
 import NavLinks from '@/Shared/NavLinks';
 
 export default function AdminLayout({ auth, header, children, links }) {
-    links = links || ['User'];
-    
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -27,7 +24,6 @@ export default function AdminLayout({ auth, header, children, links }) {
                                 <NavLink href={route('admin-dashboard')} active={route().current('admin-dashboard')}>
                                     Admin Dashboard
                                 </NavLink>
-                                
                                 <NavLinks links={links}></NavLinks>
                             </div>
                         </div>

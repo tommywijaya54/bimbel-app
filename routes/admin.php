@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\UserController;
+
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,11 +14,13 @@ Route::group([
         return Inertia::render('Admin/Dashboard');
     })->name('admin-dashboard');
 
+    /*
     Route::resource('user', UserController::class, [
         'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
+    */
 
     Route::resource('permission', PermissionController::class, [
-        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
+        'only' => ['index', 'show', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 });

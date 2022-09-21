@@ -2,9 +2,11 @@ import React from 'react';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import AdminLayout from './AdminLayout';
 
-export default function AdminAuthenticatedLayout({auth, errors, title, children, links}) {
-    const {flash} = usePage().props;
-    
+export default function AdminAuthenticatedLayout({children}) {
+    const {flash, auth, errors} = usePage().props;
+    const title = "Admin - Dashboard";
+    const links = ['permission'];
+
     return (
         <AdminLayout
             auth={auth}
@@ -13,14 +15,16 @@ export default function AdminAuthenticatedLayout({auth, errors, title, children,
             links={links}
         >
             <Head title={title} />
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    {flash.message && (
+
+            {flash.message && (
+                <div className="py-12">
+                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="alert">{flash.message}</div>
-                    )}
-                    {children}
+                    </div>
                 </div>
-            </div>
+            )}
+
+            {children}
         </AdminLayout>
     );
 }

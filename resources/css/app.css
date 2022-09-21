@@ -144,3 +144,25 @@ table.table-padding-row tbody tr td {
     margin-top: -1em;
     color: blue;
 }
+
+.user {
+    background-color: #fff9f0;
+    padding: 3px 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin: 4px;
+    display: inline-block;
+}
+
+.user:hover {
+    background-color: #ffebcd;
+}
+
+.link {
+    color: #1a0dab;
+    margin-right: 10px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

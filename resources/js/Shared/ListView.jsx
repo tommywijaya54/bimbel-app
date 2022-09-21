@@ -12,7 +12,7 @@ export default ({listprops}) => {
     })
 
     return <>
-        <table className="w-full whitespace-nowrap table-padding-row"> 
+        <table className="w-full table-padding-row"> 
                     <thead className="text-left">
                         <tr>
                             {
