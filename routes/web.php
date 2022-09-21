@@ -51,6 +51,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('user', UserController::class, [
         'only' => ['index', 'edit', 'update']
