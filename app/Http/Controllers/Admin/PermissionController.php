@@ -7,6 +7,7 @@ use App\Models\Admin\Permission;
 use App\Models\Admin\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PermissionController extends Controller
@@ -21,7 +22,19 @@ class PermissionController extends Controller
         ]);
     }
 
-    public function show()
+    public function show($id)
     {
+        $role = Role::find($id);
+        $role_permissions = $role->permissions();
+        $users = $role->users();
+
+        $permissions = Permission::all();
+
+        return Inertia::render('Admin/Permission/Show', [
+            'role' => $role,
+            'role_permissions' => $role_permissions,
+            'users' => $users,
+            'permissions' => $permissions,
+        ]);
     }
 }

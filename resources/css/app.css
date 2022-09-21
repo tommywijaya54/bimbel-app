@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+    --tw-text-opacity: 1;
+    color: rgba(51, 65, 85, var(--tw-text-opacity));
+}
 table.table-padding-row td,
 table.table-padding-row th {
     padding-left: 1.5rem;
@@ -165,4 +169,28 @@ table.table-padding-row tbody tr td {
 
 .link:hover {
     text-decoration: underline;
+}
+
+.list {
+    display: block;
+    width: 100%;
+    margin-bottom: 2em;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1.5em;
+}
+
+.list > h4 {
+    font-weight: bold;
+    font-size: large;
+}
+
+.inline-info {
+    width: 100%;
+    color: #3c7c38;
+    font-size: medium;
+}
+
+.users.list .user:first-of-type {
+    margin-left: 0
 }

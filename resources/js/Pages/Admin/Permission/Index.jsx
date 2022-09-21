@@ -21,7 +21,7 @@ export default function Index(props) {
             }
             return false;
         }).map((user, userKey) => {
-            return <User key={userKey} obj={user}></User>
+            return <User key={userKey} user={user}></User>
         });
 
         return newrole;
@@ -30,7 +30,7 @@ export default function Index(props) {
     const listprops = {
         data : roles,
         view : 'name:Role,users:Username',
-        route : 'permission.edit'
+        route : 'permission.show'
     }
 
     return (
