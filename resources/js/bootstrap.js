@@ -32,3 +32,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+
+String.prototype.cap = function (){
+        return (this.charAt(0).toUpperCase() + this.slice(1));
+    }
+    
