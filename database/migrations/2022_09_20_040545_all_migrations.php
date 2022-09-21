@@ -13,7 +13,6 @@ return new class extends Migration
      */
     public function up()
     {
-
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('nik');
@@ -33,7 +32,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
             $table->integer('employees_id');
@@ -42,7 +40,6 @@ return new class extends Migration
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
-
 
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
@@ -252,14 +249,6 @@ return new class extends Migration
             $table->string('role_title');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->integer('created_by')->nullable();
-            $table->timestamps();
-        });
-
-
-        Schema::create('roletypes', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
