@@ -7,7 +7,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\AssetController;
-use App\Http\Controllers\ParentController;
+use App\Http\Controllers\CparentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\PricelistController;
@@ -52,18 +52,24 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/sa/dashboard', function () {
+    return Inertia::render('SuperDashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('user', UserController::class, [
-        'only' => ['index', 'edit', 'update']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
+
     Route::resource('employee', EmployeeController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('manager', ManagerController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
@@ -73,22 +79,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::resource('expense', ExpenseController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('rental', RentalController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('asset', AssetController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
-    Route::resource('parent', ParentController::class, [
-        'only' => ['index,edit']
+    Route::resource('cparent', CparentController::class, [
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
@@ -98,17 +104,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::resource('school', SchoolController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('pricelist', PricelistController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('promolist', PromolistController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
@@ -118,42 +124,42 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::resource('registrationitem', RegistrationitemController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('salary', SalaryController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('advisor', AdvisorController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('teacher', TeacherController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('subject', SubjectController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('employeerole', EmployeeroleController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('roletype', RoletypeController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 
     Route::resource('actionhistory', ActionhistoryController::class, [
-        'only' => ['index,edit']
+        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
 
 

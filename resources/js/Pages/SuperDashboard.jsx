@@ -2,14 +2,14 @@ import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
 
-export default function Dashboard(props) {
-    const links = ['user'];
+export default function SADashboard(props) {
+    const links = ['user','cparent'];
 
     return (
         <AuthenticatedLayout
             auth={props.auth}
             errors={props.errors}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Super Admin - Dashboard</h2>}
             links={links}
         >
             <Head title="Dashboard" />
