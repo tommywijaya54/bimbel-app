@@ -13,7 +13,6 @@ return new class extends Migration
      */
     public function up()
     {
-        //
 
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
@@ -89,6 +88,7 @@ return new class extends Migration
 
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
+            $table->integer('branches_id');
             $table->string('item_name');
             $table->integer('qty');
             $table->integer('cost');
@@ -98,7 +98,7 @@ return new class extends Migration
         });
 
 
-        Schema::create('parents', function (Blueprint $table) {
+        Schema::create('cparents', function (Blueprint $table) {
             $table->id();
             $table->string('nik')->nullable();
             $table->string('name');
@@ -120,7 +120,7 @@ return new class extends Migration
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->integer('parents_id');
+            $table->integer('cparents_id');
             $table->integer('schools_id');
             $table->string('grade');
             $table->string('name');
