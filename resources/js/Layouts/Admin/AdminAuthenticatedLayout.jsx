@@ -1,12 +1,12 @@
 import React from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
+import AdminLayout from './AdminLayout';
 
 export default function AdminAuthenticatedLayout({auth, errors, title, children, links}) {
     const {flash} = usePage().props;
-
+    
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             auth={auth}
             errors={errors}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{title}</h2>}
@@ -21,6 +21,6 @@ export default function AdminAuthenticatedLayout({auth, errors, title, children,
                     {children}
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

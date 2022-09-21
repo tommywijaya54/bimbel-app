@@ -58,9 +58,6 @@ Route::get('/sa/dashboard', function () {
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('user', UserController::class, [
-        'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
-    ]);
 
 
     Route::resource('employee', EmployeeController::class, [
