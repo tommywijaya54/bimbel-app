@@ -23,14 +23,13 @@ export default function Index(props) {
         }).map((user, userKey) => {
             return <User key={userKey} user={user}></User>
         });
-
         return newrole;
     });
 
     const listprops = {
         data : roles,
         view : 'name:Role,users:Username',
-        route : 'permission.show'
+        goto : 'role'
     }
 
     return (

@@ -36,6 +36,7 @@ class UserSeeder extends Seeder
             array('Dewi Puspita Sari', 'dewi.puspita.sari@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
             array('Tony', 'tony@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi')
         );
+
         $column = array('name', 'email', 'password');
         runSeederInBatch($seeder, $column, "users");
 

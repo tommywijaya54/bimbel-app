@@ -27,9 +27,10 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\RoletypeController;
 
 use App\Http\Controllers\ActionhistoryController;
-
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\ScheduleController;
 
+use App\Models\Admin\Permission;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -61,14 +62,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->middleware('can:list-user');
+    Route::get('/role-and-permission', [PermissionController::class, 'index'])->middleware('can:list-role and permission');
+    Route::get('/role/{id}', [PermissionController::class, 'show'])->middleware('can:show-role');
 });
-
-
-
-
-
-
-
 
 
 Route::middleware(['auth', 'verified'])->group(function () {

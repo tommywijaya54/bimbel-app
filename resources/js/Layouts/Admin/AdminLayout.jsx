@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
 import NavigationList from '@/Components/NavigationList';
@@ -21,16 +20,7 @@ export default function AdminLayout({ auth, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('admin-dashboard')} active={route().current('admin-dashboard')}>
-                                    Admin Dashboard
-                                </NavLink>
-
-                                <NavLink href={route('permission.index')} active={route().current('permission.index')}>
-                                    Permission & Role
-                                </NavLink>
-                                
                                 <NavigationList></NavigationList>
-
                             </div>
                         </div>
 

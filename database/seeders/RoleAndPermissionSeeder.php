@@ -31,6 +31,12 @@ class RoleAndPermissionSeeder extends Seeder
             'delete-user'
         ];
 
+        $owner_permissions = [
+            'list-role and permission',
+            'show-role',
+            'edit-role'
+        ];
+
         $manager_permissions = [
             'list-branch',
             'show-branch',
@@ -53,7 +59,8 @@ class RoleAndPermissionSeeder extends Seeder
         ];
 
         // $permissions + $manager_permissions + $advisor_permissions;
-        $all_permissions =  array_merge($permissions, $manager_permissions, $advisor_permissions);
+
+        $all_permissions =  array_merge($permissions, $manager_permissions, $advisor_permissions, $owner_permissions);
 
         // echo "\r\n";
         // echo $all_permissions;
