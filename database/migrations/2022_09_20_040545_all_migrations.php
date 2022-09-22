@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('email');
-            $table->string('roles');
             $table->string('emergency_name');
             $table->string('emergency_phone');
             $table->date('join_date');

@@ -22,12 +22,25 @@ class AllSeeder extends Seeder
         }
 
         for ($x = 1; $x <= 30; $x++) {
-            $arr = ['nik' => fake()->text(), 'name' => fake()->name(), 'address' => fake()->address(), 'phone' => fake()->phoneNumber(), 'email' => fake()->unique()->safeEmail(), 'roles' => fake()->text(), 'emergency_name' => fake()->name(), 'emergency_phone' => fake()->phoneNumber(), 'join_date' => fake()->date(), 'exit_date' => fake()->date(), 'note' => fake()->text(50), 'users_id' => fake()->numberBetween($min = 1, $max = 10), 'branches_id' => fake()->numberBetween($min = 1, $max = 10),];
+            $arr = [
+                'nik' => fake()->randomDigit(),
+                'name' => fake()->name(),
+                'address' => fake()->address(),
+                'phone' => fake()->phoneNumber(),
+                'email' => fake()->unique()->safeEmail(),
+                'emergency_name' => fake()->name(),
+                'emergency_phone' => fake()->phoneNumber(),
+                'join_date' => fake()->date(),
+                'exit_date' => fake()->date(),
+                'note' => fake()->text(50),
+                'users_id' => fake()->numberBetween($min = 1, $max = 10),
+                'branches_id' => fake()->numberBetween($min = 1, $max = 4),
+            ];
             DB::table('employees')->insert($arr);
         }
 
         for ($x = 1; $x <= 4; $x++) {
-            $arr = ['employees_id' => fake()->numberBetween($min = 1, $max = 10), 'branches_id' => fake()->numberBetween($min = 1, $max = 10), 'note' => fake()->text(50),];
+            $arr = ['employees_id' => fake()->numberBetween($min = 1, $max = 10), 'branches_id' => fake()->numberBetween($min = 1, $max = 4), 'note' => fake()->text(50),];
             DB::table('managers')->insert($arr);
         }
 
@@ -37,17 +50,17 @@ class AllSeeder extends Seeder
         }
 
         for ($x = 1; $x <= 10; $x++) {
-            $arr = ['branches_id' => fake()->numberBetween($min = 1, $max = 10), 'expense_type' => fake()->text(), 'description' => fake()->text(), 'amount' => fake()->numberBetween($min = 1500, $max = 6000), 'date' => fake()->date(), 'approve_by' => fake()->text(),];
+            $arr = ['branches_id' => fake()->numberBetween($min = 1, $max = 4), 'expense_type' => fake()->text(), 'description' => fake()->text(), 'amount' => fake()->numberBetween($min = 1500, $max = 6000), 'date' => fake()->date(), 'approve_by' => fake()->text(),];
             DB::table('expenses')->insert($arr);
         }
 
         for ($x = 1; $x <= 10; $x++) {
-            $arr = ['branches_id' => fake()->numberBetween($min = 1, $max = 10), 'start_date' => fake()->date(), 'end_date' => fake()->date(), 'amount' => fake()->numberBetween($min = 1500, $max = 6000), 'owner_name' => fake()->name(), 'owner_phone' => fake()->phoneNumber(), 'notaris_name' => fake()->name(), 'notaris_phone' => fake()->phoneNumber(),];
+            $arr = ['branches_id' => fake()->numberBetween($min = 1, $max = 4), 'start_date' => fake()->date(), 'end_date' => fake()->date(), 'amount' => fake()->numberBetween($min = 1500, $max = 6000), 'owner_name' => fake()->name(), 'owner_phone' => fake()->phoneNumber(), 'notaris_name' => fake()->name(), 'notaris_phone' => fake()->phoneNumber(),];
             DB::table('rentals')->insert($arr);
         }
 
         for ($x = 1; $x <= 10; $x++) {
-            $arr = ['branches_id' => fake()->numberBetween($min = 1, $max = 10), 'item_name' => fake()->name(), 'qty' => fake()->randomDigitNotNull(), 'cost' => fake()->numberBetween($min = 1500, $max = 6000), 'note' => fake()->text(50),];
+            $arr = ['branches_id' => fake()->numberBetween($min = 1, $max = 4), 'item_name' => fake()->name(), 'qty' => fake()->randomDigitNotNull(), 'cost' => fake()->numberBetween($min = 1500, $max = 6000), 'note' => fake()->text(50),];
             DB::table('assets')->insert($arr);
         }
 
@@ -67,17 +80,17 @@ class AllSeeder extends Seeder
         }
 
         for ($x = 1; $x <= 10; $x++) {
-            $arr = ['start_date' => fake()->date(), 'end_date' => fake()->date(), 'level' => fake()->randomElement(['Discount 30%', 'Grand Opening Discount']), 'school_type' => fake()->randomElement(['International', 'National', 'International-National']), 'subject' => fake()->sentence(3), 'price' => fake()->numberBetween($min = 1500, $max = 6000), 'week' => fake()->text(), 'branches_id' => fake()->numberBetween($min = 1, $max = 10),];
+            $arr = ['start_date' => fake()->date(), 'end_date' => fake()->date(), 'level' => fake()->randomElement(['Discount 30%', 'Grand Opening Discount']), 'school_type' => fake()->randomElement(['International', 'National', 'International-National']), 'subject' => fake()->sentence(3), 'price' => fake()->numberBetween($min = 1500, $max = 6000), 'week' => fake()->text(), 'branches_id' => fake()->numberBetween($min = 1, $max = 4),];
             DB::table('pricelists')->insert($arr);
         }
 
         for ($x = 1; $x <= 10; $x++) {
-            $arr = ['start_date' => fake()->date(), 'end_date' => fake()->date(), 'label' => fake()->text(), 'discount_value' => fake()->randomElement(['30%', '-200000']), 'branches_id' => fake()->numberBetween($min = 1, $max = 10),];
+            $arr = ['start_date' => fake()->date(), 'end_date' => fake()->date(), 'label' => fake()->text(), 'discount_value' => fake()->randomElement(['30%', '-200000']), 'branches_id' => fake()->numberBetween($min = 1, $max = 4),];
             DB::table('promolists')->insert($arr);
         }
 
         for ($x = 1; $x <= 50; $x++) {
-            $arr = ['students_id' => fake()->numberBetween($min = 1, $max = 10), 'branches_id' => fake()->numberBetween($min = 1, $max = 10), 'date' => fake()->date(), 'reference' => fake()->text(50), 'cashback' => fake()->randomElement([100000, 280000, 300000]), 'status' => fake()->text(10), 'note' => fake()->text(50),];
+            $arr = ['students_id' => fake()->numberBetween($min = 1, $max = 10), 'branches_id' => fake()->numberBetween($min = 1, $max = 4), 'date' => fake()->date(), 'reference' => fake()->text(50), 'cashback' => fake()->randomElement([100000, 280000, 300000]), 'status' => fake()->text(10), 'note' => fake()->text(50),];
             DB::table('registrations')->insert($arr);
         }
 

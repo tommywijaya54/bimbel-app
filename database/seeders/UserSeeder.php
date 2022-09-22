@@ -37,10 +37,13 @@ class UserSeeder extends Seeder
             array('Tony', 'tony@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi')
         );
         $column = array('name', 'email', 'password');
-        // runSeederInBatch($seeder, $column, "users");
+        runSeederInBatch($seeder, $column, "users");
 
-        User::findByName('Tommy Saputra Wijaya')->assignRole('Super Admin');
         User::findByName('Tony')->assignRole('Owner');
+        User::findByName('Tommy Saputra Wijaya')->assignRole('super-admin');
+        User::findByName('Eko Saputra Wijaya')->assignRole('Branch Manager');
+        User::findByName('Shinta Purnama Sari')->assignRole('Advisor');
+
 
         for ($x = 1; $x <= 20; $x++) {
             $arr = [
@@ -51,13 +54,15 @@ class UserSeeder extends Seeder
             DB::table('users')->insert($arr);
         }
 
+        /*
         for ($x = 1; $x <= 20; $x++) {
             $arr = [
                 'role_id' => fake()->numberBetween($min = 1, $max = 7),
                 'model_type' => 'App\\Models\\User',
-                'model_id' => fake()->numberBetween($min = 1, $max = 20),
+                'model_id' => fake()->numberBetween($min = 5, $max = 20),
             ];
             DB::table('model_has_roles')->insert($arr);
         }
+        */
     }
 }
