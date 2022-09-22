@@ -1,10 +1,9 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
+import DebugComponent from '@/Shared/Debug/DebugComponent';
 
 export default function Dashboard(props) {
-    
-
     return (
         <AuthenticatedLayout
             auth={props.auth}
@@ -20,6 +19,8 @@ export default function Dashboard(props) {
                     </div>
                 </div>
             </div>
+
+            <DebugComponent></DebugComponent>
         </AuthenticatedLayout>
     );
 }

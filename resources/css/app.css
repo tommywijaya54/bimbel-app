@@ -194,3 +194,13 @@ table.table-padding-row tbody tr td {
 .users.list .user:first-of-type {
     margin-left: 0
 }
+
+
+.array-list .item {
+    display: inline-block;
+    padding: 10px;
+}
+
+.array-list+.array-list {
+    border-top: 1px dashed #888;
+}
