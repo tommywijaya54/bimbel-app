@@ -17,7 +17,7 @@ class UserController extends Controller
         return Inertia::render('Simple/Index', [
             'pagetitle' => "User List",
             'data' => $data,
-            'route' => 'user.edit',
+            'goto' => 'user',
             'view' => "name,email"
         ]);
     }

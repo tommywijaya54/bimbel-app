@@ -16,7 +16,6 @@ export default function NavigationList() {
                         >
                         {href.cap()}
                     </Link>
-                
             }
             return null;
         })

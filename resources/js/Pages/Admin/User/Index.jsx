@@ -39,13 +39,6 @@ export default function Index(props) {
         // route : 'user.show'
     }
 
-    /**
-     * 
-                        <ListView
-                            listprops={listprops}
-                        ></ListView>                
-     */
-
     return (
        <AdminAuthenticatedLayout>
             <div className="py-12">

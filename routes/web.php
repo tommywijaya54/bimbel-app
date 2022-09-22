@@ -2,25 +2,32 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\EmployeeroleController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\AdvisorController;
+use App\Http\Controllers\TeacherController;
+
+use App\Http\Controllers\CparentController;
+use App\Http\Controllers\StudentController;
+
+use App\Http\Controllers\SchoolController;
+
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\AssetController;
-use App\Http\Controllers\CparentController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\SchoolController;
-use App\Http\Controllers\PricelistController;
-use App\Http\Controllers\PromolistController;
+
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RegistrationitemController;
-use App\Http\Controllers\SalaryController;
-use App\Http\Controllers\AdvisorController;
-use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\PricelistController;
+use App\Http\Controllers\PromolistController;
+
 use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\EmployeeroleController;
 use App\Http\Controllers\RoletypeController;
+
 use App\Http\Controllers\ActionhistoryController;
+
 use App\Http\Controllers\ScheduleController;
 
 use Illuminate\Foundation\Application;
@@ -50,6 +57,19 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/user', [UserController::class, 'index'])->middleware('can:list-user');
+});
+
+
+
+
+
+
+
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
