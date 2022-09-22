@@ -2,7 +2,7 @@ import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 
-export default function MainAuthenticatedLayout({auth, errors, title, children, links}) {
+export default function MainAuthenticatedLayout({auth, errors, title, children}) {
     const {flash} = usePage().props;
 
     return (
@@ -10,7 +10,6 @@ export default function MainAuthenticatedLayout({auth, errors, title, children, 
             auth={auth}
             errors={errors}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{title}</h2>}
-            links={links}
         >
             <Head title={title} />
             <div className="py-12">

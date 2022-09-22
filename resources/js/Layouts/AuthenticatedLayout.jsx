@@ -4,11 +4,9 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
-import NavLinks from '@/Shared/NavLinks';
+import NavigationList from '@/Components/NavigationList';
 
-export default function Authenticated({ auth, header, children, links }) {
-    links = links || ['user'];
-    
+export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -27,8 +25,7 @@ export default function Authenticated({ auth, header, children, links }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
-                                
-                                <NavLinks links={links}></NavLinks>
+                                <NavigationList></NavigationList>
                             </div>
                         </div>
 

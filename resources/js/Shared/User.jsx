@@ -7,7 +7,7 @@ export default ({user}) => {
     return <>
         <InertiaLink
             tabIndex="-1"
-            href={route('user.show', user.id)}
+            // href={route('user.show', user.id)}
             className="user link"
         >
             {user.name}

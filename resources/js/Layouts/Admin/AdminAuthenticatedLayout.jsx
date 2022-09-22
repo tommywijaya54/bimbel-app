@@ -5,14 +5,12 @@ import AdminLayout from './AdminLayout';
 export default function AdminAuthenticatedLayout({children}) {
     const {flash, auth, errors} = usePage().props;
     const title = "Admin - Dashboard";
-    const links = ['permission'];
 
     return (
         <AdminLayout
             auth={auth}
             errors={errors}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{title}</h2>}
-            links={links}
         >
             <Head title={title} />
 

@@ -4,9 +4,9 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
-import NavLinks from '@/Shared/NavLinks';
+import NavigationList from '@/Components/NavigationList';
 
-export default function AdminLayout({ auth, header, children, links }) {
+export default function AdminLayout({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     return (
         <div className="min-h-screen bg-gray-100">
@@ -24,7 +24,13 @@ export default function AdminLayout({ auth, header, children, links }) {
                                 <NavLink href={route('admin-dashboard')} active={route().current('admin-dashboard')}>
                                     Admin Dashboard
                                 </NavLink>
-                                <NavLinks links={links}></NavLinks>
+
+                                <NavLink href={route('permission.index')} active={route().current('permission.index')}>
+                                    Permission & Role
+                                </NavLink>
+                                
+                                <NavigationList></NavigationList>
+
                             </div>
                         </div>
 

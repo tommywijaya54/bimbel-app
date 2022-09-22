@@ -53,10 +53,13 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    /* 
     Route::resource('user', UserController::class, [
         'only' => ['index', 'show', 'create', 'store', 'edit', 'update', 'delete']
     ]);
+    */
 
+    /*
     Route::resource('employee', EmployeeController::class, [
         'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
@@ -160,7 +163,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('schedule', ScheduleController::class, [
         'only' => ['index', 'create', 'store', 'edit', 'update', 'delete']
     ]);
-
+    */
 
     // Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
 });
