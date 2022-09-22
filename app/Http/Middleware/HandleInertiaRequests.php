@@ -42,7 +42,7 @@ class HandleInertiaRequests extends Middleware
                     if ($request->user()) {
                         $user = $request->user();
 
-                        $permissions = $user->getPermissionsViaRoles()->pluck('name');
+                        $permissions = $user->getPermissionsViaRoles()->pluck('name')->unique()->values()->all();
 
                         // $user->givePermissionTo('create-users');
                         // $user->getAllPermissions->pluck('name');;
