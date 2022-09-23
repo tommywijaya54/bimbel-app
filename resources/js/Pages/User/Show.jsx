@@ -3,8 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
 import DebugComponent from '@/Shared/Debug/DebugComponent';
 import UserDetails from '@/Components/UserDetails';
-
-
+import ParentDetails from '@/Components/ParentDetails';
+import StudentDetails from '@/Components/StudentDetails';
 
 export default function Show(props) {
     return (
@@ -16,24 +16,16 @@ export default function Show(props) {
             <Head title="Dashboard - User Details" />
 
             <div className="py-12">
-                <UserDetails user={props.user}></UserDetails>
+                <UserDetails user={props.user}>
+                    <ParentDetails parent={props.details.parent}></ParentDetails>
 
+                    {props.details.students.map((student,keyId) => {
+                        return <StudentDetails key={keyId} student={student}></StudentDetails>
+                    })}
+
+                </UserDetails>
                 
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 bg-white border-b border-gray-200">User Details</div>
-                    </div>
-                </div>
-
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white mt-6 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className=" p-6 bg-white border-b border-gray-200">User Details</div>
-                    </div>
-                </div>
             </div>
-
-
-
             <DebugComponent></DebugComponent>
         </AuthenticatedLayout>
     );
