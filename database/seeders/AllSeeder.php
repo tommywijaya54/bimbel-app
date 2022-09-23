@@ -65,12 +65,42 @@ class AllSeeder extends Seeder
         }
 
         for ($x = 1; $x <= 10; $x++) {
-            $arr = ['nik' => fake()->text(), 'name' => fake()->name(), 'address' => fake()->address(), 'phone' => fake()->phoneNumber(), 'email' => fake()->unique()->safeEmail(), 'birth_date' => fake()->date(), 'emergency_name' => fake()->name(), 'emergency_phone' => fake()->phoneNumber(), 'bank_account_name' => fake()->text(), 'virtual_account_name' => fake()->text(), 'note' => fake()->text(50), 'user_id' => fake()->numberBetween($min = 1, $max = 10), 'blacklist' => fake()->randomElement(['true', 'false']),];
+            $arr = [
+                'nik' => fake()->text(),
+                'name' => fake()->name(),
+                'address' => fake()->address(),
+                'phone' => fake()->phoneNumber(),
+                'email' => fake()->unique()->safeEmail(),
+                'birth_date' => fake()->date(),
+                'emergency_name' => fake()->name(),
+                'emergency_phone' => fake()->phoneNumber(),
+                'bank_account_name' => fake()->text(),
+                'virtual_account_name' => fake()->text(),
+                'note' => fake()->text(50),
+                'users_id' => fake()->numberBetween($min = 15, $max = 30),
+                'blacklist' => fake()->randomElement(['true', 'false']),
+            ];
             DB::table('cparents')->insert($arr);
         }
 
         for ($x = 1; $x <= 30; $x++) {
-            $arr = ['cparents_id' => fake()->numberBetween($min = 1, $max = 10), 'schools_id' => fake()->numberBetween($min = 1, $max = 10), 'grade' => fake()->text(), 'name' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'address' => fake()->address(), 'join_date' => fake()->date(), 'exit_date' => fake()->date(), 'exit_reason' => fake()->text(), 'birth_date' => fake()->date(), 'type' => fake()->sentence(4), 'health_condition' => fake()->sentence(4), 'note' => fake()->text(50),];
+            $arr = [
+                'cparents_id' => fake()->numberBetween($min = 1, $max = 10),
+                'schools_id' => fake()->numberBetween($min = 1, $max = 10),
+                'grade' => fake()->text(),
+                'name' => fake()->name(),
+                'email' => fake()->unique()->safeEmail(),
+                'phone' => fake()->phoneNumber(),
+                'address' => fake()->address(),
+                'join_date' => fake()->date(),
+                'exit_date' => fake()->date(),
+                'exit_reason' => fake()->text(),
+                'birth_date' => fake()->date(),
+                'type' => fake()->sentence(4),
+                'health_condition' => fake()->sentence(4),
+                'users_id' => fake()->numberBetween($min = 1, $max = 10),
+                'note' => fake()->text(50),
+            ];
             DB::table('students')->insert($arr);
         }
 

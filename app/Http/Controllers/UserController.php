@@ -18,7 +18,17 @@ class UserController extends Controller
             'pagetitle' => "User List",
             'data' => $data,
             'goto' => 'user',
-            'view' => "name,email"
+            'view' => "name,email,type"
+        ]);
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        $details = $user->details();
+        return Inertia::render('User/Show', [
+            'user' => $user,
+            'details' => $details
         ]);
     }
 

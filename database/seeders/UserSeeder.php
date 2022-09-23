@@ -30,27 +30,38 @@ class UserSeeder extends Seeder
         };
 
         $seeder = array(
-            array('Tommy Saputra Wijaya', 'tommy.wijaya54@yahoo.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
-            array('Eko Saputra Wijaya', 'eko.saputra.wijaya@gmail.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
-            array('Shinta Purnama Sari', 'shinta.purnama.sari@outlook.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
-            array('Dewi Puspita Sari', 'dewi.puspita.sari@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
-            array('Tony', 'tony@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi')
+            array('Employee', 'Tommy Saputra Wijaya', 'tommy.wijaya54@yahoo.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
+            array('Employee', 'Eko Saputra Wijaya', 'eko.saputra.wijaya@gmail.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
+            array('Employee', 'Shinta Purnama Sari', 'shinta.purnama.sari@outlook.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
+            array('Employee', 'Dewi Puspita Sari', 'dewi.puspita.sari@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
+            array('Employee', 'Tony', 'tony@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi')
         );
-
-        $column = array('name', 'email', 'password');
+        $column = array('type', 'name', 'email', 'password');
         runSeederInBatch($seeder, $column, "users");
 
         User::findByName('Tony')->assignRole('Owner');
         User::findByName('Tommy Saputra Wijaya')->assignRole('super-admin');
+        User::findByName('Tommy Saputra Wijaya')->assignRole('Owner');
         User::findByName('Eko Saputra Wijaya')->assignRole('Branch Manager');
         User::findByName('Shinta Purnama Sari')->assignRole('Advisor');
 
 
-        for ($x = 1; $x <= 20; $x++) {
+        for ($x = 1; $x <= 10; $x++) {
             $arr = [
                 'name' => fake()->name(),
                 'email' => fake()->unique()->safeEmail(),
                 'password' => fake()->text(20),
+                'type' => 'Student',
+            ];
+            DB::table('users')->insert($arr);
+        }
+
+        for ($x = 1; $x <= 10; $x++) {
+            $arr = [
+                'name' => fake()->name(),
+                'email' => fake()->unique()->safeEmail(),
+                'password' => fake()->text(20),
+                'type' => 'Parent',
             ];
             DB::table('users')->insert($arr);
         }

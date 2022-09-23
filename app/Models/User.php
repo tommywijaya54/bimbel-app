@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PHPUnit\Framework\MockObject\Builder\Stub;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -46,5 +47,50 @@ class User extends Authenticatable
     public static function findByName($fullname)
     {
         return static::where('name', $fullname)->first();
+    }
+
+    public function details()
+    {
+        $type = $this->type;
+
+        if ($type == 'Employee') {
+            return Employee::where('users_id', $this->id)->get();
+        }
+
+        if ($type == 'Student') {
+            /*
+            $student = Student::where('users_id', $this->id)->firstOr(function(){
+
+            });
+            */
+            $student = Student::where('users_id', $this->id)->first();
+
+            /*
+            $student->parent = Cparent::where('id', $student->cparents_id)->first();
+            $student->school = School::where('id', $student->schools_id)->first();
+            return $student;
+            */
+
+            $parent = Cparent::where('id', $student->cparents_id)->first();
+            $school = School::where('id', $student->schools_id)->first();
+
+            return [
+                'student' => $student,
+                'parent' => $parent,
+                'school' => $school,
+            ];
+        }
+
+        if ($type == 'Parent') {
+            $parent = Cparent::where('users_id', $this->id)->first();
+
+            $students = Student::where('cparents_id', $parent->id)->get();
+            //return Cparent::where('users_id', $this->id)->get();
+
+            return [
+                'parent' => $parent,
+                'students' => $students
+            ];
+        }
     }
 }

@@ -204,3 +204,12 @@ table.table-padding-row tbody tr td {
 .array-list+.array-list {
     border-top: 1px dashed #888;
 }
+
+
+.parsed-object {
+    background: white;
+    padding: 1em;
+    border-radius: 10px;
+    margin-bottom: 1.5em;
+}
+

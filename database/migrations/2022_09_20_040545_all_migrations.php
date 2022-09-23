@@ -107,7 +107,7 @@ return new class extends Migration
             $table->string('bank_account_name')->nullable();
             $table->string('virtual_account_name')->nullable();
             $table->string('note')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->integer('users_id')->nullable();
             $table->string('blacklist')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
@@ -130,6 +130,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('health_condition');
             $table->string('note');
+            $table->integer('users_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
