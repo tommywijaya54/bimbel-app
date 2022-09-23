@@ -213,3 +213,12 @@ table.table-padding-row tbody tr td {
     margin-bottom: 1.5em;
 }
 
+.ui-component .info h3{
+    font-size: large;
+    font-weight: bold;
+}
+
+.ui-component .header {
+    padding: 1em 1.5em;
+    background: cadetblue;
+}
