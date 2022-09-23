@@ -14,7 +14,7 @@ export default ({header, content, show, children}) => {
     }
 
     return (
-        <div className="p-8 -mr-6 -mb-8 flex flex-wrap">
+        <div className="-mr-6 -mb-8 flex flex-wrap">
             {
                 newContent.map((a) => {
                     return (<div className="pr-6 pb-8 w-full lg:w-1/2">
