@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('email');
             $table->string('emergency_name');
             $table->string('emergency_phone');
-            $table->date('join_date');
-            $table->date('exit_date');
-            $table->string('note');
-            $table->integer('users_id');
+            $table->date('join_date')->nullable();
+            $table->date('exit_date')->nullable();
+            $table->string('note')->nullable();
+            $table->integer('users_id')->nullable();
             $table->integer('branches_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
