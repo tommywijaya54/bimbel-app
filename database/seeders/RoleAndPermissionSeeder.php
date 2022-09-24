@@ -28,26 +28,29 @@ class RoleAndPermissionSeeder extends Seeder
             'show-user',
             'create-user',
             'edit-user',
-            'delete-user'
+            'deactivate-user',
+            'activate-user'
         ];
 
         $owner_permissions = [
             'list-role and permission',
             'show-role',
-            'edit-role'
+            'edit-role',
+            'deactivate-branch',
+            'create-branch',
+            'edit-branch',
         ];
 
         $manager_permissions = [
             'list-branch',
             'show-branch',
-            'create-branch',
-            'edit-branch',
-            'delete-branch',
+            'add-branch-expenses',
             'list-employee',
             'show-employee',
             'create-employee',
             'edit-employee',
-            'delete-employee'
+            'deactivate-employee',
+            'activate-employee'
         ];
 
         $advisor_permissions = [
