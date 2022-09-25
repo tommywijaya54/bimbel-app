@@ -222,6 +222,16 @@ table.table-padding-row tbody tr td {
     padding: 1em 1.5em;
     background: cadetblue;
 }
+.header span.info {
+    float: right;
+    color: #fff;
+}
+.header span.black-listed {
+    background: #ffda00;
+    padding: 0.2em 0.5em;
+    margin-right: 1em;
+    border-radius: 10px;
+}
 
 .ui-component .form-input {
     min-height: 42px;
@@ -240,7 +250,6 @@ table.table-padding-row tbody tr td {
 .content>.child-component>.ui-component+.ui-component {
     margin-bottom: 1em;
 }
-
 
 a.button {
     padding: 0.4em 0.6em;
