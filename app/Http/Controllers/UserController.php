@@ -18,7 +18,7 @@ class UserController extends Controller
             'pagetitle' => "User List",
             'data' => $data,
             'goto' => 'user',
-            'view' => "name,email,type"
+            'view' => "id,name,email,type"
         ]);
     }
 
