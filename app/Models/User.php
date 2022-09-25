@@ -54,7 +54,9 @@ class User extends Authenticatable
         $type = $this->type;
 
         if ($type == 'Employee') {
-            return Employee::where('users_id', $this->id)->get();
+            return [
+                'employee' => Employee::where('users_id', $this->id)->first(),
+            ];
         }
 
         if ($type == 'Student') {

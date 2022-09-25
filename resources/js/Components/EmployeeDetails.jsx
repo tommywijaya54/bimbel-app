@@ -11,7 +11,7 @@ export default ({employee,children}) => {
     >
         <Display
             content={employee}
-            show="nik,name,email,phone,address,note,join_date,exit_date,emergency_name,emergency_phone,branches_id"
+            show="nik,,name,email,phone,,address,note,join_date,exit_date,_,emergency_name,emergency_phone,branches_id"
         >
         </Display>
 
