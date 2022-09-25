@@ -6,6 +6,9 @@ export default ({user,children}) => {
     return (
     <CompRowAndBox
         header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">User / {user.name}</h2>}
+        footer={
+            <SmartFooterButton componentFor='user' obj={user}></SmartFooterButton>
+        }
     >
         <Display
             content={user}

@@ -223,6 +223,10 @@ table.table-padding-row tbody tr td {
     background: cadetblue;
 }
 
+.ui-component .form-input {
+    min-height: 42px;
+}
+
 .content>.child-component {
     margin-top: 3em;
 }
@@ -235,4 +239,25 @@ table.table-padding-row tbody tr td {
 
 .content>.child-component>.ui-component+.ui-component {
     margin-bottom: 1em;
+}
+
+
+a.button {
+    padding: 0.4em 0.6em;
+    border: 1px solid #a299ff;
+    margin-left: 1em;
+    border-radius: 5px;
+    background-color: #8eb1ff;
+    color: #0228b4;
+}
+
+a.button:hover {
+    background-color: #6b7896;
+    border-color: #6b7896;
+    color: white;
+}
+
+a.button.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
 }

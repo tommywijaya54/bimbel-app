@@ -17,8 +17,7 @@ export default ({header, footer, children}) => {
 
                 {footer}
 
-                <SmartFooterButton></SmartFooterButton>
-               
+                {/* <SmartFooterButton></SmartFooterButton> */}
             </div>
         </div>
     );
