@@ -5,6 +5,7 @@ import DebugComponent from '@/Shared/Debug/DebugComponent';
 import UserDetails from '@/Components/UserDetails';
 import ParentDetails from '@/Components/ParentDetails';
 import StudentDetails from '@/Components/StudentDetails';
+import EmployeeDetails from '@/Components/EmployeeDetails';
 
 export default function Show(props) {
     return (
@@ -16,15 +17,17 @@ export default function Show(props) {
             <Head title="Dashboard - User Details" />
 
             <div className="py-12">
-                <UserDetails user={props.user}>
-                    <ParentDetails parent={props.details.parent}></ParentDetails>
+                <UserDetails user={props.user}></UserDetails>
 
-                    {props.details.students.map((student,keyId) => {
-                        return <StudentDetails key={keyId} student={student}></StudentDetails>
-                    })}
+                {props.details && props.details.employee && 
+                        <EmployeeDetails employee={props.details.employee}></EmployeeDetails>}
 
-                </UserDetails>
-                
+                {props.details && props.details.parent && 
+                    <ParentDetails parent={props.details.parent}></ParentDetails>}
+
+                {props.details && props.details.students && props.details.students.map((student,keyId) => {
+                    return <StudentDetails key={keyId} student={student}></StudentDetails>
+                })}
             </div>
             <DebugComponent></DebugComponent>
         </AuthenticatedLayout>

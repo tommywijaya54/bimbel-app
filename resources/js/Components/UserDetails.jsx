@@ -18,6 +18,5 @@ export default ({user,children}) => {
                 {children}
             </div>
         }
-
     </CompRowAndBox>)
 }
