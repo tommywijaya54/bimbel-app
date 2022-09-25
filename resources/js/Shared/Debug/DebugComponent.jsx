@@ -29,9 +29,27 @@ export default () => {
 
         return <>{
             parsedOb.map((ob,i) => {
+                /*
+                <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+                return <pre className="prettyprint lang-html" key={i}>
+                    The lang-* class specifies the language file extensions.
+                    File extensions supported by default include:
+                        "bsh", "c", "cc", "cpp", "cs", "csh", "cyc", "cv", "htm", "html", "java",
+                        "js", "m", "mxml", "perl", "pl", "pm", "py", "rb", "sh", "xhtml", "xml",
+                        "xsl".
+                    </pre>
+                    */
+
+                return <pre key={i}><code>
+                    props.{ob.id} : {JSON.stringify(ob.value)}
+                    </code>
+                </pre>
+                
+                /*
                 return <div className='parsed-object' key={i}>
                     {ob.id} : {JSON.stringify(ob.value)}
                 </div>
+                */
             })
         }</>
     }

@@ -20,7 +20,6 @@ export default function Dashboard(props) {
                 </div>
             </div>
 
-            <DebugComponent></DebugComponent>
         </AuthenticatedLayout>
     );
 }
