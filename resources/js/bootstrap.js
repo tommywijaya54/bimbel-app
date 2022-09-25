@@ -40,6 +40,26 @@ String.prototype.cap = function (){
     return (this.charAt(0).toUpperCase() + this.slice(1));
 }
 
+String.prototype.toDisplayElement = function (){
+    const entityname = this.split(",")[0];
+    let label = this.split(',')[1] || entityname.cap();
+    
+    if(entityname === "id"){
+        label = "ID"
+    }
+    if(entityname.includes('_')){
+        label = (entityname.split('_')).map((str) => {
+            return str.cap()
+        }).join(" ");
+    }
+
+    return {
+        entityname : entityname,
+        label : label
+    }
+}
+
+
 // Adding Current App & Current User 
 class CurrentApp{
     constructor (el_id = 'app') {
