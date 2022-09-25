@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->string('status')->nullable(); // register online 
             $table->string('type')->nullable(); // employee / student / parent
             $table->string('disabled')->nullable(); // null / reason of disabled
             $table->rememberToken();
