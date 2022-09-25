@@ -12,8 +12,11 @@ export default ({header, content, show, children}) => {
                     element:'line'
                 })
             }else{
+
+                const a = prp.toDisplayElement();
+
                 newContent.push({
-                    label:prp.cap(),
+                    label:a.label,
                     content: content[prp]
                 })
             }
