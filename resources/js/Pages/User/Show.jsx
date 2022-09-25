@@ -20,7 +20,10 @@ export default function Show(props) {
                 <UserDetails user={props.user}></UserDetails>
 
                 {props.details && props.details.employee && 
-                        <EmployeeDetails employee={props.details.employee}></EmployeeDetails>}
+                    <EmployeeDetails employee={props.details.employee}></EmployeeDetails>}
+
+                {props.details && props.details.student && 
+                    <StudentDetails student={props.details.student}></StudentDetails>}
 
                 {props.details && props.details.parent && 
                     <ParentDetails parent={props.details.parent}></ParentDetails>}
