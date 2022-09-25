@@ -23,13 +23,15 @@ class RoleAndPermissionSeeder extends Seeder
             Role::create(['name' => $value]);
         }
 
+
         $permissions = [
             'list-user',
             'show-user',
             'create-user',
             'edit-user',
             'deactivate-user',
-            'activate-user'
+            'activate-user',
+            'reset password-user'
         ];
 
         $owner_permissions = [

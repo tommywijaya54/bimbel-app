@@ -43,7 +43,6 @@ class UserSeeder extends Seeder
         runSeederInBatch($seeder, $column, "users");
 
         User::findByName('Tony')->assignRole('Owner');
-
         User::findByName('Eko Saputra Wijaya')->assignRole('Branch Manager');
         User::findByName('Shinta Purnama Sari')->assignRole('Advisor');
 
@@ -64,37 +63,5 @@ class UserSeeder extends Seeder
             'branches_id' => '3',
             'note' => 'No explanation present',
         ]);
-
-
-        for ($x = 1; $x <= 10; $x++) {
-            $arr = [
-                'name' => fake()->name(),
-                'email' => fake()->unique()->safeEmail(),
-                'password' => fake()->text(20),
-                'type' => 'Student',
-            ];
-            DB::table('users')->insert($arr);
-        }
-
-        for ($x = 1; $x <= 10; $x++) {
-            $arr = [
-                'name' => fake()->name(),
-                'email' => fake()->unique()->safeEmail(),
-                'password' => fake()->text(20),
-                'type' => 'Parent',
-            ];
-            DB::table('users')->insert($arr);
-        }
-
-        /*
-        for ($x = 1; $x <= 20; $x++) {
-            $arr = [
-                'role_id' => fake()->numberBetween($min = 1, $max = 7),
-                'model_type' => 'App\\Models\\User',
-                'model_id' => fake()->numberBetween($min = 5, $max = 20),
-            ];
-            DB::table('model_has_roles')->insert($arr);
-        }
-        */
     }
 }

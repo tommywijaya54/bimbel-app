@@ -16,11 +16,15 @@ class AllSeeder extends Seeder
      */
     public function run()
     {
+        /*
+
         for ($x = 1; $x <= 10; $x++) {
             $arr = ['name' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'password' => fake()->text(20),];
             DB::table('users')->insert($arr);
         }
+        */
 
+        /*
         for ($x = 1; $x <= 30; $x++) {
             $arr = [
                 'nik' => fake()->randomDigit(),
@@ -38,16 +42,19 @@ class AllSeeder extends Seeder
             ];
             DB::table('employees')->insert($arr);
         }
+        */
 
         for ($x = 1; $x <= 4; $x++) {
             $arr = ['employees_id' => fake()->numberBetween($min = 1, $max = 10), 'branches_id' => fake()->numberBetween($min = 1, $max = 4), 'note' => fake()->text(50),];
             DB::table('managers')->insert($arr);
         }
 
+        /*
         for ($x = 1; $x <= 4; $x++) {
             $arr = ['name' => fake()->name(), 'address' => fake()->address(), 'phone' => fake()->phoneNumber(), 'managers_id' => fake()->numberBetween($min = 1, $max = 10), 'email' => fake()->unique()->safeEmail(), 'open_date' => fake()->date(), 'status' => fake()->text(10),];
             DB::table('branches')->insert($arr);
         }
+        */
 
         for ($x = 1; $x <= 10; $x++) {
             $arr = ['branches_id' => fake()->numberBetween($min = 1, $max = 4), 'expense_type' => fake()->text(), 'description' => fake()->text(), 'amount' => fake()->numberBetween($min = 1500, $max = 6000), 'date' => fake()->date(), 'approve_by' => fake()->text(),];
@@ -64,6 +71,7 @@ class AllSeeder extends Seeder
             DB::table('assets')->insert($arr);
         }
 
+        /*
         for ($x = 1; $x <= 10; $x++) {
             $arr = [
                 'nik' => fake()->text(),
@@ -82,7 +90,9 @@ class AllSeeder extends Seeder
             ];
             DB::table('cparents')->insert($arr);
         }
+        */
 
+        /*
         for ($x = 1; $x <= 30; $x++) {
             $arr = [
                 'cparents_id' => fake()->numberBetween($min = 1, $max = 10),
@@ -103,6 +113,7 @@ class AllSeeder extends Seeder
             ];
             DB::table('students')->insert($arr);
         }
+        */
 
         for ($x = 1; $x <= 10; $x++) {
             $arr = ['name' => fake()->name(), 'address' => fake()->address(), 'city' => fake()->randomElement(['Jakarta Barat', 'Jakarta Timur', 'Jakarta Selatan']), 'type' => fake()->sentence(4), 'color_code' => fake()->randomElement(['blue', 'yellow', 'red']),];
