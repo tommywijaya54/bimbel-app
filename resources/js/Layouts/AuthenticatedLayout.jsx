@@ -5,6 +5,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
 import NavigationList from '@/Components/NavigationList';
+import DebugComponent from '@/Shared/Debug/DebugComponent';
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -120,108 +121,7 @@ export default function Authenticated({ auth, header, children }) {
             )}
 
             <main>{children}</main>
+            <DebugComponent></DebugComponent>
         </div>
     );
 }
-
-
-/**
- * 
-        <NavLink href={route('user.index')} active={route().current('user.index')}>
-            User
-        </NavLink>
-        
-        <NavLink href={route('parent.index')} active={route().current('parent.index')}>
-            Parent
-        </NavLink>
-
-        <NavLink href={route('student.index')} active={route().current('student.index')}>
-            Student
-        </NavLink>
-            
-            <NavLink href={route('school.index')} active={route().current('school.index')}>
-                School
-            </NavLink>
-
-        
-
-        <NavLink href={route('employee.index')} active={route().current('employee.index')}>
-            Employee
-        </NavLink>
-                    <NavLink href={route('salary.index')} active={route().current('salary.index')}>
-                        Salary
-                    </NavLink>
-
-                    <NavLink href={route('employeerole.index')} active={route().current('employeerole.index')}>
-                        Employeerole
-                    </NavLink>
-                    
-                    <NavLink href={route('roletype.index')} active={route().current('roletype.index')}>
-                        Roletype
-                    </NavLink>
-        
-            <NavLink href={route('manager.index')} active={route().current('manager.index')}>
-                Manager
-            </NavLink>
-
-            <NavLink href={route('advisor.index')} active={route().current('advisor.index')}>
-                Advisor
-            </NavLink>
-            
-
-            <NavLink href={route('teacher.index')} active={route().current('teacher.index')}>
-                Teacher
-            </NavLink>
-            
-
-                <NavLink href={route('subject.index')} active={route().current('subject.index')}>
-                    Subject
-                </NavLink>
-            
-        
-
-        <NavLink href={route('branch.index')} active={route().current('branch.index')}>
-            Branch
-        </NavLink>
-        
-            <NavLink href={route('expense.index')} active={route().current('expense.index')}>
-                Expense
-            </NavLink>
-        
-
-            <NavLink href={route('rental.index')} active={route().current('rental.index')}>
-                Rental
-            </NavLink>
-        
-
-            <NavLink href={route('asset.index')} active={route().current('asset.index')}>
-                Asset
-            </NavLink> 
-
-        <NavLink href={route('registration.index')} active={route().current('registration.index')}>
-            Registration
-        </NavLink>
-            
-            <NavLink href={route('registrationitem.index')} active={route().current('registrationitem.index')}>
-                Registrationitem
-            </NavLink>
-        
-        <NavLink href={route('pricelist.index')} active={route().current('pricelist.index')}>
-            Pricelist
-        </NavLink>
-
-        <NavLink href={route('promolist.index')} active={route().current('promolist.index')}>
-            Promolist
-        </NavLink>
-        
-
-        <NavLink href={route('actionhistory.index')} active={route().current('actionhistory.index')}>
-            Actionhistory
-        </NavLink>
-        
-
-        <NavLink href={route('schedule.index')} active={route().current('schedule.index')}>
-            Schedule
-        </NavLink>
-
- */
