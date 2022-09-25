@@ -4,11 +4,16 @@ import SimpleLink from "./SimpleLink";
 
 export default ({listprops}) => {
     const PrimaryId = listprops.PrimaryId || "id";
+
     const Elements = (listprops.view.split(",")).map((header) => {
+        return header.toDisplayElement();
+        
+        /*
         return {
             entityname : header.split(":")[0],
             label : header.split(":")[1] || (header.split(":")[0]).cap()
         }
+        */
     });
 
     const Data = listprops.data;
