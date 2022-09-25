@@ -6,7 +6,8 @@ export default ({employee,children}) => {
     <CompRowAndBox
         header={
             <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Employee / {employee.name}
+               {employee.name}
+               <span className="info">Employment Information</span>
             </h2>}
     >
         <Display

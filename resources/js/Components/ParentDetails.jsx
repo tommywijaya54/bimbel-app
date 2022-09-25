@@ -7,14 +7,16 @@ export default ({parent,children}) => {
     <CompRowAndBox
         header={
             <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Parent / {parent.name}
-                {parent.blacklist == 'true' ? ' / BLACK LISTED' : ''}
+                {parent.blacklist == 'true' ? 
+                <span className="black-listed">Black Listed</span> : ''}
+                {parent.name}
+                <span className="info">Parent Information</span>
             </h2>}
         
     >
         <Display
             content={parent}
-            show="nik,name,email,phone,birth_date,blacklist,address,note,emergency_name,emergency_phone,bank_account_name,virtual_account_name,"
+            show="nik,blacklist,name,email,phone,birth_date,address,note,emergency_name,emergency_phone,bank_account_name,virtual_account_name,"
         >
         </Display>
 

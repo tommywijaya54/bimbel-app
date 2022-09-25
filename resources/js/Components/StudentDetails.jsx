@@ -6,12 +6,13 @@ export default ({student,children}) => {
     <CompRowAndBox
         header={
             <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Student / {student.name}
+                {student.name}
+                <span className="info">Student Information</span>
             </h2>}
     >
         <Display
             content={student}
-            show="name,email,phone,address,birth_date,note,join_date,grade,exit_date,exit_reason,health_condition,type"
+            show="name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note"
         >
         </Display>
 

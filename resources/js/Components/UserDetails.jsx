@@ -5,14 +5,17 @@ import SmartFooterButton from "./SmartFooterButton";
 export default ({user,children}) => {
     return (
     <CompRowAndBox
-        header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">User / {user.name}</h2>}
+        header={
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">{user.id}. {user.name} 
+                <span className="info">User Details</span>
+            </h2>}
         footer={
             <SmartFooterButton componentFor='user' obj={user}></SmartFooterButton>
         }
     >
         <Display
             content={user}
-            show="name,email,type"
+            show="name,email,type,status"
         >
         </Display>
 
