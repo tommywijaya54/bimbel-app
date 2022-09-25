@@ -59,6 +59,15 @@ String.prototype.toDisplayElement = function (){
     }
 }
 
+String.prototype.fromStringArraytoObject = function (){
+    const arr = this.split(',');
+    let ob = {};
+    arr.map((a) => {
+        ob[a] = ''
+    });
+    return ob;
+}
+
 
 // Adding Current App & Current User 
 class CurrentApp{
@@ -67,8 +76,6 @@ class CurrentApp{
         this.data = JSON.parse(this.el.dataset.page);
     }
 }
-window.current_app = new CurrentApp();
-
 
 class CurrentUser{
     constructor () {
@@ -86,6 +93,9 @@ class CurrentUser{
     hasRole(rl){
         return this.roles.includes(rl);
     }
+}   
+
+window.current_app = new CurrentApp();
+if(window.current_app.data.props.auth.user){
+    window.current_user = new CurrentUser();
 }
-window.current_user = new CurrentUser();
-    
