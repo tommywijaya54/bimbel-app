@@ -47,6 +47,7 @@ String.prototype.toDisplayElement = function (){
     if(entityname === "id"){
         label = "ID"
     }
+
     if(entityname.includes('_')){
         label = (entityname.split('_')).map((str) => {
             return str.cap()
