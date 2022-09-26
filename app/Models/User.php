@@ -55,26 +55,26 @@ class User extends Authenticatable
 
         if ($type == 'Employee') {
             return [
-                'employee' => Employee::where('users_id', $this->id)->first(),
+                'employee' => Employee::where('user_id', $this->id)->first(),
             ];
         }
 
         if ($type == 'Student') {
             /*
-            $student = Student::where('users_id', $this->id)->firstOr(function(){
+            $student = Student::where('user_id', $this->id)->firstOr(function(){
 
             });
             */
-            $student = Student::where('users_id', $this->id)->first();
+            $student = Student::where('user_id', $this->id)->first();
 
             /*
-            $student->parent = Cparent::where('id', $student->cparents_id)->first();
-            $student->school = School::where('id', $student->schools_id)->first();
+            $student->parent = Cparent::where('id', $student->cparent_id)->first();
+            $student->school = School::where('id', $student->school_id)->first();
             return $student;
             */
 
-            $parent = Cparent::where('id', $student->cparents_id)->first();
-            $school = School::where('id', $student->schools_id)->first();
+            $parent = Cparent::where('id', $student->cparent_id)->first();
+            $school = School::where('id', $student->school_id)->first();
 
             return [
                 'student' => $student,
@@ -84,10 +84,10 @@ class User extends Authenticatable
         }
 
         if ($type == 'Parent') {
-            $parent = Cparent::where('users_id', $this->id)->first();
+            $parent = Cparent::where('user_id', $this->id)->first();
 
-            $students = Student::where('cparents_id', $parent->id)->get();
-            //return Cparent::where('users_id', $this->id)->get();
+            $students = Student::where('cparent_id', $parent->id)->get();
+            //return Cparent::where('user_id', $this->id)->get();
 
             return [
                 'parent' => $parent,

@@ -29,7 +29,7 @@ class ParentSeeder extends Seeder
                 'bank_account_name' => fake()->text(),
                 'virtual_account_name' => fake()->text(),
                 'note' => fake()->text(50),
-                'users_id' => fake()->numberBetween($min = 15, $max = 30),
+                'user_id' => fake()->numberBetween($min = 15, $max = 30),
                 'blacklist' => fake()->randomElement(['true', 'false']),
             ];
 
@@ -41,7 +41,7 @@ class ParentSeeder extends Seeder
             ];
 
             $User = User::create($user);
-            $people['users_id'] = $User->id;
+            $people['user_id'] = $User->id;
 
             DB::table('cparents')->insert($people);
         }

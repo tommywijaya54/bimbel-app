@@ -25,16 +25,16 @@ return new class extends Migration
             $table->date('join_date')->nullable();
             $table->date('exit_date')->nullable();
             $table->string('note')->nullable();
-            $table->integer('users_id')->nullable();
-            $table->integer('branches_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('branche_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
 
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
-            $table->integer('employees_id');
-            $table->integer('branches_id')->nullable();
+            $table->integer('employee_id');
+            $table->integer('branche_id')->nullable();
             $table->string('note');
             $table->integer('created_by')->nullable();
             $table->timestamps();
@@ -45,7 +45,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone');
-            $table->integer('managers_id')->nullable();
+            $table->integer('manager_id')->nullable();
             $table->string('email');
             $table->date('open_date');
             $table->string('status')->nullable();
@@ -56,7 +56,7 @@ return new class extends Migration
 
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->integer('branches_id');
+            $table->integer('branche_id');
             $table->string('expense_type');
             $table->string('description');
             $table->integer('amount');
@@ -69,7 +69,7 @@ return new class extends Migration
 
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
-            $table->integer('branches_id');
+            $table->integer('branche_id');
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('amount');
@@ -84,7 +84,7 @@ return new class extends Migration
 
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->integer('branches_id');
+            $table->integer('branche_id');
             $table->string('item_name');
             $table->integer('qty');
             $table->integer('cost');
@@ -107,7 +107,7 @@ return new class extends Migration
             $table->string('bank_account_name')->nullable();
             $table->string('virtual_account_name')->nullable();
             $table->string('note')->nullable();
-            $table->integer('users_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->string('blacklist')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
@@ -116,8 +116,8 @@ return new class extends Migration
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->integer('cparents_id');
-            $table->integer('schools_id');
+            $table->integer('cparent_id');
+            $table->integer('school_id');
             $table->string('grade');
             $table->string('name');
             $table->string('email');
@@ -130,7 +130,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('health_condition');
             $table->string('note');
-            $table->integer('users_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
@@ -157,7 +157,7 @@ return new class extends Migration
             $table->string('subject');
             $table->integer('price');
             $table->string('week');
-            $table->integer('branches_id');
+            $table->integer('branche_id');
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
@@ -169,7 +169,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->string('label');
             $table->string('discount_value');
-            $table->integer('branches_id');
+            $table->integer('branche_id');
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
@@ -177,8 +177,8 @@ return new class extends Migration
 
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->integer('students_id');
-            $table->integer('branches_id');
+            $table->integer('student_id');
+            $table->integer('branche_id');
             $table->date('date');
             $table->string('reference');
             $table->integer('cashback');
@@ -191,9 +191,9 @@ return new class extends Migration
 
         Schema::create('registrationitems', function (Blueprint $table) {
             $table->id();
-            $table->integer('registrations_id');
-            $table->integer('pricelists_id')->nullable();
-            $table->integer('promolists_id')->nullable();
+            $table->integer('registration_id');
+            $table->integer('pricelist_id')->nullable();
+            $table->integer('promolist_id')->nullable();
             $table->string('charges');
             $table->integer('price')->nullable();
             $table->string('discount_amount')->nullable();
@@ -204,7 +204,7 @@ return new class extends Migration
 
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->integer('employees_id');
+            $table->integer('employee_id');
             $table->integer('amount');
             $table->date('start_date');
             $table->date('end_date');
@@ -216,7 +216,7 @@ return new class extends Migration
 
         Schema::create('advisors', function (Blueprint $table) {
             $table->id();
-            $table->integer('employees_id');
+            $table->integer('employee_id');
             $table->string('note');
             $table->integer('created_by')->nullable();
             $table->timestamps();
@@ -225,7 +225,7 @@ return new class extends Migration
 
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->integer('employees_id');
+            $table->integer('employee_id');
             $table->string('subject');
             $table->string('note');
             $table->integer('created_by')->nullable();
@@ -235,7 +235,7 @@ return new class extends Migration
 
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            $table->integer('teachers_id');
+            $table->integer('teacher_id');
             $table->string('subject');
             $table->string('school');
             $table->integer('created_by')->nullable();
@@ -245,7 +245,7 @@ return new class extends Migration
 
         Schema::create('employeeroles', function (Blueprint $table) {
             $table->id();
-            $table->integer('employees_id');
+            $table->integer('employee_id');
             $table->string('role_title');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

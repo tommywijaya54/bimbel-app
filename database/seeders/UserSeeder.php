@@ -60,8 +60,8 @@ class UserSeeder extends Seeder
             'emergency_name' => 'Sisca Lancaster',
             'emergency_phone' => '0458 897 789',
             'join_date' => '2022-06-04',
-            'users_id' => $tommy->id,
-            'branches_id' => '3',
+            'user_id' => $tommy->id,
+            'branche_id' => '3',
             'note' => 'No explanation present',
         ]);
     }

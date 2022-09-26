@@ -51,9 +51,9 @@ class StudentSeeder extends Seeder
 
             $User = User::create($user);
 
-            $people['users_id'] = $User->id;
-            $people['cparents_id'] = $Parents->random()->id;
-            $people['schools_id'] = $Schools->random()->id;
+            $people['user_id'] = $User->id;
+            $people['cparent_id'] = $Parents->random()->id;
+            $people['school_id'] = $Schools->random()->id;
 
             DB::table('students')->insert($people);
         }

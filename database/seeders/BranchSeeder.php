@@ -34,7 +34,7 @@ class BranchSeeder extends Seeder
                 'name' => $branch_names[$x],
                 'address' => fake()->address(),
                 'phone' => fake()->phoneNumber(),
-                'managers_id' => fake()->numberBetween($min = 1, $max = 10),
+                'manager_id' => fake()->numberBetween($min = 1, $max = 10),
                 'email' => fake()->unique()->safeEmail(),
                 'open_date' => fake()->date(),
                 'status' => fake()->text(10),
