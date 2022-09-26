@@ -12,7 +12,7 @@ export default ({student,children}) => {
     >
         <Display
             content={student}
-            show="name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note"
+            fields="name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note"
         >
         </Display>
 

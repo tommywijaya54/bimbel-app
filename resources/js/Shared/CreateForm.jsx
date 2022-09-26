@@ -14,23 +14,21 @@ class FormObject {
     }
 }
 
-const CreateForm = ({formprops}) => {
-    const props = formprops;
-    const FormOb = new FormObject(props.forminput);
+const CreateForm = ({props}) => {
+    const FormOb = new FormObject(props.form_fields);
     const { data, setData, errors, post, processing } = useForm({
         ...FormOb.Object
     });
     
   function handleSubmit(e) {
     e.preventDefault();
-    post(props.postto);
+    post(props.post_url);
   }
 
   return <>
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-wrap p-8 -mb-8 -mr-6">
                     {FormOb.DisplayElementInArray.map((Element, keyId) => {
-                        
                         return <FormElement 
                             Element={Element} 
                             key={keyId}

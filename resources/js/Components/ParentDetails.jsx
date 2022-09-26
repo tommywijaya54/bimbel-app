@@ -16,7 +16,7 @@ export default ({parent,children}) => {
     >
         <Display
             content={parent}
-            show="nik,blacklist,name,email,phone,birth_date,address,note,emergency_name,emergency_phone,bank_account_name,virtual_account_name,"
+            fields="nik,blacklist,name,email,phone,birth_date,address,note,emergency_name,emergency_phone,bank_account_name,virtual_account_name,"
         >
         </Display>
 

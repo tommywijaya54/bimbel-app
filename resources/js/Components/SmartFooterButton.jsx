@@ -7,7 +7,7 @@ const SmartFooterButton = ({componentFor, obj}) => {
 
     let component = [];
 
-    if(componentFor === 'User'){
+    if(componentFor === 'user'){
         const url = {
             deactivate:'/user/'+obj.id+'/deactivate',
             activate:'/user/'+obj.id+'/activate',
@@ -27,7 +27,7 @@ const SmartFooterButton = ({componentFor, obj}) => {
             component.push(<a href={url.edit} className={'button '}>Edit user</a>) : ''
     }
 
-    if(componentFor === 'Branch'){
+    if(componentFor === 'branch'){
         current_user.hasPermission('delete-branch') ? 
             component.push(<a href={'/branch/'+obj.id+'/delete'} className={'button '}>Delete Branch</a>) : ''
 

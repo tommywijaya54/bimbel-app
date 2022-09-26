@@ -5,27 +5,19 @@ import SimpleLink from "./SimpleLink";
 
 export default ({listprops}) => {
     const PrimaryId = listprops.PrimaryId || "id";
-
-    const Elements = (listprops.view.split(",")).map((header) => {
+    const Fields = (listprops.fields.split(",")).map((header) => {
         return header.toDisplayElement();
-        
-        /*
-        return {
-            entityname : header.split(":")[0],
-            label : header.split(":")[1] || (header.split(":")[0]).cap()
-        }
-        */
     });
-
     const Data = listprops.data;
-    const GotoHref = listprops.goto || null;
+
+    const item_url = listprops.item_url || null;
 
     return <>
         <table className="w-full table-padding-row"> 
                     <thead className="text-left">
                         <tr>
                             {
-                                Elements.map((el, keyID) => {
+                                Fields.map((el, keyID) => {
                                     return <th key={keyID}>{el.label}</th>
                                 })
                             }
@@ -39,18 +31,18 @@ export default ({listprops}) => {
                                     className="hover:bg-gray-100 focus-within:bg-gray-100"
                                     >
                                     {
-                                        Elements.map((el, keyID) => {
+                                        Fields.map((el, keyID) => {
                                             return <td key={keyID}>
                                                 <DisplayElement data={data} el={el}></DisplayElement>
                                             </td>
                                         })
                                     }
-                                    {GotoHref && 
+                                    {item_url && 
                                         <td>
                                             <SimpleLink 
                                                 type='goto'
                                                 id={data[PrimaryId]}
-                                                href={GotoHref}
+                                                href={item_url}
                                             >
                                             </SimpleLink>
                                         </td>

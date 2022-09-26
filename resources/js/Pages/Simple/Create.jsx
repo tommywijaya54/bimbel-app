@@ -7,10 +7,10 @@ export default function Index(props) {
         <MainAuthenticatedLayout
             auth={props.auth}
             errors={props.errors}
-            title={props.pagetitle}
+            title={props.page_title}
         >
             <div className="overflow-x-auto bg-white rounded shadow">
-                <CreateForm formprops={props}></CreateForm>
+                <CreateForm props={props}></CreateForm>
             </div>
         </MainAuthenticatedLayout>
     );

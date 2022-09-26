@@ -1,8 +1,8 @@
 import DisplayElement from "./DisplayElement";
 
-export default ({header, content, show, children}) => {
+export default ({header, content, fields, children}) => {
     const newContent = [];
-    const display = show.split(",");
+    const display = fields.split(",");
     if(content){
         display.forEach((prp) => {
             if(prp == ''){

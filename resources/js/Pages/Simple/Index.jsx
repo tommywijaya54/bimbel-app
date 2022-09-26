@@ -7,7 +7,7 @@ export default function Index(props) {
         <MainAuthenticatedLayout
             auth={props.auth}
             errors={props.errors}
-            title={props.pagetitle}
+            title={props.page_title}
             header_action={props.action_button}
         >
             <div className="overflow-x-auto bg-white rounded shadow">

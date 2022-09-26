@@ -62,7 +62,10 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->middleware('can:list-user');
+    Route::get('/user/create', [UserController::class, 'create'])->middleware('can:create-user');
     Route::get('/user/{id}', [UserController::class, 'show'])->middleware('can:show-user');
+    Route::post('/user', [UserController::class, 'store'])->middleware('can:create-user');
+
 
     Route::get('/role-and-permission', [PermissionController::class, 'index'])->middleware('can:list-role and permission');
     Route::get('/role/{id}', [PermissionController::class, 'show'])->middleware('can:show-role');

@@ -10,7 +10,7 @@ export default function Show(props) {
         <MainAuthenticatedLayout
             auth={props.auth}
             errors={props.errors}
-            title={props.pagetitle}
+            title={props.page_title}
             header_action={props.action_button}
         >
             <CompRowAndBox
@@ -20,12 +20,15 @@ export default function Show(props) {
                         <span className="info">{props.component_header}</span>
                     </h2>}
                 footer={
-                    <SmartFooterButton componentFor={props.component_for} obj={data}></SmartFooterButton>
+                    <SmartFooterButton 
+                        componentFor={props.component_for} 
+                        obj={data}
+                        ></SmartFooterButton>
                 }
             >
                 <Display
                     content={props.data}
-                    show={props.view}
+                    fields={props.view}
                 >
                 </Display>
             </CompRowAndBox>

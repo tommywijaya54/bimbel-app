@@ -11,20 +11,36 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
+    public $entity = User::class;
+    public $modal = 'user';
+
+    public $list_view_fields = "id,name,email,type";
+    public $list_view_action_button = 'create-user';
+
+    public $form_fields = 'name,email,type,status,password';
+
+    function __construct()
+    {
+        $this->model_name = ucfirst($this->modal);
+    }
+
+
     public function index()
     {
-        $data = User::all();
+        $data = $this->entity::all();
         return Inertia::render('Simple/Index', [
-            'pagetitle' => "User List",
+            'page_title' => $this->model_name . " List",
+            'action_button' => $this->list_view_action_button,
+            'fields' => $this->list_view_fields,
             'data' => $data,
-            'goto' => 'user',
-            'view' => "id,name,email,type"
+            'item_url' => "/" . $this->modal . "/{id}",
+
         ]);
     }
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = $this->entity::find($id);
         $details = $user->details();
         return Inertia::render('User/Show', [
             'user' => $user,
@@ -34,18 +50,26 @@ class UserController extends Controller
 
     public function create()
     {
-        return Inertia::render('User/Create');
+        return Inertia::render('Simple/Create', [
+            'page_title' => "Create " . $this->model_name,
+            'postto' => "/" . $this->modal,
+            'forminput' => $this->formInput,
+        ]);
     }
 
     public function store(Request $request)
     {
-        User::create([
+        // dd($request, $request['type'], $request['status']);
+
+        $this->entity::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => $request['password'],
+            'type' => $request['type'],
+            'status' => $request['status'],
         ]);
+        return redirect('/' . $this->modal);
     }
-
 
     public function edit($id)
     {
@@ -58,6 +82,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $entity = User::find($id);
+
         $entity->name = $request->name;
         $entity->email = $request->email;
         $entity->password = $request->password;

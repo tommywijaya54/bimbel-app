@@ -13,7 +13,7 @@ class CparentController extends Controller
     {
         $data = Cparent::all();
         return Inertia::render('Simple/Index', [
-            'pagetitle' => "Cparent List",
+            'page_title' => "Cparent List",
             'data' => $data,
             'route' => 'cparent.edit',
             'view' => "name,address,phone"

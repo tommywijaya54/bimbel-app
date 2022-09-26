@@ -15,7 +15,7 @@ export default ({user,children}) => {
     >
         <Display
             content={user}
-            show="name,email,type,status"
+            fields="name,email,type,status"
         >
         </Display>
 
