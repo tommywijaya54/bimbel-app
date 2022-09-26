@@ -32,7 +32,6 @@ export default function Show(props) {
                     return <StudentDetails key={keyId} student={student}></StudentDetails>
                 })}
             </div>
-            <DebugComponent></DebugComponent>
         </AuthenticatedLayout>
     );
 }
