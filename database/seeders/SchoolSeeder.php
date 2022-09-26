@@ -26,10 +26,10 @@ class SchoolSeeder extends Seeder
         ) {
             $arr = [
                 'name' => $school_name[$x],
-                'address' => fake()->address(),
-                'city' => fake()->randomElement(['Jakarta Barat', 'Jakarta Timur', 'Jakarta Selatan', 'Jakarta Utara']),
-                'type' => fake()->randomElement(['International', 'National', 'International - National']),
-                'color_code' => fake()->randomElement(['blue', 'yellow', 'red']),
+                'address' => fake('id_ID')->address(),
+                'city' => fake('id_ID')->randomElement(['Jakarta Barat', 'Jakarta Timur', 'Jakarta Selatan', 'Jakarta Utara']),
+                'type' => fake('id_ID')->randomElement(['International', 'National', 'International - National']),
+                'color_code' => fake('id_ID')->randomElement(['blue', 'yellow', 'red']),
             ];
             DB::table('schools')->insert($arr);
         }

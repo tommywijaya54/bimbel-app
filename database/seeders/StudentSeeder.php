@@ -28,18 +28,18 @@ class StudentSeeder extends Seeder
             $x++
         ) {
             $people = [
-                'grade' => fake()->randomElement(['TKA', 'TKB', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12']),
-                'name' => fake()->name(),
-                'email' => fake()->unique()->safeEmail(),
-                'phone' => fake()->phoneNumber(),
-                'address' => fake()->address(),
-                'join_date' => fake()->date(),
-                'exit_date' => fake()->date(),
-                'exit_reason' => fake()->randomElement(['', 'Pindah Sekolah - Jauh dari area bimbel']),
-                'birth_date' => fake()->date(),
-                'type' => fake()->randomElement(['International', 'National', 'International - National']),
-                'health_condition' => fake()->sentence(4),
-                'note' => fake()->text(50),
+                'grade' => fake('id_ID')->randomElement(['TKA', 'TKB', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12']),
+                'name' => fake('id_ID')->name(),
+                'email' => fake('id_ID')->unique()->safeEmail(),
+                'phone' => fake('id_ID')->phoneNumber(),
+                'address' => fake('id_ID')->address(),
+                'join_date' => fake('id_ID')->date(),
+                'exit_date' => fake('id_ID')->date(),
+                'exit_reason' => fake('id_ID')->randomElement(['', 'Pindah Sekolah - Jauh dari area bimbel']),
+                'birth_date' => fake('id_ID')->date(),
+                'type' => fake('id_ID')->randomElement(['International', 'National', 'International - National']),
+                'health_condition' => fake('id_ID')->sentence(4),
+                'note' => fake('id_ID')->text(50),
             ];
 
             $user = [

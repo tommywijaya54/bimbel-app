@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 use function PHPSTORM_META\map;
 
+
 class BranchSeeder extends Seeder
 {
     /**
@@ -15,8 +16,11 @@ class BranchSeeder extends Seeder
      *
      * @return void
      */
+
+
     public function run()
     {
+        $fake = fake('id_ID');
         //
         $branch_names = [
             'Bimbel - Jakarta Timur',
@@ -32,12 +36,12 @@ class BranchSeeder extends Seeder
         ) {
             $branch = [
                 'name' => $branch_names[$x],
-                'address' => fake()->address(),
-                'phone' => fake()->phoneNumber(),
-                'manager_id' => fake()->numberBetween($min = 1, $max = 10),
-                'email' => fake()->unique()->safeEmail(),
-                'open_date' => fake()->date(),
-                'status' => fake()->text(10),
+                'address' => fake('id_ID')->address(),
+                'phone' => fake('id_ID')->phoneNumber(),
+                'manager_id' => fake('id_ID')->numberBetween($min = 1, $max = 10),
+                'email' => fake('id_ID')->unique()->safeEmail(),
+                'open_date' => fake('id_ID')->date(),
+                'status' => fake('id_ID')->text(10),
             ];
 
             DB::table('branches')->insert($branch);

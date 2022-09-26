@@ -23,16 +23,16 @@ class EmployeeSeeder extends Seeder
 
         for ($x = 1; $x <= 5; $x++) {
             $people = [
-                'nik' => fake()->randomDigit() . '99-999-Employee',
-                'name' => fake()->name(),
-                'address' => fake()->address(),
-                'phone' => fake()->phoneNumber(),
-                'email' => fake()->unique()->safeEmail(),
-                'emergency_name' => fake()->name(),
-                'emergency_phone' => fake()->phoneNumber(),
-                'join_date' => fake()->date(),
-                'exit_date' => fake()->date(),
-                'note' => fake()->text(50),
+                'nik' => fake('id_ID')->randomDigit() . '99-999-Employee',
+                'name' => fake('id_ID')->name(),
+                'address' => fake('id_ID')->address(),
+                'phone' => fake('id_ID')->phoneNumber(),
+                'email' => fake('id_ID')->unique()->safeEmail(),
+                'emergency_name' => fake('id_ID')->name(),
+                'emergency_phone' => fake('id_ID')->phoneNumber(),
+                'join_date' => fake('id_ID')->date(),
+                'exit_date' => fake('id_ID')->date(),
+                'note' => fake('id_ID')->text(50),
             ];
 
             $user = [

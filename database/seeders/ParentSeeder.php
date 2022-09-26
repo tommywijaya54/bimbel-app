@@ -18,19 +18,19 @@ class ParentSeeder extends Seeder
     {
         for ($x = 1; $x <= 10; $x++) {
             $people = [
-                'nik' => fake()->numerify('CPA-###-###-###'),
-                'name' => fake()->name(),
-                'address' => fake()->address(),
-                'phone' => fake()->phoneNumber(),
-                'email' => fake()->unique()->safeEmail(),
-                'birth_date' => fake()->date(),
-                'emergency_name' => fake()->name(),
-                'emergency_phone' => fake()->phoneNumber(),
-                'bank_account_name' => fake()->text(),
-                'virtual_account_name' => fake()->text(),
-                'note' => fake()->text(50),
-                'user_id' => fake()->numberBetween($min = 15, $max = 30),
-                'blacklist' => fake()->randomElement(['true', 'false']),
+                'nik' => fake('id_ID')->numerify('CPA-###-###-###'),
+                'name' => fake('id_ID')->name(),
+                'address' => fake('id_ID')->address(),
+                'phone' => fake('id_ID')->phoneNumber(),
+                'email' => fake('id_ID')->unique()->safeEmail(),
+                'birth_date' => fake('id_ID')->date(),
+                'emergency_name' => fake('id_ID')->name(),
+                'emergency_phone' => fake('id_ID')->phoneNumber(),
+                'bank_account_name' => fake('id_ID')->text(),
+                'virtual_account_name' => fake('id_ID')->text(),
+                'note' => fake('id_ID')->text(50),
+                'user_id' => fake('id_ID')->numberBetween($min = 15, $max = 30),
+                'blacklist' => fake('id_ID')->randomElement(['true', 'false']),
             ];
 
             $user = [
