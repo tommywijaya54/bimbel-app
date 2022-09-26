@@ -67,7 +67,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/role-and-permission', [PermissionController::class, 'index'])->middleware('can:list-role and permission');
     Route::get('/role/{id}', [PermissionController::class, 'show'])->middleware('can:show-role');
 
-    Route::get('/branch', [BranchController::class, 'index'])->middleware('can:list-branchshow');
+    Route::get('/branch', [BranchController::class, 'index'])->middleware('can:list-branch');
+    Route::get('/branch/create', [BranchController::class, 'create'])->middleware('can:create-branch');
+    Route::post('/branch', [BranchController::class, 'store'])->middleware('can:create-branch');
+    Route::get('/branch/{id}', [BranchController::class, 'show'])->middleware('can:show-branch');
 });
 
 
