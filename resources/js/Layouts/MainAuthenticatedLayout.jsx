@@ -1,15 +1,20 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
+import HeaderAction from '@/Components/HeaderAction';
 
-export default function MainAuthenticatedLayout({auth, errors, title, children}) {
+export default function MainAuthenticatedLayout({auth, errors, title, header_action,children}) {
     const {flash} = usePage().props;
 
     return (
         <AuthenticatedLayout
             auth={auth}
             errors={errors}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{title}</h2>}
+            header={
+                <h2 className="font-semibold text-xl text-gray-800 leading-tight">{title}
+                    {header_action && <HeaderAction action={header_action}></HeaderAction>}
+                </h2>
+            }
         >
             <Head title={title} />
             <div className="py-12">
