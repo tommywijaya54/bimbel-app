@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\User;
 
 use Inertia\Inertia;
@@ -42,9 +43,12 @@ class UserController extends Controller
     {
         $user = $this->entity::find($id);
         $details = $user->details();
+
+
         return Inertia::render('User/Show', [
             'user' => $user,
-            'details' => $details
+            'details' => $details,
+            'branch' => Branch::select('id', 'name')->get(),
         ]);
     }
 

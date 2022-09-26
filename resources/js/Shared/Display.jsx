@@ -37,7 +37,7 @@ export default ({header, content, fields, children}) => {
     }
 
     return (
-        <div className="-mr-6 -mb-8 flex flex-wrap display-component">
+        <div className="display-component flex flex-wrap ">
             {
                 newContent.map((a, keyId) => {
                     if(a.element && a.element == 'blank row'){
@@ -47,7 +47,9 @@ export default ({header, content, fields, children}) => {
                     }else{
                         return (<div key={keyId} className="pr-6 pb-8 w-full lg:w-1/2">
                                     <label className="form-label">{a.label}:</label> 
-                                    <div className="form-input"><DisplayElement el={a}></DisplayElement></div>
+                                    <div className="form-input">
+                                        <DisplayElement el={a}></DisplayElement>
+                                    </div>
                                 </div>);
                     }
                 })

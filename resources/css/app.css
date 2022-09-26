@@ -152,9 +152,9 @@ table.table-padding-row tbody tr td {
 .user {
     background-color: #fff9f0;
     padding: 3px 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     border: 1px solid #ddd;
-    margin: 4px;
+    margin: 0 4px 4px 0;
     display: inline-block;
 }
 
@@ -267,7 +267,7 @@ a.button {
     padding: 0.4em 0.6em;
     border: 1px solid #a299ff;
     margin-left: 1em;
-    border-radius: 5px;
+    border-radius: 4px;
     background-color: #8eb1ff;
     color: #0228b4;
 }
@@ -298,4 +298,48 @@ a.button.btn-light:hover {
 
 a.button.btn-sm {
     font-size: medium;
+}
+
+.max-w-7xl>.ui-component {
+    padding: 0;
+}
+
+:is(.edit-form, .create-form) .ui-component .header {
+    background: #8ba1ff;
+}
+
+:is(.edit-form, .create-form) .ui-component {
+    padding: 0;
+}
+
+:is(.edit-form, .create-form) .content {
+    padding: 0;
+}
+
+.display-component .form-input {
+    border-width: 0px 0px 0px 0px;
+    border-radius: 0;
+    padding: 0px;
+}
+
+.display-component label.form-label {
+    font-weight: 700;
+    margin-bottom: 0.3px;
+}
+
+.display-component>div {
+    padding: 0 1em 1em 0;
+}
+
+.display-component>div:hover {
+    cursor: pointer;
+    text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.ui-component .display-component .form-input {
+    min-height: 30px;
+}
+
+.display-component .user {
+    margin: 0;
 }

@@ -45,7 +45,7 @@ class EmployeeSeeder extends Seeder
             $User = User::create($user);
 
             $people['user_id'] = $User->id;
-            $people['branche_id'] = $Branches->random()->id;
+            $people['branch_id'] = $Branches->random()->id;
 
             DB::table('employees')->insert($people);
         }

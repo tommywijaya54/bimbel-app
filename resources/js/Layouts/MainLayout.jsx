@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAction from '@/Components/HeaderAction';
 
-export default function MainAuthenticatedLayout({auth, errors, title, header_action,children}) {
+export default function MainLayout({auth, errors, title, header_action,children}) {
     const {flash} = usePage().props;
 
     return (

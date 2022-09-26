@@ -61,7 +61,7 @@ class UserSeeder extends Seeder
             'emergency_phone' => '0458 897 789',
             'join_date' => '2022-06-04',
             'user_id' => $tommy->id,
-            'branche_id' => '3',
+            'branch_id' => '3',
             'note' => 'No explanation present',
         ]);
     }

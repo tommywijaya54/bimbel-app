@@ -1,69 +1,51 @@
+
 import React from 'react';
 import { useForm } from '@inertiajs/inertia-react';
-import TextInput from '@/Shared/TextInput';
 import LoadingButton from '@/Shared/LoadingButton';
-import SelectInput from '@/Shared/SelectInput';
+import FormElement from './FormElement';
 
-export default ({FORMPROPS}) => {
-    const setInitialFormData = (Elements,Data) => {
-        let fData = {};
-        Elements.forEach((el) => {
-            fData[el.property] = FORMPROPS.DATA[el.property] || ''
-        })
-        return fData;
+
+// For use in useForm (Inertia/React)  
+class FormObject {
+    constructor(str,data){
+        this.initialString = str;
+        this.Object = str.fromStringArraytoObject();
+        this.DisplayElementInArray = (str.split(',')).map((a) => {
+            return a.toDisplayElement();
+        });
+
+        if(data){
+            for(const property in this.Object){
+                this.Object[property] = data[property];
+            }
+        }
     }
+}
 
-    const InitialFormData = setInitialFormData(FORMPROPS.ELEMENTS,FORMPROPS.DATA);
-    
+
+const EditForm = ({props}) => {
+    const FormOb = new FormObject(props.form_fields,props.data);
     const { data, setData, errors, post, processing } = useForm({
-        ...InitialFormData,
+        ...FormOb.Object,
         _method: 'PUT'
     });
+    
+  function handleSubmit(e) {
+    e.preventDefault();
+    post(props.post_url);
+  }
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        post(route(FORMPROPS.ROUTE.UPDATE, FORMPROPS.DATA[FORMPROPS.PRIMARYID]));
-    }
-
-    return <>
+  return <>
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-wrap p-8 -mb-8 -mr-6">
-                    {FORMPROPS.ELEMENTS.map((Element) => {
-                        if(Element.element == "row"){
-                            return (
-                                <div class="w-full pb-8 pr-6 lg:w-1/2"></div>
-                            )
-                        }
-
-                        if(Element.options){
-                            return (
-                                <SelectInput
-                                    className="w-full pb-8 pr-6 lg:w-1/2"
-                                    label={Element.label}
-                                    name={Element.property}
-                                    errors={errors[Element.property]}
-                                    value={data[Element.property]}
-                                    onChange={e => setData(Element.property, e.target.value)}
-                                >
-                                    {Element.options.map((option, keyID) => {
-                                        return <option value={option} key={keyID}>
-                                            {option}
-                                        </option>
-                                    })}
-                                </SelectInput>
-                            )
-                        }
-
-                        return (
-                            <TextInput
-                                className="w-full pb-8 pr-6 lg:w-1/2"
-                                label={Element.label}
-                                name={Element.property}
-                                errors={errors[Element.property]}
-                                value={data[Element.property]}
-                                onChange={e => setData(Element.property, e.target.value)}
-                            />
-                        )
+                    {FormOb.DisplayElementInArray.map((Element, keyId) => {
+                        return <FormElement 
+                            Element={Element} 
+                            key={keyId}
+                            errors={errors}
+                            data={data}
+                            setData={setData}    
+                        ></FormElement>
                     })}
                 </div>
 
@@ -73,9 +55,11 @@ export default ({FORMPROPS}) => {
                         type="submit"
                         className="ml-auto btn-indigo"
                     >
-                        Update
+                        Save
                     </LoadingButton>
                 </div>
             </form>
         </>
 }
+
+export default EditForm;

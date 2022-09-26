@@ -1,10 +1,10 @@
 import React from 'react';
-import MainAuthenticatedLayout from '@/Layouts/MainAuthenticatedLayout';
+import MainLayout from '@/Layouts/MainLayout';
 import ListView from '@/Shared/ListView';
 
 export default function Index(props) {
     return (
-        <MainAuthenticatedLayout
+        <MainLayout
             auth={props.auth}
             errors={props.errors}
             title={props.page_title}
@@ -15,6 +15,6 @@ export default function Index(props) {
                     listprops={props}
                 ></ListView>
             </div>
-        </MainAuthenticatedLayout>
+        </MainLayout>
     );
 }

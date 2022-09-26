@@ -12,7 +12,7 @@ export default ({employee,children}) => {
     >
         <Display
             content={employee}
-            fields="nik,,name,email,phone,,address,note,join_date,exit_date,_,emergency_name,emergency_phone,branche_id"
+            fields="nik,,name,email,phone,,address,note,join_date,exit_date,_,emergency_name,emergency_phone,branch_id"
         >
         </Display>
 

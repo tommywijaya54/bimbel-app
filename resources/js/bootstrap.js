@@ -1,5 +1,9 @@
 import _ from 'lodash';
 window._ = _;
+window.locale = {
+    code: "id-ID",
+    dateFormat : { year: 'numeric', month: 'short', day: '2-digit' }
+};
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -41,11 +45,14 @@ String.prototype.cap = function (){
 }
 
 String.prototype.toDisplayElement = function (){
-    const entityname = this.split(",")[0];
+    const entityname = this.split(":")[0];
     let label = this.split(',')[1] || entityname.cap();
     
     if(entityname === "id"){
         label = "ID"
+    }
+    if(entityname === 'nik'){
+        label = "NIK"
     }
 
     if(entityname.includes('_')){
@@ -67,6 +74,10 @@ String.prototype.fromStringArraytoObject = function (){
         ob[a] = ''
     });
     return ob;
+}
+
+Array.prototype.findById = function(id){
+    return this.find(x => x.id === id);
 }
 
 
@@ -94,7 +105,7 @@ class CurrentUser{
     hasRole(rl){
         return this.roles.includes(rl);
     }
-}   
+} 
 
 window.current_app = new CurrentApp();
 if(window.current_app.data.props.auth.user){

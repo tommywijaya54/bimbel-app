@@ -1,7 +1,7 @@
 import React from 'react';
-import AdminAuthenticatedLayout from '@/Layouts/Admin/AdminAuthenticatedLayout';
 import ListView from '@/Shared/ListView';
 import User from '@/Shared/User';
+import MainLayout from '@/Layouts/MainLayout';
 
 export default function Index(props) {
 
@@ -28,22 +28,16 @@ export default function Index(props) {
 
     const listprops = {
         data : roles,
-        view : 'name:Role,users:Username',
-        goto : 'role'
+        fields : 'name:Role,users:Username',
+        item_url : '/role/{id}'
     }
 
     return (
-       <AdminAuthenticatedLayout>
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <ListView
-                            listprops={listprops}
-                        ></ListView>
-                    </div>
-                </div>
-            </div>
-        </AdminAuthenticatedLayout>
+       <MainLayout>
+            <ListView
+                listprops={listprops}
+            ></ListView>
+        </MainLayout>
     );
 }
 

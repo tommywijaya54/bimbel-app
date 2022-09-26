@@ -1,8 +1,8 @@
 import React from 'react';
-import AdminAuthenticatedLayout from '@/Layouts/Admin/AdminAuthenticatedLayout';
 import ListView from '@/Shared/ListView';
 import User from '@/Shared/User';
 import Users from '@/Shared/Users';
+import MainLayout from '@/Layouts/MainLayout';
 
 const Permission = ({permission}) => {
     return <div className='permission'>
@@ -33,7 +33,7 @@ const Permissions = ({r_permissions, permissions}) => {
 
 export default function Show(props) {
     return (
-       <AdminAuthenticatedLayout>
+       <MainLayout>
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -45,7 +45,7 @@ export default function Show(props) {
                     </div>
                 </div>
             </div>
-        </AdminAuthenticatedLayout>
+        </MainLayout>
     );
 }
 

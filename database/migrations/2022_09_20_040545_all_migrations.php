@@ -26,7 +26,7 @@ return new class extends Migration
             $table->date('exit_date')->nullable();
             $table->string('note')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('branche_id')->nullable();
+            $table->integer('branch_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
@@ -34,7 +34,7 @@ return new class extends Migration
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_id');
-            $table->integer('branche_id')->nullable();
+            $table->integer('branch_id')->nullable();
             $table->string('note');
             $table->integer('created_by')->nullable();
             $table->timestamps();
@@ -56,7 +56,7 @@ return new class extends Migration
 
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->integer('branche_id');
+            $table->integer('branch_id');
             $table->string('expense_type');
             $table->string('description');
             $table->integer('amount');
@@ -69,7 +69,7 @@ return new class extends Migration
 
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
-            $table->integer('branche_id');
+            $table->integer('branch_id');
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('amount');
@@ -84,7 +84,7 @@ return new class extends Migration
 
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->integer('branche_id');
+            $table->integer('branch_id');
             $table->string('item_name');
             $table->integer('qty');
             $table->integer('cost');
@@ -157,7 +157,7 @@ return new class extends Migration
             $table->string('subject');
             $table->integer('price');
             $table->string('week');
-            $table->integer('branche_id');
+            $table->integer('branch_id');
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
@@ -169,7 +169,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->string('label');
             $table->string('discount_value');
-            $table->integer('branche_id');
+            $table->integer('branch_id');
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
@@ -178,7 +178,7 @@ return new class extends Migration
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
             $table->integer('student_id');
-            $table->integer('branche_id');
+            $table->integer('branch_id');
             $table->date('date');
             $table->string('reference');
             $table->integer('cashback');

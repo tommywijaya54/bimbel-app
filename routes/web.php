@@ -27,10 +27,10 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\RoletypeController;
 
 use App\Http\Controllers\ActionhistoryController;
-use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ScheduleController;
 
-use App\Models\Admin\Permission;
+use App\Models\Permission;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -71,9 +71,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/role/{id}', [PermissionController::class, 'show'])->middleware('can:show-role');
 
     Route::get('/branch', [BranchController::class, 'index'])->middleware('can:list-branch');
+
     Route::get('/branch/create', [BranchController::class, 'create'])->middleware('can:create-branch');
     Route::post('/branch', [BranchController::class, 'store'])->middleware('can:create-branch');
+
     Route::get('/branch/{id}', [BranchController::class, 'show'])->middleware('can:show-branch');
+
+    Route::get('/branch/{id}/edit', [BranchController::class, 'edit'])->middleware('can:edit-branch');
+    Route::put('/branch/{id}', [BranchController::class, 'update'])->middleware('can:edit-branch');
 });
 
 

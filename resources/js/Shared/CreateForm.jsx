@@ -4,13 +4,20 @@ import { useForm } from '@inertiajs/inertia-react';
 import LoadingButton from '@/Shared/LoadingButton';
 import FormElement from './FormElement';
 
+// For use in useForm (Inertia/React)  
 class FormObject {
-    constructor(str){
+    constructor(str,data){
         this.initialString = str;
         this.Object = str.fromStringArraytoObject();
         this.DisplayElementInArray = (str.split(',')).map((a) => {
             return a.toDisplayElement();
-        })
+        });
+
+        if(data){
+            for(const property in this.Object){
+                this.Object[property] = data[property];
+            }
+        }
     }
 }
 

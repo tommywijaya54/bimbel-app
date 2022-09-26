@@ -8,7 +8,6 @@ use Inertia\Inertia;
 
 class BranchController extends Controller
 {
-    //
 
     public $entity = Branch::class;
     public $modal = 'branch';
@@ -32,6 +31,7 @@ class BranchController extends Controller
             'fields' => $this->list_view_fields,
             'data' => $data,
             'item_url' => "/" . $this->modal . "/{id}",
+            'modal' => $this->modal,
         ]);
     }
 
@@ -39,8 +39,9 @@ class BranchController extends Controller
     {
         return Inertia::render('Simple/Create', [
             'page_title' => "Create " . $this->model_name,
-            'post_url' => "/" . $this->modal,
             'form_fields' => $this->form_fields,
+            'modal' => $this->modal,
+            'post_url' => "/" . $this->modal,
         ]);
     }
 
@@ -81,9 +82,25 @@ class BranchController extends Controller
         return Inertia::render('Simple/Edit', [
             'page_title' => 'Edit ' . $entity->name . ' branch',
             'component_header' => 'Edit Form ',
-            'data' => $entity,
-            'postto' => "/" . $this->modal,
+
             'form_fields' =>  $this->form_fields,
+            'data' => $entity,
+            'post_url' => "/" . $this->modal . "/" . $entity->id,
+
+            'modal' => $this->modal,
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $fieldnames = explode(",", $this->form_fields);
+        $entity = $this->entity::find($id);
+
+        foreach ($fieldnames as $a) {
+            $entity[$a] = $request[$a];
+        }
+
+        $entity->update();
+        return redirect('/' . $this->modal . '/' . $entity->id);
     }
 }

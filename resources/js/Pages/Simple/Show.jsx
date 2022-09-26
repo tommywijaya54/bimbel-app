@@ -1,12 +1,12 @@
 import React from 'react';
-import MainAuthenticatedLayout from '@/Layouts/MainAuthenticatedLayout';
+import MainLayout from '@/Layouts/MainLayout';
 import CompRowAndBox from '@/Shared/CompRowAndBox';
 import Display from '@/Shared/Display';
 import SmartFooterButton from '@/Components/SmartFooterButton';
 
 export default function Show(props) {
     return (
-        <MainAuthenticatedLayout
+        <MainLayout
             auth={props.auth}
             errors={props.errors}
             title={props.page_title}
@@ -31,6 +31,6 @@ export default function Show(props) {
                 >
                 </Display>
             </CompRowAndBox>
-        </MainAuthenticatedLayout>
+        </MainLayout>
     );
 }

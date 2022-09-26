@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 use function PHPSTORM_META\map;
-
 
 class BranchSeeder extends Seeder
 {
@@ -20,7 +20,7 @@ class BranchSeeder extends Seeder
 
     public function run()
     {
-        $fake = fake('id_ID');
+        $Users = User::all();
         //
         $branch_names = [
             'Bimbel - Jakarta Timur',
@@ -38,7 +38,7 @@ class BranchSeeder extends Seeder
                 'name' => $branch_names[$x],
                 'address' => fake('id_ID')->address(),
                 'phone' => fake('id_ID')->phoneNumber(),
-                'manager_id' => fake('id_ID')->numberBetween($min = 1, $max = 10),
+                'manager_id' => $Users->random()->id,
                 'email' => fake('id_ID')->unique()->safeEmail(),
                 'open_date' => fake('id_ID')->date(),
                 'status' => fake('id_ID')->text(10),
