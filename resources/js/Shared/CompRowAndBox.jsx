@@ -1,7 +1,3 @@
-// import SmartFooterButton from "./SmartFooterButton";
-
-import SmartFooterButton from "@/Components/SmartFooterButton";
-
 export default ({header, footer, children}) => {
     return (
         <div className="ui-component row max-w-7xl mx-auto sm:px-6 lg:px-8 mb-6 row">
@@ -16,8 +12,6 @@ export default ({header, footer, children}) => {
                 </div>
 
                 {footer}
-
-                {/* <SmartFooterButton></SmartFooterButton> */}
             </div>
         </div>
     );

@@ -1,3 +1,5 @@
+import DisplayElement from "./DisplayElement";
+
 export default ({header, content, show, children}) => {
     const newContent = [];
     const display = show.split(",");
@@ -16,8 +18,8 @@ export default ({header, content, show, children}) => {
                 const a = prp.toDisplayElement();
 
                 newContent.push({
-                    label:a.label,
-                    content: content[prp]
+                    content: content[prp],
+                    ...a
                 })
             }
         })
@@ -45,7 +47,7 @@ export default ({header, content, show, children}) => {
                     }else{
                         return (<div key={keyId} className="pr-6 pb-8 w-full lg:w-1/2">
                                     <label className="form-label">{a.label}:</label> 
-                                    <div className="form-input">{a.content}</div>
+                                    <div className="form-input"><DisplayElement el={a}></DisplayElement></div>
                                 </div>);
                     }
                 })
