@@ -1,4 +1,5 @@
 import { InertiaLink } from "@inertiajs/inertia-react"
+import DisplayElement from "./DisplayElement";
 import Icon from "./Icon"
 import SimpleLink from "./SimpleLink";
 
@@ -39,7 +40,9 @@ export default ({listprops}) => {
                                     >
                                     {
                                         Elements.map((el, keyID) => {
-                                            return <td key={keyID}>{data[el.entityname]}</td>
+                                            return <td key={keyID}>
+                                                <DisplayElement data={data} el={el}></DisplayElement>
+                                            </td>
                                         })
                                     }
                                     {GotoHref && 
