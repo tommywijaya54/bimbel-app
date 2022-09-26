@@ -282,3 +282,20 @@ a.button.disabled {
     cursor: not-allowed;
     opacity: 0.6;
 }
+
+.header-action{
+    float:right
+}
+
+a.button.btn-light {
+    background-color: aliceblue;
+}
+
+a.button.btn-light:hover {
+    background-color: teal;
+}
+
+
+a.button.btn-sm {
+    font-size: medium;
+}
