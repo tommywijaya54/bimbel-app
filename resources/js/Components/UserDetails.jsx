@@ -10,7 +10,7 @@ export default ({user,children}) => {
                 <span className="info">User Details</span>
             </h2>}
         footer={
-            <SmartFooterButton componentFor='user' obj={user}></SmartFooterButton>
+            <SmartFooterButton componentFor='User' obj={user}></SmartFooterButton>
         }
     >
         <Display
