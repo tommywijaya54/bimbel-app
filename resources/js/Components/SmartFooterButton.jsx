@@ -28,13 +28,16 @@ const SmartFooterButton = ({componentFor, obj}) => {
     }
 
     if(componentFor === 'branch'){
-        current_user.hasPermission('delete-branch') ? 
-            component.push(<a href={'/branch/'+obj.id+'/delete'} className={'button '}>Delete Branch</a>) : ''
-
         current_user.hasPermission('edit-branch') ? 
             component.push(<a href={'/branch/'+obj.id+'/edit'} className={'button '}>Edit Branch</a>) : ''
     }
 
+    if(componentFor === 'employee'){
+        current_user.hasPermission('edit-employee') ? 
+            component.push(<a href={'/employee/'+obj.id+'/edit'} className={'button '}>Edit Employee</a>) : ''
+    }
+
+    
 
     return (<div className="smart-footer">
                 <div className="px-6 py-4 bg-gray-50 flex justify-end">

@@ -12,6 +12,9 @@ export default ({action}) => {
             <a href="/branch/create" className="button btn-sm btn-light">Create New Branch</a>
         }
 
-
+        {
+            current_user.hasPermission('create-employee') && actions.includes('create-employee') && 
+            <a href="/employee/create" className="button btn-sm btn-light">Create Employee</a>
+        }
     </span>);
 }
