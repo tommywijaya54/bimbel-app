@@ -61,16 +61,17 @@ Route::get('/dashboard', function () {
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    // User
     Route::get('/user', [UserController::class, 'index'])->middleware('can:list-user');
     Route::get('/user/create', [UserController::class, 'create'])->middleware('can:create-user');
     Route::get('/user/{id}', [UserController::class, 'show'])->middleware('can:show-user');
     Route::post('/user', [UserController::class, 'store'])->middleware('can:create-user');
 
-
+    // Role & Permission
     Route::get('/role-and-permission', [PermissionController::class, 'index'])->middleware('can:list-role and permission');
     Route::get('/role/{id}', [PermissionController::class, 'show'])->middleware('can:show-role');
 
-
+    // Branch
     Route::get('/branch', [BranchController::class, 'index'])->middleware('can:list-branch');
 
     Route::get('/branch/create', [BranchController::class, 'create'])->middleware('can:create-branch');
@@ -81,7 +82,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/branch/{id}/edit', [BranchController::class, 'edit'])->middleware('can:edit-branch');
     Route::put('/branch/{id}', [BranchController::class, 'update'])->middleware('can:edit-branch');
 
-
+    // Employee
     Route::get('/employee', [EmployeeController::class, 'index'])->middleware('can:list-employee');
 
     Route::get('/employee/create', [EmployeeController::class, 'create'])->middleware('can:create-employee');
@@ -91,6 +92,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/employee/{id}/edit', [EmployeeController::class, 'edit'])->middleware('can:edit-employee');
     Route::put('/employee/{id}', [EmployeeController::class, 'update'])->middleware('can:edit-employee');
+
+    // Student
+    Route::get('/student', [StudentController::class, 'index'])->middleware('can:list-student');
+
+    Route::get('/student/create', [StudentController::class, 'create'])->middleware('can:create-student');
+    Route::post('/student', [StudentController::class, 'store'])->middleware('can:create-student');
+
+    Route::get('/student/{id}', [StudentController::class, 'show'])->middleware('can:show-student');
+
+    Route::get('/student/{id}/edit', [StudentController::class, 'edit'])->middleware('can:edit-student');
+    Route::put('/student/{id}', [StudentController::class, 'update'])->middleware('can:edit-student');
+
+    // Parent
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
