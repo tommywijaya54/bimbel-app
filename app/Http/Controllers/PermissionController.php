@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PermissionController extends Controller
@@ -16,9 +13,9 @@ class PermissionController extends Controller
     public function index()
     {
         return Inertia::render('Permission/Index', [
-            'roles' => Role::all(),
-            'permission' => Permission::all(),
-            'users' => User::with('roles')->get()
+            'roles' => Role::orderBy('id', 'asc')->get(['name', 'id']),
+            'permission' => Permission::all(['id', 'name']),
+            'users' => User::with('roles')->get(['id', 'name'])
         ]);
     }
 
@@ -26,9 +23,9 @@ class PermissionController extends Controller
     {
         $role = Role::find($id);
         $role_permissions = $role->permissions();
-        $users = $role->users();
+        $users = $role->users(); //->get(['id', 'name']); //->select('id', 'name')->get();
 
-        $permissions = Permission::all();
+        $permissions = Permission::select('id', 'name')->get();
 
         return Inertia::render('Permission/Show', [
             'role' => $role,
