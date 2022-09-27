@@ -48,7 +48,7 @@ export default ({header, content, fields, children}) => {
                         return (<div key={keyId} className="pr-6 pb-8 w-full lg:w-1/2">
                                     <label className="form-label">{a.label}:</label> 
                                     <div className="form-input">
-                                        <DisplayElement el={a}></DisplayElement>
+                                        <DisplayElement data={content} el={a}></DisplayElement>
                                     </div>
                                 </div>);
                     }

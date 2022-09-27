@@ -3,9 +3,9 @@ import SelectInput from '@/Shared/SelectInput';
 import DateInput from './DateInput';
 
 export default ({Element, data, errors, setData}) => {
-    if(Element.element == "row"){
+    if(Element.element == "row" || Element.label == ""){
         return (
-            <div key={keyId} class="w-full pb-8 pr-6 lg:w-1/2"></div>
+            <div class="w-full pb-8 pr-6 lg:w-1/2"></div>
         )
     }
 
