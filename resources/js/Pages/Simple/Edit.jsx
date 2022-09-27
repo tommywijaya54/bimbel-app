@@ -18,6 +18,7 @@ export default function Show(props) {
                             {props.data.name}
                             <span className="info">{props.component_header}</span>
                         </h2>}
+                    note={props.component_note}
                 >
                     <EditForm
                         props={props}>
