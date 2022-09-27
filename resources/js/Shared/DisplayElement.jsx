@@ -10,10 +10,12 @@ export default ({data, el}) => {
     */
 
     /* 
-    if(text > 0 && !text.length){
+    
+    */
+   
+    if(text == null){
         return <span className="empty-value">---</span>
     }
-    */
 
     if(el.entityname === 'email'){
         return <a className="link" href={'mailto:'+text}>{text}</a>;
