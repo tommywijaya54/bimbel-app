@@ -70,6 +70,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/role-and-permission', [PermissionController::class, 'index'])->middleware('can:list-role and permission');
     Route::get('/role/{id}', [PermissionController::class, 'show'])->middleware('can:show-role');
 
+
     Route::get('/branch', [BranchController::class, 'index'])->middleware('can:list-branch');
 
     Route::get('/branch/create', [BranchController::class, 'create'])->middleware('can:create-branch');
@@ -79,8 +80,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/branch/{id}/edit', [BranchController::class, 'edit'])->middleware('can:edit-branch');
     Route::put('/branch/{id}', [BranchController::class, 'update'])->middleware('can:edit-branch');
-});
 
+
+    Route::get('/employee', [EmployeeController::class, 'index'])->middleware('can:list-employee');
+
+    Route::get('/employee/create', [EmployeeController::class, 'create'])->middleware('can:create-employee');
+    Route::post('/employee', [EmployeeController::class, 'store'])->middleware('can:create-employee');
+
+    Route::get('/employee/{id}', [EmployeeController::class, 'show'])->middleware('can:show-employee');
+
+    Route::get('/employee/{id}/edit', [EmployeeController::class, 'edit'])->middleware('can:edit-employee');
+    Route::put('/employee/{id}', [EmployeeController::class, 'update'])->middleware('can:edit-employee');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

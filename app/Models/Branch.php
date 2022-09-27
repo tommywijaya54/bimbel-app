@@ -24,4 +24,9 @@ class Branch extends Model
     {
         return User::find($this->manager_id);
     }
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }
