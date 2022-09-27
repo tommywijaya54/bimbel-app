@@ -5,7 +5,7 @@ import DateInput from './DateInput';
 export default ({Element, data, errors, setData}) => {
     if(Element.element == "row" || Element.label == ""){
         return (
-            <div class="w-full pb-8 pr-6 lg:w-1/2"></div>
+            <div className="w-full pb-8 pr-6 lg:w-1/2"></div>
         )
     }
 
@@ -20,8 +20,8 @@ export default ({Element, data, errors, setData}) => {
                 onChange={e => setData(Element.entityname, e.target.value)}
             >
                 {Element.options.map((option, keyID) => {
-                    return <option value={option} key={keyID}>
-                        {option}
+                    return <option value={option.id} key={keyID}>
+                        {option.name}
                     </option>
                 })}
             </SelectInput>
