@@ -11,7 +11,6 @@ export default function Index(props) {
     const roles =  props.roles.map((role) => {
         let newrole = {...role};
         newrole.users = [];
-
         newrole.users = users.filter(function( user ) {
             for (let i = 0; i < user.roles.length; i++) {
                 const urole = user.roles[i];
@@ -28,15 +27,22 @@ export default function Index(props) {
 
     const listprops = {
         data : roles,
-        fields : 'name:Role,users:Username',
+        fields : 'name:Role,users:Users',
         item_url : '/role/{id}'
     }
 
     return (
-       <MainLayout>
-            <ListView
-                listprops={listprops}
-            ></ListView>
+       <MainLayout
+            auth={props.auth}
+            errors={props.errors}
+            title="Role and Permission List"
+            header_action={props.action_button}
+            >
+                <div className="overflow-x-auto bg-white rounded shadow">
+                    <ListView
+                        listprops={listprops}
+                    ></ListView>
+                </div>
         </MainLayout>
     );
 }

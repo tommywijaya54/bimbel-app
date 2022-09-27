@@ -5,9 +5,9 @@ import Users from '@/Shared/Users';
 import MainLayout from '@/Layouts/MainLayout';
 
 const Permission = ({permission}) => {
-    return <div className='permission'>
+    return <span className='permission'>
         {permission.name}
-    </div>
+    </span>
 }
 
 const Permissions = ({r_permissions, permissions}) => {
@@ -33,18 +33,21 @@ const Permissions = ({r_permissions, permissions}) => {
 
 export default function Show(props) {
     return (
-       <MainLayout>
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+       <MainLayout
+            auth={props.auth}
+            errors={props.errors}
+            title={"Role and Permission List"}
+            header_action={props.action_button}
+            >
+            
+                
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className='p-8 flex flex-wrap'>
-                            <h1 className='mb-8 font-bold text-2xl w-full'>Role : {props.role.name}</h1>
+                        <div className='p-6 flex flex-wrap'>
+                            <h1 className='mb-4 font-bold text-2xl w-full'>Role : {props.role.name}</h1>
                             <Permissions r_permissions={props.role_permissions} permissions={props.permissions}></Permissions>
                             <Users users={props.users}></Users>
                         </div>
                     </div>
-                </div>
-            </div>
         </MainLayout>
     );
 }
