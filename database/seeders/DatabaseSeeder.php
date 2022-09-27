@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
 
             BranchSeeder::class,
+            BranchExpensesSeeder::class,
             SchoolSeeder::class,
 
             EmployeeSeeder::class,

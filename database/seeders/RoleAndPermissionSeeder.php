@@ -61,7 +61,17 @@ class RoleAndPermissionSeeder extends Seeder
             'show-registration',
             'create-registration',
             'edit-registration',
-            'delete-registration'
+            'delete-registration',
+
+            'list-student',
+            'show-student',
+            'create-student',
+            'edit-student',
+
+            'list-parent',
+            'show-parent',
+            'create-parent',
+            'edit-parent',
         ];
 
         // $permissions + $manager_permissions + $advisor_permissions;
