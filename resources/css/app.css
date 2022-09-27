@@ -215,6 +215,7 @@ table.table-padding-row tbody tr td {
 
 .debug code {
     white-space: break-spaces;
+    word-break: break-all;
 }
 
 .debug pre {
@@ -231,7 +232,7 @@ table.table-padding-row tbody tr td {
 }
 
 .ui-component .header {
-    padding: 1em 1.5em;
+    padding: 1.5em 2em;
     background: cadetblue;
 }
 .header span.info {
@@ -342,4 +343,33 @@ a.button.btn-sm {
 
 .display-component .user {
     margin: 0;
+}
+
+span.permission {
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    display: inline-block;
+    margin: 0 0.5em 0.5em 0;
+    padding: 0 0.4em;
+    border-radius: 4px;
+}
+
+span.unit {
+    display: inline-block;
+    margin: 0.1em 0.5em 0 0;
+    background: #f5f5f5;
+    padding: 3px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+span.empty-value {
+    color: #888;
+}
+
+.note {
+    text-align: center;
+    padding: 1em;
+    background-color: #ffcf8f;
+    margin: 2em 2em 0 2em;
 }
