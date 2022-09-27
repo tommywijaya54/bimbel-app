@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, usePage } from '@inertiajs/inertia-react';
 
-export default function NavigationList() {
+export default function TopNavigationList() {
     const permissions = usePage().props.auth.permissions;
     
     const NavList = ({list}) => {

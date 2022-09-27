@@ -4,7 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
-import NavigationList from '@/Components/NavigationList';
+import TopNavigationList from '@/Components/TopNavigationList';
 import DebugComponent from '@/Shared/Debug/DebugComponent';
 
 export default function Authenticated({ auth, header, children }) {
@@ -26,7 +26,7 @@ export default function Authenticated({ auth, header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
-                                <NavigationList></NavigationList>
+                                <TopNavigationList></TopNavigationList>
                             </div>
                         </div>
 
