@@ -8,4 +8,38 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'grade',
+        'address',
+        'phone',
+        'email',
+        'join_date',
+        'exit_date',
+        'note',
+        'exit_reason',
+        'birth_date',
+        'type',
+        'health_condition',
+        'cparent_id',
+        'school_id'
+    ];
+
+    protected $hidden = [
+        'user_id'
+    ];
+
+    public function cparent()
+    {
+        return $this->belongsTo(Cparent::class);
+    }
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
