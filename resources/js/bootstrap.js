@@ -54,13 +54,16 @@ String.prototype.toDisplayElement = function (){
             return str.cap()
         }).join(" ");
     }
-
+    
     switch (entityname) {
         case "id":
             label = "ID";
             break;
         case "nik":
             label = "NIK";
+            break;
+        case "cparent":
+            label = "Parent";
             break;
         /*
         case "branch_id":

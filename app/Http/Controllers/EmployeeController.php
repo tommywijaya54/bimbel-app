@@ -27,20 +27,14 @@ class EmployeeController extends Controller
         // this used on index view for reducing the data variable
         $this->list_view_array = explode(",", $this->list_view_fields);
 
-
-
-
-
         // for Create View Fields & 
         $this->create_form_fields = 'nik,,name,address,phone,email,emergency_name,emergency_phone,join_date,exit_date,note,branch_id';  // str_replace(',user', '', $this->form_fields);
 
         // this used for Store function
         $this->store_form_fields = str_replace(",,", ',', $this->create_form_fields);
 
-
         // for Edit View Fields
-        $this->clean_form_fields = str_replace(",,", ',', $this->form_fields);
-        $this->edit_form_fields = $this->create_form_fields; // str_replace(',user', '', $this->clean_form_fields);
+        $this->edit_form_fields = $this->create_form_fields;
         $this->update_form_fields = str_replace(",,", ',', $this->create_form_fields);
     }
 

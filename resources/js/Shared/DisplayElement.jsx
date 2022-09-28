@@ -68,7 +68,12 @@ export default ({data, el}) => {
         
     }
 
+    if(typeof text === 'object'){
+        return <a href={'/'+el.entityname+'/'+text.id} className={el.entityname+' link'}>{text.name}</a>
+
+        return JSON.stringify(text);
+    }
       
 
-    return text;// + " -- "+el.entityname;
+    return text; // + " -- "+el.entityname;
 }
