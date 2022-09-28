@@ -44,56 +44,6 @@ String.prototype.cap = function (){
     return (this.charAt(0).toUpperCase() + this.slice(1));
 }
 
-String.prototype.toDisplayElement = function (){
-    const entityname = this.split(":")[0];
-
-    let label = this.split(':')[1] || entityname.cap();
-    
-    if(entityname.includes('_')){
-        label = (entityname.split('_')).map((str) => {
-            return str.cap()
-        }).join(" ");
-    }
-    
-    switch (entityname) {
-        case "id":
-            label = "ID";
-            break;
-        case "nik":
-            label = "NIK";
-            break;
-        case "cparent":
-            label = "Parent";
-            break;
-        /*
-        case "branch_id":
-            label = "Branch";
-            break;
-        case "manager_id":
-            label = "Manager";
-            break;
-        */
-    }
-
-    return {
-        entityname : entityname,
-        label : label
-    }
-}
-
-String.prototype.fromStringArraytoObject = function (){
-    const arr = this.split(',');
-    let ob = {};
-    arr.map((a) => {
-        ob[a] = ""
-    });
-    return ob;
-}
-
-Array.prototype.findById = function(id){
-    return this.find(x => x.id === id);
-}
-
 
 // Adding Current App & Current User 
 class CurrentApp{

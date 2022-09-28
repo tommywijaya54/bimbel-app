@@ -1,18 +1,12 @@
-export default ({data, el}) => {
+import { DisplayFields } from "@/util";
+
+Array.prototype.findById = function(id){
+    return this.find(x => x.id === id);
+}
+
+const displayValueElement = (data,el) => {
     let text = data[el.entityname];
 
-    /*
-    let text = el.content;
-
-    if(data){
-        
-    }
-    */
-
-    /* 
-    
-    */
-   
     if(text == null){
         return <span className="empty-value">---</span>
     }
@@ -76,4 +70,29 @@ export default ({data, el}) => {
       
 
     return text; // + " -- "+el.entityname;
+}
+
+export default ({fields, content, data, el}) => {
+    if(data && el){
+        return displayValueElement(data, el)
+    }
+
+    if(fields && content){
+        const Fields = new DisplayFields(fields,content);
+
+        return Fields.map((a, keyId) => {
+            if(a.element && a.element == 'row'){
+                return(<div key={keyId} className="blank-row w-full"></div>)
+            }else if(a.element && a.element == 'line'){
+                return(<div key={keyId} className="line w-full"></div>)
+            }else{
+                return (<div key={keyId} className="pr-6 pb-8 w-full lg:w-1/2">
+                            <label className="form-label">{a.label}:</label> 
+                            <div className="form-input">
+                                {displayValueElement(content,a)}
+                            </div>
+                        </div>);
+            }
+        })
+    }
 }

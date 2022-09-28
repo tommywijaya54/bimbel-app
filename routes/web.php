@@ -105,6 +105,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/student/{id}', [StudentController::class, 'update'])->middleware('can:edit-student');
 
     // Parent
+    Route::get('/parent', [CparentController::class, 'index'])->middleware('can:list-parent');
+
+    Route::get('/parent/create', [CparentController::class, 'create'])->middleware('can:create-parent');
+    Route::post('/parent', [CparentController::class, 'store'])->middleware('can:create-parent');
+
+    Route::get('/parent/{id}', [CparentController::class, 'show'])->middleware('can:show-parent');
+
+    Route::get('/parent/{id}/edit', [CparentController::class, 'edit'])->middleware('can:edit-parent');
+    Route::put('/parent/{id}', [CparentController::class, 'update'])->middleware('can:edit-parent');
+
+    // School
+    Route::get('/school', [SchoolController::class, 'index'])->middleware('can:list-school');
+
+    Route::get('/school/create', [SchoolController::class, 'create'])->middleware('can:create-school');
+    Route::post('/school', [SchoolController::class, 'store'])->middleware('can:create-school');
+
+    Route::get('/school/{id}', [SchoolController::class, 'show'])->middleware('can:show-school');
+
+    Route::get('/school/{id}/edit', [SchoolController::class, 'edit'])->middleware('can:edit-school');
+    Route::put('/school/{id}', [SchoolController::class, 'update'])->middleware('can:edit-school');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

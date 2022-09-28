@@ -1,3 +1,4 @@
+import { FormObject, DisplayElement as DisplayEl } from "@/util";
 import { InertiaLink } from "@inertiajs/inertia-react"
 import DisplayElement from "./DisplayElement";
 import Icon from "./Icon"
@@ -5,11 +6,10 @@ import SimpleLink from "./SimpleLink";
 
 export default ({listprops}) => {
     const PrimaryId = listprops.PrimaryId || "id";
-    const Fields = (listprops.fields.split(",")).map((header) => {
-        return header.toDisplayElement();
+    const TableTD = (listprops.fields.split(",")).map((header) => {
+        return new DisplayEl(header);
     });
-    const Data = listprops.data;
-
+    const TableData = listprops.data;
     const item_url = listprops.item_url || null;
 
     return <>
@@ -17,7 +17,7 @@ export default ({listprops}) => {
                     <thead className="text-left">
                         <tr>
                             {
-                                Fields.map((el, keyID) => {
+                                TableTD.map((el, keyID) => {
                                     return <th key={keyID}>{el.label}</th>
                                 })
                             }
@@ -25,13 +25,13 @@ export default ({listprops}) => {
                     </thead>
                     <tbody>
                         {
-                            Data.map((data,i) => {
+                            TableData.map((data,i) => {
                                 return <tr 
                                     key={i}
                                     className="hover:bg-gray-100 focus-within:bg-gray-100"
                                     >
                                     {
-                                        Fields.map((el, keyID) => {
+                                        TableTD.map((el, keyID) => {
                                             return <td key={keyID}>
                                                 <DisplayElement data={data} el={el}></DisplayElement>
                                             </td>
