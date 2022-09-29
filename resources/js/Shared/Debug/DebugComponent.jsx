@@ -55,6 +55,9 @@ export default () => {
     }
 
     const AutoFill = () => {
+        if(!window.tomatoDebugger){
+            return ''
+        }
         // find field 
         const fillTheFields = () => {
             if(window.tomatoDebugger){

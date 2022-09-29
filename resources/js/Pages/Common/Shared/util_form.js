@@ -7,6 +7,9 @@ export class FormSchema {
         this.modal = this.schema.modal;
         this.id = this.schema.id;
         this.fields = this.schema.fields;
+        this.fields_has_entity = this.fields.filter(field => {
+            return field.entityname
+        });
         
         this.display_form = this.schema.display_form;
         this.create_form = this.schema.create_form;
@@ -16,7 +19,7 @@ export class FormSchema {
     }
     
     getValue(params){
-        return this.fields.find(field => field.entityname == params).value;
+        return this.fields_has_entity.find(field => field.entityname == params)?.value;
     }
 
     getVariableForUseForm(){
@@ -25,14 +28,12 @@ export class FormSchema {
 }
 
 export class FieldUtil{
-    static check_and_getCommonField(field){
+    static check_and_getCommonField(field, keyId){
         if(field.element){
              if(field.element == 'row'){
-                return React.createElement('div', {className:'row w-full'}, '');
-                // return (<div key={keyId} className="blank-row w-full"></div>)
+                return React.createElement('div', {className:'row w-full', key:keyId}, '');
             }else if(field.element == 'line'){
-                return React.createElement('div', {className:'line w-full'}, '');
-                // return (<div key={keyId} className="line w-full"></div>)
+                return React.createElement('div', {className:'line w-full', key:keyId}, '');
             }
         }
         return null;

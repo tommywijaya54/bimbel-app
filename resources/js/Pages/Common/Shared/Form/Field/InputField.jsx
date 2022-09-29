@@ -2,6 +2,9 @@ import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
 import DateInput from '@/Shared/DateInput';
 import { FieldUtil } from '../../util_form';
+
+import NumberInput from '@/Shared/NumberInput';
+
 export default ({Field, data, errors, setData}) => {
     if(Field.element){
         return FieldUtil.check_and_getCommonField(Field);
@@ -33,6 +36,17 @@ export default ({Field, data, errors, setData}) => {
 
     if(Field.inputtype == 'date'){
         return <DateInput
+            className="w-full pb-8 pr-6 lg:w-1/2"
+            label={Field.label}
+            name={Field.entityname}
+            errors={errors[Field.entityname]}
+            value={data[Field.entityname]}
+            onChange={e => setData(Field.entityname, e.target.value)}
+        />
+    }
+
+    if(Field.inputtype == 'number'){
+        return <NumberInput
             className="w-full pb-8 pr-6 lg:w-1/2"
             label={Field.label}
             name={Field.entityname}

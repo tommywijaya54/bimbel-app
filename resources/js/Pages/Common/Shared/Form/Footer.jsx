@@ -6,11 +6,8 @@ const FormFooter = ({form, obj}) => {
 
     let component = [];
 
-    if(form.create_form){
+    if(form.create_form || form.edit_form){
         return '';
-        
-        user.hasPermission('create-'+model) ? 
-            component.push(<a href={'/'+model+'/'+obj.id+'/edit'} className={'button '}>Save / Create {model.cap()}</a>) : ''
     }
 
     if(form.display_form){

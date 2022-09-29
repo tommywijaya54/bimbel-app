@@ -24,11 +24,30 @@ class FormField
         } else {
             $arr = explode(":", $StringField);
             $this->entityname = $arr[0];
-            $this->label = $arr[1] ?? ucwords(str_replace('_', ' ', $this->entityname)); // set label -> if label has _ then change it into space
-            $this->inputtype = $arr[2] ?? 'text';
+
+            // label assignment
+            /*
+            if (!isset($arr[1])) {
+                $this->label = $arr[1] ?? ucwords(str_replace('_', ' ', $this->entityname)); // set label -> if label has _ then change it into space
+            }
+            */
+
+            if (isset($arr[1]) && $arr[1] != '') {
+                $this->label = $arr[1];
+            } else {
+                $this->label = ucwords(str_replace('_', ' ', $this->entityname));
+            }
+
+            if (str_contains($this->entityname, '_id')) {
+                $this->label = ucwords(str_replace('_id', '', $this->entityname));
+            }
 
             // type assigning
+            $this->inputtype = $arr[2] ?? 'text';
             if (str_contains($this->entityname, '_date')) {
+                $this->inputtype = 'date';
+            }
+            if (str_contains($this->entityname, 'date')) {
                 $this->inputtype = 'date';
             }
         }
@@ -85,33 +104,23 @@ class FormSchema
     public function withValue($data)
     {
         $arr = $data->getOriginal();
-        $this->id = $arr['id'];
-
-        foreach ($this->fields as $field) {
-            $field->value = $arr[$field->entityname];
-        }
-
-        // if ($data['id']) {}
-        // dd($data, $data->getOriginal());
 
         // print_r($arr);
-        /*
-        foreach ($arr as $key => $value) {
-            $found_key = array_search($key, array_column($this->fields, 'entityname'));
-            // var_dump("<br>found_key", $found_key, " : key -> ", $key);
 
-            if ($found_key != false) {
-                var_dump($found_key . ' -> ' . $this->fields[$found_key]->value);
-                $this->fields[$found_key]->value = $value; //"CPA-613-369-762"; // $value;
-                var_dump($this->fields[$found_key]->value);
-            }
-        }*/
-
-        // $this->fields[0]->value = "Hello";
-        // $this->fields[false]->value = "Hello False";
+        $this->id = $arr['id'];
 
         // print_r($this->fields);
-        // die();
+
+        foreach ($this->fields as $key => $field) {
+            if ($field->entityname) {
+                $field->value = $arr[$field->entityname];
+            }
+
+            // print_r($field);
+            // print_r($field->entityname, $arr[$field->entityname]);
+            // $field->value = $arr[$field->entityname];
+        }
+
         return $this;
     }
 
@@ -137,5 +146,24 @@ class FormSchema
         $this->submit_url = "/" . $this->modal . "/" . $this->id;
 
         return $this;
+    }
+
+    public function setStoreOrUpdate($request = null, $entity = [])
+    {
+        foreach ($this->fields as $field) {
+            if ($field->entityname) {
+                if ($request[$field->entityname]) {
+                    $entity[$field->entityname] = $request[$field->entityname];
+                }
+            }
+        }
+        return $entity;
+    }
+    public function setUpdate($request, $entity)
+    {
+    }
+
+    public function recordHistory()
+    {
     }
 }

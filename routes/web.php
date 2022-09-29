@@ -125,6 +125,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/school/{id}/edit', [SchoolController::class, 'edit'])->middleware('can:edit-school');
     Route::put('/school/{id}', [SchoolController::class, 'update'])->middleware('can:edit-school');
+
+    // Registration
+    Route::get('/registration', [RegistrationController::class, 'index'])->middleware('can:list-registration');
+
+    Route::get('/registration/create', [RegistrationController::class, 'create'])->middleware('can:create-registration');
+    Route::post('/registration', [RegistrationController::class, 'store'])->middleware('can:create-registration');
+
+    Route::get('/registration/{id}', [RegistrationController::class, 'show'])->middleware('can:show-registration');
+
+    Route::get('/registration/{id}/edit', [RegistrationController::class, 'edit'])->middleware('can:edit-registration');
+    Route::put('/registration/{id}', [RegistrationController::class, 'update'])->middleware('can:edit-registration');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

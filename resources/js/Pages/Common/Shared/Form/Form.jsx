@@ -1,5 +1,4 @@
 import Component from "./Component"
-import Field from "./Field";
 import FormFooter from "./Footer"
 import { FormSchema } from "../util_form"
 
@@ -7,6 +6,7 @@ import React from 'react';
 import { useForm } from '@inertiajs/inertia-react';
 import LoadingButton from '@/Shared/LoadingButton';
 import InputField from "./Field/InputField";
+import DisplayField from "./Field/DisplayField";
 
 const CreateEditForm = ({Form}) => {
     const method = Form.edit_form ? {_method: 'PUT'} : null;
@@ -53,9 +53,9 @@ const CreateEditForm = ({Form}) => {
 }
 
 export default (form_schema) => {
-    const {id, fields, modal, submit_url, form_type ,display_form, edit_form, create_form, form_note,children} = form_schema;
-
+    const {id, fields, modal, submit_url, form_type ,display_form, edit_form, create_form, form_note, children} = form_schema;
     const Form = new FormSchema(form_schema);
+
     window.Form = Form;
 
     let component_header = "No form type found";
@@ -65,7 +65,7 @@ export default (form_schema) => {
     }else if(display_form){
         component_header = 
         <>
-            {Form.getValue('name')}
+            {Form.getValue('name') || Form.id}
             <span className="info">
                 {Form.modal.cap() + ' Information'}
             </span>
@@ -73,7 +73,7 @@ export default (form_schema) => {
     }else if(edit_form){
         component_header = 
         <>
-            {Form.getValue('name')}
+            {Form.getValue('name') || Form.id}
             <span className="info">
                 Edit Form
             </span>
@@ -88,11 +88,9 @@ export default (form_schema) => {
                 className={form_type+'-form'}
                 footer={<FormFooter obj={{id:Form.id}} form={Form}></FormFooter>}
             >
-                {Form.display_form && <Field fields={Form.fields} form={Form}></Field>}
+                {Form.display_form && <DisplayField fields={Form.fields} form={Form}></DisplayField>}
                 
-                {Form.create_form && <CreateEditForm Form={Form}></CreateEditForm>}
-                
-                {Form.edit_form && <CreateEditForm Form={Form}></CreateEditForm>}
+                {(Form.create_form || Form.edit_form)  && <CreateEditForm Form={Form}></CreateEditForm>}
             {children}
         </Component>)
 }

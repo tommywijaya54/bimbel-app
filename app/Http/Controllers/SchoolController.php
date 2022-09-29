@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\FormSchema;
 use App\Models\School;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Inertia\Inertia;
 
 class SchoolController extends Controller
@@ -55,7 +54,9 @@ class SchoolController extends Controller
     {
         $entity = $this->entity::find($id);
         $form_schema = $this->form_schema->withValue($entity)->editForm();
-        $form_schema->form_note = "To Edit you need admin access";
+
+        // $form_schema->form_note = "To Edit you need admin access";
+
         return Inertia::render('Common/EditForm', [
             'title' => 'Edit ' . $entity->name . ' ' . $this->modal,
             'form_schema' => $form_schema,
@@ -64,25 +65,13 @@ class SchoolController extends Controller
 
     public function store(Request $request)
     {
-        $entity = [];
-        foreach ($this->form_schema->fields as $field) {
-            if ($request[$field->entityname]) {
-                $entity[$field->entityname] = $request[$field->entityname];
-            }
-        }
-        $this->entity::create($entity);
+        $this->entity::create($this->form_schema->setStoreOrUpdate($request));
         return redirect('/' . $this->modal);
     }
 
     public function update(Request $request, $id)
     {
-        $entity = $this->entity::find($id);
-        foreach ($this->form_schema->fields as $field) {
-            if ($request[$field->entityname]) {
-                $entity[$field->entityname] = $request[$field->entityname];
-            }
-        }
-        $entity->update();
-        return redirect('/' . $this->modal . '/' . $entity->id);
+        $this->form_schema->setStoreOrUpdate($request, $this->entity::find($id))->update();
+        return redirect('/' . $this->modal . '/' . $id);
     }
 }
