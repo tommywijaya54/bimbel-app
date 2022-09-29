@@ -1,4 +1,4 @@
-import { DisplayFields } from "@/util";
+import { DisplayFields, getAlias } from "@/util";
 
 Array.prototype.findById = function(id){
     return this.find(x => x.id === id);
@@ -63,7 +63,7 @@ const displayValueElement = (data,el) => {
     }
 
     if(typeof text === 'object'){
-        return <a href={'/'+el.entityname+'/'+text.id} className={el.entityname+' link'}>{text.name}</a>
+        return <a href={'/'+getAlias(el.entityname)+'/'+text.id} className={getAlias(el.entityname)+' link'}>{text.name}</a>
 
         return JSON.stringify(text);
     }

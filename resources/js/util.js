@@ -80,8 +80,13 @@ class FormObject {
     }
 }
 
-
-
+// for URL alias : due to PHP not allow use of Parent as variable name it change to CParent
+function getAlias(str){
+    const alias = {
+        'cparent' : 'parent'
+    }
+    return alias[str] || str
+}
 
 // Adding Current App & Current User 
 class CurrentApp{
@@ -120,4 +125,4 @@ if(window.current_app.data.props.auth.user){
 }
 */
 
-export {DisplayFields,FormObject,DisplayElement, CurrentUser, CurrentApp}
+export {DisplayFields,FormObject,DisplayElement, CurrentUser, CurrentApp, getAlias}

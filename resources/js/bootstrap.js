@@ -44,38 +44,3 @@ String.prototype.cap = function (){
     return (this.charAt(0).toUpperCase() + this.slice(1));
 }
 
-
-// Adding Current App & Current User 
-class CurrentApp{
-    constructor (el_id = 'app') {
-        this.el = document.getElementById(el_id);
-        this.data = JSON.parse(this.el.dataset.page);
-    }
-    refresh(el_id = 'app') {
-        this.el = document.getElementById(el_id);
-        this.data = JSON.parse(this.el.dataset.page);
-    }
-}
-
-class CurrentUser{
-    constructor () {
-        this._app = window.current_app || new CurrentApp();
-        this._data = this._app.data.props.auth.user;
-        this.name = this._data.name;
-        this.type = this._data.type;
-        this.permissions = this._app.data.props.auth.permissions;
-        this.roles = this._app.data.props.auth.roles;
-    }
-
-    hasPermission(prm){
-        return this.permissions.includes(prm);
-    }
-    hasRole(rl){
-        return this.roles.includes(rl);
-    }
-} 
-
-window.current_app = new CurrentApp();
-if(window.current_app.data.props.auth.user){
-    window.current_user = new CurrentUser();
-}

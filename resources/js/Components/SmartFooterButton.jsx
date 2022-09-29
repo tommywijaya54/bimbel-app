@@ -1,4 +1,4 @@
-import { CurrentUser } from "@/util";
+import { CurrentUser, getAlias } from "@/util";
 
 const SmartFooterButton = ({componentFor, obj}) => {
     /* 
@@ -7,9 +7,13 @@ const SmartFooterButton = ({componentFor, obj}) => {
         const permissions = data.auth.permissions;
     */
     const user = new CurrentUser();
-   
+    const model = window.location.pathname.split('/')[1];
+
     let component = [];
 
+    user.hasPermission('edit-'+model) ? 
+            component.push(<a href={'/'+model+'/'+obj.id+'/edit'} className={'button '}>Edit {model.cap()}</a>) : ''
+    
     if(componentFor === 'user'){
         const url = {
             deactivate:'/user/'+obj.id+'/deactivate',
@@ -30,6 +34,8 @@ const SmartFooterButton = ({componentFor, obj}) => {
             component.push(<a href={url.edit} className={'button '}>Edit user</a>) : ''
     }
 
+    /*
+
     if(componentFor === 'branch'){
         user.hasPermission('edit-branch') ? 
             component.push(<a href={'/branch/'+obj.id+'/edit'} className={'button '}>Edit Branch</a>) : ''
@@ -39,6 +45,7 @@ const SmartFooterButton = ({componentFor, obj}) => {
         user.hasPermission('edit-employee') ? 
             component.push(<a href={'/employee/'+obj.id+'/edit'} className={'button '}>Edit Employee</a>) : ''
     }
+    */
 
     return (<div className="smart-footer">
                 <div className="px-6 py-4 bg-gray-50 flex justify-end">

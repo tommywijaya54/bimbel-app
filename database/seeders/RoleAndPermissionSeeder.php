@@ -23,6 +23,15 @@ class RoleAndPermissionSeeder extends Seeder
             Role::create(['name' => $value]);
         }
 
+        $owner_permissions = [
+            'list-role and permission',
+            'show-role',
+            'edit-role',
+            'deactivate-branch',
+            'create-branch',
+            'edit-branch',
+            'delete-branch'
+        ];
 
         $super_admin_permissions = [
             'list-user',
@@ -32,16 +41,6 @@ class RoleAndPermissionSeeder extends Seeder
             'deactivate-user',
             'activate-user',
             'reset password-user'
-        ];
-
-        $owner_permissions = [
-            'list-role and permission',
-            'show-role',
-            'edit-role',
-            'deactivate-branch',
-            'create-branch',
-            'edit-branch',
-            'delete-branch'
         ];
 
         $manager_permissions = [
@@ -72,6 +71,11 @@ class RoleAndPermissionSeeder extends Seeder
             'show-parent',
             'create-parent',
             'edit-parent',
+
+            'list-school',
+            'show-school',
+            'create-school',
+            'edit-school',
         ];
 
         // $permissions + $manager_permissions + $advisor_permissions;
@@ -93,9 +97,10 @@ class RoleAndPermissionSeeder extends Seeder
 
         //echo '</pre>';
 
-        Role::findByName('Owner')->givePermissionTo($all_permissions);
         Role::findByName('super-admin')->givePermissionTo($super_admin_permissions);
         Role::findByName('Branch Manager')->givePermissionTo($manager_permissions);
         Role::findByName('Advisor')->givePermissionTo($advisor_permissions);
+
+        Role::findByName('Owner')->givePermissionTo($all_permissions);
     }
 }

@@ -3,80 +3,135 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cparent;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CparentController extends Controller
 {
+    public $entity = Cparent::class;
+    public $modal = 'parent';
+
+    function __construct()
+    {
+        $this->model_name = ucfirst($this->modal);
+        $this->list_view_action_button = 'create-' . $this->modal;
+
+        // this used on Index/List view for reducing the data variable
+        $this->list_view_fields = "id,nik,name,phone,blacklist";
+        $this->list_view_array = explode(",", $this->list_view_fields);
+
+        $this->show_form_fields = 'nik,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,user,blacklist';
+
+        // for Create View Fields & 
+        $this->create_form_fields = 'nik,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,user_id,blacklist';
+
+        $this->form_fields_options = [];
+
+        // this used for Store function
+        $this->store_form_fields = str_replace(",,", ',', $this->create_form_fields);
+
+        // for Edit View Fields
+        $this->edit_form_fields = $this->create_form_fields;
+        $this->update_form_fields = str_replace(",,", ',', $this->create_form_fields);
+    }
+
     public function index()
     {
-        $data = Cparent::all();
+        $data = $this->entity::all($this->list_view_array);
         return Inertia::render('Simple/Index', [
-            'page_title' => "Cparent List",
+            'page_title' => $this->model_name . " List",
+            'action_button' => $this->list_view_action_button,
+            'fields' => $this->list_view_fields,
             'data' => $data,
-            'route' => 'cparent.edit',
-            'view' => "name,address,phone"
+            'item_url' => "/" . $this->modal . "/{id}",
+            'modal' => $this->modal,
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Cparent/Create');
+        return Inertia::render('Simple/Create', [
+            'page_title' => "Create " . $this->model_name,
+            'form_fields' => $this->create_form_fields,
+            'form_fields_options' => $this->form_fields_options,
+            'modal' => $this->modal,
+            'post_url' => "/" . $this->modal,
+        ]);
     }
 
     public function store(Request $request)
     {
-        Cparent::create([
-            'nik' => $request['nik'],
+        $arr = [];
+        $fieldnames = explode(",", $this->store_form_fields);
+
+        foreach ($fieldnames as $a) {
+            if ($request[$a]) {
+                $arr[$a] = $request[$a];
+            }
+        }
+
+        $user = User::create([
             'name' => $request['name'],
-            'address' => $request['address'],
-            'phone' => $request['phone'],
             'email' => $request['email'],
-            'birth_date' => $request['birth_date'],
-            'emergency_name' => $request['emergency_name'],
-            'emergency_phone' => $request['emergency_phone'],
-            'bank_account_name' => $request['bank_account_name'],
-            'virtual_account_name' => $request['virtual_account_name'],
-            'note' => $request['note'],
-            'user_id' => $request['user_id'],
-            'blacklist' => $request['blacklist'],
+            'type' => 'Parent',
+            'password' => bcrypt('password'), // '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi', // password
+        ]);
+
+        $cparent = $this->entity::create($arr);
+        $cparent->user_id = $user->id;
+        $cparent->update();
+
+        return redirect('/' . $this->modal);
+    }
+
+    public function show($id)
+    {
+        $entity = $this->entity::with('user')->find($id);
+        return Inertia::render('Simple/Show', [
+            'page_title' => $entity->name . ' ' . $this->model_name . ' ',
+            'component_header' => $this->model_name . ' Information',
+
+            'form_fields' => $this->show_form_fields,
+            'data' => $entity,
+
+            'modal' => $this->modal,
         ]);
     }
 
-
     public function edit($id)
     {
-        $data = Cparent::find($id);
-        return Inertia::render('Cparent/Edit', [
-            'data' => $data
+        $entity = $this->entity::find($id);
+
+        return Inertia::render('Simple/Edit', [
+            'page_title' => 'Edit ' . $entity->name . ' ' . $this->modal,
+            'component_header' => 'Edit Form ',
+            'component_note' => 'To change name, email & password on your login information you need to contact administrator',
+
+            'form_fields' =>  $this->edit_form_fields,
+            'form_fields_options' => $this->form_fields_options,
+
+            'data' => $entity,
+            'post_url' => "/" . $this->modal . "/" . $entity->id,
+
+            'modal' => $this->modal,
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $entity = Cparent::find($id);
-        $entity->nik = $request->nik;
-        $entity->name = $request->name;
-        $entity->address = $request->address;
-        $entity->phone = $request->phone;
-        $entity->email = $request->email;
-        $entity->birth_date = $request->birth_date;
-        $entity->emergency_name = $request->emergency_name;
-        $entity->emergency_phone = $request->emergency_phone;
-        $entity->bank_account_name = $request->bank_account_name;
-        $entity->virtual_account_name = $request->virtual_account_name;
-        $entity->note = $request->note;
-        $entity->user_id = $request->user_id;
-        $entity->blacklist = $request->blacklist;
+        $fieldnames = explode(",", $this->update_form_fields);
+
+        $entity = $this->entity::find($id);
+
+        foreach ($fieldnames as $a) {
+            if ($request[$a]) {
+                $entity[$a] = $request[$a];
+            }
+        }
 
         $entity->update();
-        return Redirect::route('cparent.index');
-    }
-
-    public function destroy(Cparent $cparent)
-    {
-        $cparent->delete();
-        return Redirect::back()->with('message', 'Cparent deleted.');
+        return redirect('/' . $this->modal . '/' . $entity->id);
     }
 }
