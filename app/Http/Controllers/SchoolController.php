@@ -16,7 +16,7 @@ class SchoolController extends Controller
     {
         $this->model_name = ucfirst($this->modal);
 
-        $this->list_view_fields = 'id,name,address';
+        $this->list_view_fields = 'id,name,city,address';
         $this->list_view_array = explode(",", $this->list_view_fields);
 
         $this->form_schema = new FormSchema('name,address,city,type,color_code', $this->modal);

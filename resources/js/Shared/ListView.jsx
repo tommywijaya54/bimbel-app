@@ -1,3 +1,4 @@
+import DisplayField from "@/Pages/Common/Shared/Form/Field/DisplayField";
 import { FormObject, DisplayElement as DisplayEl } from "@/util";
 import { InertiaLink } from "@inertiajs/inertia-react"
 import DisplayElement from "./DisplayElement";
@@ -34,6 +35,7 @@ export default ({listprops}) => {
                                         TableTD.map((el, keyID) => {
                                             return <td key={keyID}>
                                                 <DisplayElement data={data} el={el}></DisplayElement>
+                                                
                                             </td>
                                         })
                                     }

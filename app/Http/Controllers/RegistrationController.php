@@ -21,12 +21,12 @@ class RegistrationController extends Controller
     {
         $this->model_name = ucfirst($this->modal);
 
-        $this->list_view_fields = 'id,date,student_id,branch_id,status';
+        $this->list_view_fields = 'id,date,student,branch,status';
         $this->list_view_array = explode(",", $this->list_view_fields);
 
         $this->form_schema = new FormSchema('date,,student_id,branch_id,reference,cashback::number,status,note', $this->modal);
-        $this->form_schema->field('student_id')->hasOptions(Student::all(['id', 'name']));
-        $this->form_schema->field('branch_id')->hasOptions(Branch::all(['id', 'name']));
+        $this->form_schema->field('student_id')->hasOptions(Student::all(['id', 'name'])->toArray());
+        $this->form_schema->field('branch_id')->hasOptions(Branch::all(['id', 'name'])->toArray());
 
         /*
         $table->integer('student_id');
@@ -41,7 +41,10 @@ class RegistrationController extends Controller
 
     public function index()
     {
-        $data = $this->entity::all($this->list_view_array);
+        // with('student', 'branch')
+        //$data = $this->entity::all($this->list_view_array)->with('student');
+
+        $data = $this->entity::with('student', 'branch')->get();
         return Inertia::render('Simple/Index', [
             'page_title' => $this->model_name . " List",
             'fields' => $this->list_view_fields,
@@ -52,9 +55,16 @@ class RegistrationController extends Controller
     }
     public function show($id)
     {
-        $entity = $this->entity::find($id);
+        $entity = $this->entity::with('student', 'branch')->find($id)->toArray();
+
+        // print_r($entity);
+        // $this->form_schema = $this->form_schema->addField('student');
+        // $this->form_schema->addField('student');
+        // $this->form_schema->addField('branch');
+
         return Inertia::render('Common/DisplayForm', [
-            'title' => $entity->name . ' ' . $this->model_name . ' ',
+            'title' => $entity['id'] . ' ' . $this->model_name . ' ',
+            'entity' => $entity,
             'form_schema' => $this->form_schema->withValue($entity)->displayForm(),
         ]);
     }
@@ -74,7 +84,7 @@ class RegistrationController extends Controller
         // $form_schema->form_note = "To Edit you need admin access";
 
         return Inertia::render('Common/EditForm', [
-            'title' => 'Edit ' . $entity->name . ' ' . $this->modal,
+            'title' => 'Edit ' . $entity['id'] . ' ' . $this->modal,
             'form_schema' => $form_schema,
         ]);
     }

@@ -5,41 +5,63 @@ Array.prototype.findById = function(id){
 }
 
 const displayValueElement = (data,el) => {
-    let text = data[el.entityname];
+    let value = data[el.entityname];
 
-    if(text == null){
+    if(Array.isArray(value)){
+        if(value.length == 0){
+            return <span className="empty-value">---</span>
+        }
+        return value.map((a,i) => {
+            if(typeof a == 'object'){
+                return <a key={i} href={'/'+getAlias(el.entityname)+'/'+a.id} className={getAlias(el.entityname)+' link'}>{a.name}</a>
+            }else if(typeof a == 'string'){
+                return <span key={i} className={getAlias(el.entityname)+" unit"}>{a}</span>
+            }
+        })
+    }
+
+    /*
+    if(el.entityname == 'student'){
+        console.log(data,el);
+        return JSON.stringify(value);
+    }
+    */
+
+    
+
+    if(value == null){
         return <span className="empty-value">---</span>
     }
 
     if(el.entityname === 'email'){
-        return <a className="link" href={'mailto:'+text}>{text}</a>;
+        return <a className="link" href={'mailto:'+value}>{value}</a>;
     }
 
     if(el.entityname.includes('_date')){
-        return (new Date(text)).toLocaleDateString(locale.code,locale.dateFormat);
+        return (new Date(value)).toLocaleDateString(locale.code,locale.dateFormat);
     }
 
     if(el.entityname === 'role'){
-        if(Array.isArray(text)){
-            if(text.length == 0){
+        if(Array.isArray(value)){
+            if(value.length == 0){
                 return <span className="empty-value">no role assign</span>
             }
-            return text.map((a,i) => <span key={i} className="role unit">{a}</span>)
+            return value.map((a,i) => <span key={i} className="role unit">{a}</span>)
         }
     }
 
     if(el.entityname === 'user'){
-        return <a href={"/user/"+text.id} className='user link'>{text.id + " : "+text.name}</a>;
+        return <a href={"/user/"+value.id} className='user link'>{value.id + " : "+value.name}</a>;
     }
 
     if(el.entityname === 'branch'){
-        return <a href={"/branch/"+text.id} className='branch link'>{text.id + " : "+text.name}</a>;
+        return <a href={"/branch/"+value.id} className='branch link'>{value.id + " : "+value.name}</a>;
     }
     
     try{
         if(el.entityname.includes('_id')){
             const model = el.entityname.split("_id")[0];
-            const id = text;
+            const id = value;
 
             if(el.entityname.includes('manager_id')){
                 return <a href={"/user/"+id} className='user'>{id + " : "+data[model].name}</a>;
@@ -49,7 +71,7 @@ const displayValueElement = (data,el) => {
                 //current_app.refresh();
                 /* 
                 const current_data = current_app.data.props[model];
-                return <a href={"/branch/"+id} className='branch link'>{id + " : "+current_data.findById(text).name}</a>;
+                return <a href={"/branch/"+id} className='branch link'>{id + " : "+current_data.findById(value).name}</a>;
                 */
                 return <a href={"/branch/"+id} className='branch link'>{id + " : "+data[model].name}</a>;
             }
@@ -62,18 +84,20 @@ const displayValueElement = (data,el) => {
         
     }
 
-    if(typeof text === 'object'){
-        return <a href={'/'+getAlias(el.entityname)+'/'+text.id} className={getAlias(el.entityname)+' link'}>{text.name}</a>
+    if(typeof value === 'object'){
+        return <a href={'/'+getAlias(el.entityname)+'/'+value.id} className={getAlias(el.entityname)+' link'}>{value.name}</a>
 
-        return JSON.stringify(text);
+        
     }
-      
+    
 
-    return text; // + " -- "+el.entityname;
+    return value; // + " -- "+el.entityname;
 }
 
 export default ({fields, content, data, el}) => {
     if(data && el){
+        // console.log(data,el);
+
         return displayValueElement(data, el)
     }
 
@@ -86,7 +110,7 @@ export default ({fields, content, data, el}) => {
             }else if(a.element && a.element == 'line'){
                 return(<div key={keyId} className="line w-full"></div>)
             }else{
-                return (<div key={keyId} className="pr-6 pb-8 w-full lg:w-1/2">
+                return (<div key={keyId} className="form-component pr-6 pb-8 w-full lg:w-1/2">
                             <label className="form-label">{a.label}:</label> 
                             <div className="form-input">
                                 {displayValueElement(content,a)}

@@ -11,14 +11,20 @@ import DisplayField from "./Field/DisplayField";
 const CreateEditForm = ({Form}) => {
     const method = Form.edit_form ? {_method: 'PUT'} : null;
     const UseFormObject = {...Form.getVariableForUseForm(), ...method};
-    const { data, setData, errors, post, processing } = useForm(UseFormObject);
+    const { data, setData, errors, post, processing, transform } = useForm(UseFormObject);
 
     window.tomatoDebugger = {
         form : Form,
         setData : setData
     }
+    
     window.data = data;
     window.setData = setData;
+
+    transform((data) => {
+        Form.fields.filter(f => f.model).forEach(y => data[y.entityname] =  data[y.entityname].split(" : ")[0]);
+        return data;
+    })
 
     function handleSubmit(e) {
         e.preventDefault();

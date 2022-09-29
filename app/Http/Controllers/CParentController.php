@@ -20,7 +20,7 @@ class CparentController extends Controller
         $this->model_name = ucfirst($this->modal);
 
         // this used on Index/List view for reducing the data variable
-        $this->list_view_fields = "id,nik,name,phone,blacklist";
+        $this->list_view_fields = "id,nik,name:Parent Name,student:Child Name,phone,blacklist";
         $this->list_view_array = explode(",", $this->list_view_fields);
 
         $this->show_form_fields = 'nik,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,user,blacklist';
@@ -45,7 +45,8 @@ class CparentController extends Controller
 
     public function index()
     {
-        $data = $this->entity::all($this->list_view_array);
+        //$data = $this->entity::all($this->list_view_array);
+        $data = $this->entity::with('student')->get();
         return Inertia::render('Simple/Index', [
             'page_title' => $this->model_name . " List",
             'fields' => $this->list_view_fields,
@@ -95,7 +96,7 @@ class CparentController extends Controller
     public function show($id)
     {
         $entity = $this->entity::with('user')->find($id);
-        $this->form_schema->withValue($entity)->displayOnly();
+        // $this->form_schema->withValue($entity)->displayOnly();
 
         return Inertia::render('Simple/Show', [
             'page_title' => $entity->name . ' ' . $this->model_name . ' ',

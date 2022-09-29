@@ -85,6 +85,11 @@ function getAlias(str){
     const alias = {
         'cparent' : 'parent'
     }
+    
+    if(str.includes('_id')){
+        str = str.replace('_id','');
+    }
+
     return alias[str] || str
 }
 

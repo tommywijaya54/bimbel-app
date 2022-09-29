@@ -380,3 +380,17 @@ span.empty-value {
 .form-create .header h2 {
     color: white;
 }
+
+.display-form label.form-label {
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.display-form .form-input {
+    border: none;
+    padding: 0;
+}
+
+.display-form .form-component {
+    padding: 0 0 0.5em 0;
+}

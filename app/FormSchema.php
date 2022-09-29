@@ -14,6 +14,9 @@ class FormField
     public $element;
     public $options;
 
+    // public $model;
+    // public $model_value;
+
     function __construct($StringField)
     {
         // field schema -> entityname:label:inputtype
@@ -38,10 +41,6 @@ class FormField
                 $this->label = ucwords(str_replace('_', ' ', $this->entityname));
             }
 
-            if (str_contains($this->entityname, '_id')) {
-                $this->label = ucwords(str_replace('_id', '', $this->entityname));
-            }
-
             // type assigning
             $this->inputtype = $arr[2] ?? 'text';
             if (str_contains($this->entityname, '_date')) {
@@ -50,13 +49,24 @@ class FormField
             if (str_contains($this->entityname, 'date')) {
                 $this->inputtype = 'date';
             }
+
+            if (str_contains($this->entityname, '_id')) {
+                $this->label = ucwords(str_replace('_id', '', $this->entityname));
+                $this->inputtype = 'datalist';
+                $this->model = str_replace('_id', '', $this->entityname);
+            }
+
+            if (str_contains($this->entityname, 'note')) {
+                $this->inputtype = 'textarea';
+            }
         }
     }
 
-    public function hasOptions($options)
+    public function hasOptions($options, $inputtype = 'select')
     {
         $this->options = $options;
-        $this->inputtype = 'select';
+        $this->inputtype = $inputtype;
+        return $this;
     }
 }
 
@@ -69,7 +79,6 @@ class FormSchema
 
     public $id;
     public $fields;
-
     public $submit_url;
     public $form_type;
     public $modal;
@@ -91,6 +100,10 @@ class FormSchema
     public function field($entityname)
     {
         $found_key = array_search($entityname, array_column($this->fields, 'entityname'));
+        // print_r($this->fields);
+        // print_r($found_key);
+        // print_r($this->fields[$found_key]);
+
         return $this->fields[$found_key];
     }
 
@@ -103,18 +116,50 @@ class FormSchema
     // for display and edit view
     public function withValue($data)
     {
-        $arr = $data->getOriginal();
+        // print_r($this->fields);
 
-        // print_r($arr);
+        // print_r($data['student']->toArray());
 
-        $this->id = $arr['id'];
+        // print_r($data);
+
+        //$arr = $data->getOriginal();
+        //print_r($arr);
+
+        $this->id = $data['id'];
 
         // print_r($this->fields);
 
         foreach ($this->fields as $key => $field) {
-            if ($field->entityname) {
-                $field->value = $arr[$field->entityname];
+            if (str_contains($field->entityname, '_id')) {
+                $model = str_replace('_id', '', $field->entityname);
+                $field->model_value = $data[$model];
+                /*
+                if ($data[$model]) {
+                    $new_field = new FormField($model);
+                    $new_field->value = $data[$model];
+
+                    
+                    // $this->addField($model);
+                    // $this->field($model)->value = ;
+                    // $field->value = $data[$model];
+                }
+                */
+
+                // print_r($field->model_value['name']);
+                // print_r($field);
+
+                // print_r($data[$field->entityname]);
+
+                // $found_key = array_search($data[$field->entityname], array_column($field->model_value, 'id'));
+                // var_dump($found_key);
+                //  print_r($found_key);
+
+                $field->value = $data[$field->entityname] . " : " . $field->model_value['name'];
+            } else if ($field->entityname) {
+                $field->value = $data[$field->entityname];
             }
+
+
 
             // print_r($field);
             // print_r($field->entityname, $arr[$field->entityname]);
@@ -124,10 +169,30 @@ class FormSchema
         return $this;
     }
 
+    public function addField($field_string)
+    {
+        array_push($this->fields, new FormField($field_string));
+        return $this;
+    }
+    public function removeField()
+    {
+    }
+
     public function displayForm()
     {
         $this->display_form = true;
         $this->form_type = "display";
+
+        /*
+        $form = $this;
+
+        // change _id to object
+        foreach ($form->fields as $field) {
+            if ($field->entityname && str_contains($field->entityname, '_id')) {
+            }
+        }
+        */
+
         return $this;
     }
     public function createForm()

@@ -18,4 +18,13 @@ class Registration extends Model
         'status',
         'note'
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
 }
