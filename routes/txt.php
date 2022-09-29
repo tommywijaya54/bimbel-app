@@ -1,10 +1,8 @@
-// Student
-Route::get('/school', [SchoolController::class, 'index'])->middleware('can:list-school');
+$table->string('name');
+$table->string('address')->nullable();
+$table->string('city')->nullable();
+$table->string('type')->nullable();
+$table->string('color_code')->nullable();
 
-Route::get('/school/create', [SchoolController::class, 'create'])->middleware('can:create-school');
-Route::post('/school', [SchoolController::class, 'store'])->middleware('can:create-school');
-
-Route::get('/school/{id}', [SchoolController::class, 'show'])->middleware('can:show-school');
-
-Route::get('/school/{id}/edit', [SchoolController::class, 'edit'])->middleware('can:edit-school');
-Route::put('/school/{id}', [SchoolController::class, 'update'])->middleware('can:edit-school');
+'id,name,address'
+'name,address,city,type,color_code'

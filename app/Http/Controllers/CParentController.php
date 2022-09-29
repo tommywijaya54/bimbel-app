@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\FormSchema;
 use App\Models\Cparent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+
 
 class CparentController extends Controller
 {
@@ -26,7 +28,6 @@ class CparentController extends Controller
 
         // for Create View Fields & 
         $this->create_form_fields = 'nik,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,user_id,blacklist';
-
         $this->form_fields_options = [];
 
         // this used for Store function
@@ -35,6 +36,12 @@ class CparentController extends Controller
         // for Edit View Fields
         $this->edit_form_fields = $this->create_form_fields;
         $this->update_form_fields = str_replace(",,", ',', $this->create_form_fields);
+
+        $this->form_schema = new FormSchema($this->create_form_fields, $this->modal);
+        $this->form_schema->alter('name', function ($field) {
+            $field->options = [1, 2, 3];
+            return $field;
+        });
     }
 
     public function index()
@@ -58,6 +65,7 @@ class CparentController extends Controller
             'form_fields_options' => $this->form_fields_options,
             'modal' => $this->modal,
             'post_url' => "/" . $this->modal,
+            'form_schema' => $this->form_schema,
         ]);
     }
 
@@ -89,6 +97,8 @@ class CparentController extends Controller
     public function show($id)
     {
         $entity = $this->entity::with('user')->find($id);
+        $this->form_schema->withValue($entity)->displayOnly();
+
         return Inertia::render('Simple/Show', [
             'page_title' => $entity->name . ' ' . $this->model_name . ' ',
             'component_header' => $this->model_name . ' Information',
@@ -97,12 +107,14 @@ class CparentController extends Controller
             'data' => $entity,
 
             'modal' => $this->modal,
+            'form_schema' => $this->form_schema,
         ]);
     }
 
     public function edit($id)
     {
         $entity = $this->entity::find($id);
+        $this->form_schema->withValue($entity);
 
         return Inertia::render('Simple/Edit', [
             'page_title' => 'Edit ' . $entity->name . ' ' . $this->modal,
@@ -116,6 +128,8 @@ class CparentController extends Controller
             'post_url' => "/" . $this->modal . "/" . $entity->id,
 
             'modal' => $this->modal,
+
+            'form_schema' => $this->form_schema,
         ]);
     }
 

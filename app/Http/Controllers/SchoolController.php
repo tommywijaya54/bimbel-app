@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\FormSchema;
 use App\Models\School;
 use Illuminate\Http\Request;
 use App\Models\User;
