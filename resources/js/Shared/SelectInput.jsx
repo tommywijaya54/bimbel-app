@@ -19,7 +19,7 @@ export default ({
         id={name}
         name={name}
         {...props}
-        className={`form-select ${errors.length ? 'error' : ''}`}
+        className={`input-field form-select ${errors.length ? 'error' : ''}`}
       >
         {children}
       </select>

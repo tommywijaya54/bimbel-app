@@ -7,12 +7,12 @@ use function PHPUnit\Framework\stringStartsWith;
 class FormField
 {
     public $entityname;
+    public $value;
+
     public $label;
     public $inputtype;
     public $element;
     public $options;
-
-    public $value;
 
     function __construct($StringField)
     {
@@ -26,7 +26,18 @@ class FormField
             $this->entityname = $arr[0];
             $this->label = $arr[1] ?? ucwords(str_replace('_', ' ', $this->entityname)); // set label -> if label has _ then change it into space
             $this->inputtype = $arr[2] ?? 'text';
+
+            // type assigning
+            if (str_contains($this->entityname, '_date')) {
+                $this->inputtype = 'date';
+            }
         }
+    }
+
+    public function hasOptions($options)
+    {
+        $this->options = $options;
+        $this->inputtype = 'select';
     }
 }
 
@@ -34,14 +45,15 @@ class FormSchema
 {
     protected $original_string;
     protected $string_of_fields;
-    protected $modal;
 
-    // public $options; // create/edit/display_only
+    // public $options; // create/edit/display_form
 
     public $id;
     public $fields;
+
     public $submit_url;
-    public $display_only;
+    public $form_type;
+    public $modal;
 
     function __construct($StringOfFields = null, $modal = null)
     {
@@ -57,6 +69,12 @@ class FormSchema
         }, $this->string_of_fields);
     }
 
+    public function field($entityname)
+    {
+        $found_key = array_search($entityname, array_column($this->fields, 'entityname'));
+        return $this->fields[$found_key];
+    }
+
     public function alter($entityname, $changes)
     {
         $found_key = array_search($entityname, array_column($this->fields, 'entityname'));
@@ -67,9 +85,7 @@ class FormSchema
     public function withValue($data)
     {
         $arr = $data->getOriginal();
-
         $this->id = $arr['id'];
-        $this->submit_url = "/" . $this->modal . "/" . $this->id;
 
         foreach ($this->fields as $field) {
             $field->value = $arr[$field->entityname];
@@ -99,9 +115,27 @@ class FormSchema
         return $this;
     }
 
-    public function displayOnly()
+    public function displayForm()
     {
-        $this->display_only = true;
+        $this->display_form = true;
+        $this->form_type = "display";
+        return $this;
+    }
+    public function createForm()
+    {
+        $this->create_form = true;
+        $this->form_type = "create";
+        $this->submit_url = '/' . $this->modal;
+
+        return $this;
+    }
+
+    public function editForm()
+    {
+        $this->edit_form = true;
+        $this->form_type = "edit";
+        $this->submit_url = "/" . $this->modal . "/" . $this->id;
+
         return $this;
     }
 }

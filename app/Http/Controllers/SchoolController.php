@@ -17,22 +17,11 @@ class SchoolController extends Controller
     {
         $this->model_name = ucfirst($this->modal);
 
-        // this used on Index/List view for reducing the data variable
         $this->list_view_fields = 'id,name,address';
         $this->list_view_array = explode(",", $this->list_view_fields);
 
-        $this->show_form_fields = 'name,address,city,type,color_code';
-
-        // for Create View Fields &
-        $this->create_form_fields = 'name,address,city,type,color_code';
-        $this->form_fields_options = [];
-
-        // this used for Store function
-        $this->store_form_fields = str_replace(",,", ',', $this->create_form_fields);
-
-        // for Edit View Fields
-        $this->edit_form_fields = $this->create_form_fields;
-        $this->update_form_fields = str_replace(",,", ',', $this->create_form_fields);
+        $this->form_schema = new FormSchema('name,address,city,type,color_code', $this->modal);
+        $this->form_schema->field('type')->hasOptions(['International', 'National', 'International & National']);
     }
 
     public function index()
@@ -46,77 +35,53 @@ class SchoolController extends Controller
             'modal' => $this->modal,
         ]);
     }
-
+    public function show($id)
+    {
+        $entity = $this->entity::find($id);
+        return Inertia::render('Common/DisplayForm', [
+            'title' => $entity->name . ' ' . $this->model_name . ' ',
+            'form_schema' => $this->form_schema->withValue($entity)->displayForm(),
+        ]);
+    }
     public function create()
     {
-        return Inertia::render('Simple/Create', [
-            'page_title' => "Create " . $this->model_name,
-            'form_fields' => $this->create_form_fields,
-            'form_fields_options' => $this->form_fields_options,
-            'modal' => $this->modal,
-            'post_url' => "/" . $this->modal,
+        $this->form_schema->createForm();
+        return Inertia::render('Common/CreateForm', [
+            'title' => "Create " . $this->model_name,
+            'form_schema' => $this->form_schema,
+        ]);
+    }
+    public function edit($id)
+    {
+        $entity = $this->entity::find($id);
+        $form_schema = $this->form_schema->withValue($entity)->editForm();
+        $form_schema->form_note = "To Edit you need admin access";
+        return Inertia::render('Common/EditForm', [
+            'title' => 'Edit ' . $entity->name . ' ' . $this->modal,
+            'form_schema' => $form_schema,
         ]);
     }
 
     public function store(Request $request)
     {
-        $arr = [];
-        $fieldnames = explode(",", $this->store_form_fields);
-
-        foreach ($fieldnames as $a) {
-            if ($request[$a]) {
-                $arr[$a] = $request[$a];
+        $entity = [];
+        foreach ($this->form_schema->fields as $field) {
+            if ($request[$field->entityname]) {
+                $entity[$field->entityname] = $request[$field->entityname];
             }
         }
-        $this->entity::create($arr);
+        $this->entity::create($entity);
         return redirect('/' . $this->modal);
-    }
-
-    public function show($id)
-    {
-        $entity = $this->entity::find($id);
-        return Inertia::render('Simple/Show', [
-            'page_title' => $entity->name . ' ' . $this->model_name . ' ',
-            'component_header' => $this->model_name . ' Information',
-
-            'form_fields' => $this->show_form_fields,
-            'data' => $entity,
-
-            'modal' => $this->modal,
-        ]);
-    }
-
-    public function edit($id)
-    {
-        $entity = $this->entity::find($id);
-
-        return Inertia::render('Simple/Edit', [
-            'page_title' => 'Edit ' . $entity->name . ' ' . $this->modal,
-            'component_header' => 'Edit Form ',
-            'component_note' => 'To change name, email & password on your login information you need to contact administrator',
-
-            'form_fields' =>  $this->edit_form_fields,
-            'form_fields_options' => $this->form_fields_options,
-
-            'data' => $entity,
-            'post_url' => "/" . $this->modal . "/" . $entity->id,
-
-            'modal' => $this->modal,
-        ]);
     }
 
     public function update(Request $request, $id)
     {
-        $fieldnames = explode(",", $this->update_form_fields);
-
         $entity = $this->entity::find($id);
-
-        foreach ($fieldnames as $a) {
-            if ($request[$a]) {
-                $entity[$a] = $request[$a];
+        foreach ($this->form_schema->fields as $field) {
+            if ($request[$field->entityname]) {
+                $entity[$field->entityname] = $request[$field->entityname];
             }
         }
-
         $entity->update();
         return redirect('/' . $this->modal . '/' . $entity->id);
     }

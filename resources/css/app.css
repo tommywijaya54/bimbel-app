@@ -232,7 +232,7 @@ table.table-padding-row tbody tr td {
 }
 
 .ui-component .header {
-    padding: 1.5em 2em;
+    padding: 1.5em;
     background: cadetblue;
 }
 .header span.info {
@@ -305,8 +305,11 @@ a.button.btn-sm {
     padding: 0;
 }
 
-:is(.edit-form, .create-form) .ui-component .header {
-    background: #8ba1ff;
+:is(.edit-form, .create-form) .header {
+    background: #56c96d;
+}
+:is(.edit-form, .create-form) .header h2 {
+    color: #fff;
 }
 
 :is(.edit-form, .create-form) .ui-component {
@@ -370,6 +373,10 @@ span.empty-value {
 .note {
     text-align: center;
     padding: 1em;
-    background-color: #ffcf8f;
-    margin: 2em 2em 0 2em;
+    background-color: #ffe6c4;
+    margin: 1.5em 1.5em 0 1.5em;
+}
+
+.form-create .header h2 {
+    color: white;
 }
