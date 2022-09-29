@@ -15,7 +15,6 @@ class EmployeeController extends Controller
 
     // this used on INDEX VIEW
     public $list_view_fields = "id,nik,name,phone,email";
-    public $list_view_action_button = 'create-employee';
 
     // this used on SHOW VIEW
     public $form_fields = 'nik,,name,address,phone,email,emergency_name,emergency_phone,join_date,exit_date,note,user,branch';
@@ -43,7 +42,6 @@ class EmployeeController extends Controller
         $data = $this->entity::all($this->list_view_array);
         return Inertia::render('Simple/Index', [
             'page_title' => $this->model_name . " List",
-            'action_button' => $this->list_view_action_button,
             'fields' => $this->list_view_fields,
             'data' => $data,
             'item_url' => "/" . $this->modal . "/{id}",

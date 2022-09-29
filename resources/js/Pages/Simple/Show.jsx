@@ -10,7 +10,6 @@ export default function Show(props) {
             auth={props.auth}
             errors={props.errors}
             title={props.page_title}
-            header_action={props.action_button}
         >
             <CompRowAndBox
                 header={

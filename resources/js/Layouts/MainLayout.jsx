@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAction from '@/Components/HeaderAction';
 
-export default function MainLayout({auth, errors, title, header_action,children}) {
+export default function MainLayout({auth, errors, title, children}) {
     const {flash} = usePage().props;
 
     return (
@@ -12,7 +12,7 @@ export default function MainLayout({auth, errors, title, header_action,children}
             errors={errors}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">{title}
-                    {header_action && <HeaderAction action={header_action}></HeaderAction>}
+                    <HeaderAction></HeaderAction>
                 </h2>
             }
         >

@@ -16,7 +16,6 @@ class UserController extends Controller
     public $modal = 'user';
 
     public $list_view_fields = "id,name,email,type";
-    public $list_view_action_button = 'create-user';
 
     public $form_fields = 'name,email,type,status,password';
 
@@ -31,7 +30,6 @@ class UserController extends Controller
         $data = $this->entity::all();
         return Inertia::render('Simple/Index', [
             'page_title' => $this->model_name . " List",
-            'action_button' => $this->list_view_action_button,
             'fields' => $this->list_view_fields,
             'data' => $data,
             'item_url' => "/" . $this->modal . "/{id}",

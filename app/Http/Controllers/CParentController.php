@@ -18,7 +18,6 @@ class CparentController extends Controller
     function __construct()
     {
         $this->model_name = ucfirst($this->modal);
-        $this->list_view_action_button = 'create-' . $this->modal;
 
         // this used on Index/List view for reducing the data variable
         $this->list_view_fields = "id,nik,name,phone,blacklist";
@@ -49,7 +48,6 @@ class CparentController extends Controller
         $data = $this->entity::all($this->list_view_array);
         return Inertia::render('Simple/Index', [
             'page_title' => $this->model_name . " List",
-            'action_button' => $this->list_view_action_button,
             'fields' => $this->list_view_fields,
             'data' => $data,
             'item_url' => "/" . $this->modal . "/{id}",

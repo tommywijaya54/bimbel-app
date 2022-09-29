@@ -13,7 +13,6 @@ class BranchController extends Controller
     public $modal = 'branch';
 
     public $list_view_fields = "id,name,phone,address,email";
-    public $list_view_action_button = 'create-branch';
 
     public $form_fields = 'name,address,phone,email,open_date,status,manager_id';
 
@@ -27,7 +26,6 @@ class BranchController extends Controller
         $data = $this->entity::all();
         return Inertia::render('Simple/Index', [
             'page_title' => $this->model_name . " List",
-            'action_button' => $this->list_view_action_button,
             'fields' => $this->list_view_fields,
             'data' => $data,
             'item_url' => "/" . $this->modal . "/{id}",

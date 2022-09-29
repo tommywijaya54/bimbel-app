@@ -18,7 +18,6 @@ class StudentController extends Controller
 
     // this used on INDEX VIEW
     public $list_view_fields = "id,name,grade,phone,email";
-    public $list_view_action_button = 'create-student';
 
     // this used on SHOW VIEW
     // public $form_fields = 'name,grade,address,phone,email,join_date,exit_date,note,exit_reason,birth_date,type,health_condition,cparent,school,user';
@@ -59,7 +58,6 @@ class StudentController extends Controller
         $data = $this->entity::all($this->list_view_array);
         return Inertia::render('Simple/Index', [
             'page_title' => $this->model_name . " List",
-            'action_button' => $this->list_view_action_button,
             'fields' => $this->list_view_fields,
             'data' => $data,
             'item_url' => "/" . $this->modal . "/{id}",

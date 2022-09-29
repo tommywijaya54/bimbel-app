@@ -37,7 +37,6 @@ export default function Show(props) {
             auth={props.auth}
             errors={props.errors}
             title={"Role and Permission List"}
-            header_action={props.action_button}
             >
             
                 

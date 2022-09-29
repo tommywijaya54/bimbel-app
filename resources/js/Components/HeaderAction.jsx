@@ -1,9 +1,7 @@
 import { CurrentUser } from "@/util";
 
 export default ({action}) => {
-    const actions = action.split(",");
     const user = new CurrentUser();
-
     const model = window.location.pathname.split('/')[1];
 
     return (<span className="header-action">
@@ -15,7 +13,6 @@ export default ({action}) => {
 }
 
 /*
-
         {
             user.hasPermission('create-user') && actions.includes('create-user') && 
             

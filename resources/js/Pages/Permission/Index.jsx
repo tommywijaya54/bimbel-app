@@ -36,7 +36,6 @@ export default function Index(props) {
             auth={props.auth}
             errors={props.errors}
             title="Role and Permission List"
-            header_action={props.action_button}
             >
                 <div className="overflow-x-auto bg-white rounded shadow">
                     <ListView
