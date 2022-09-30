@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\FormSchema;
+use App\ListSchema;
 use App\Models\Branch;
 use App\Models\Registration;
 use App\Models\School;
@@ -21,12 +22,12 @@ class RegistrationController extends Controller
     {
         $this->model_name = ucfirst($this->modal);
 
-        $this->list_view_fields = 'id,date,student,branch,status';
-        $this->list_view_array = explode(",", $this->list_view_fields);
+        $this->list = new ListSchema('id,date,student,branch,status', $this->modal, $this->entity);
+        $this->list->include(['student', 'branch']);
 
         $this->form_schema = new FormSchema('date,,student_id,branch_id,reference,cashback::number,status,note', $this->modal);
-        $this->form_schema->field('student_id')->hasOptions(Student::all(['id', 'name'])->toArray());
-        $this->form_schema->field('branch_id')->hasOptions(Branch::all(['id', 'name'])->toArray());
+        $this->form_schema->field('student_id')->hasOptions(Student::all(['id', 'name'])->toArray(), 'datalist');
+        $this->form_schema->field('branch_id')->hasOptions(Branch::all(['id', 'name'])->toArray(), 'datalist');
 
         /*
         $table->integer('student_id');
@@ -44,13 +45,17 @@ class RegistrationController extends Controller
         // with('student', 'branch')
         //$data = $this->entity::all($this->list_view_array)->with('student');
 
-        $data = $this->entity::with('student', 'branch')->get();
-        return Inertia::render('Simple/Index', [
-            'page_title' => $this->model_name . " List",
+        // $data = $this->entity::with('student', 'branch')->get();
+        return Inertia::render('Common/List', [
+            'title' => $this->model_name . " List",
+            'list' => $this->list->table_format(),
+            /*
             'fields' => $this->list_view_fields,
             'data' => $data,
+
             'item_url' => "/" . $this->modal . "/{id}",
             'modal' => $this->modal,
+            */
         ]);
     }
     public function show($id)

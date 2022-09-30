@@ -394,3 +394,10 @@ span.empty-value {
 .display-form .form-component {
     padding: 0 0 0.5em 0;
 }
+
+.attention {
+    text-align: center;
+    font-size: x-large;
+    margin-top: -1em;
+    margin-bottom: 1em;
+}

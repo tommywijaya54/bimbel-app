@@ -7,6 +7,7 @@ export default function EditForm(props) {
         <MainLayout
             {...props}
         >
+            <h1 className='attention'>Common Edit Form</h1>
             <Form
                 {...props.form_schema}
             >

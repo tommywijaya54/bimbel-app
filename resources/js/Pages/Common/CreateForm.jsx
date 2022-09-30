@@ -7,6 +7,7 @@ export default function CreateForm(props) {
         <MainLayout
             {...props}
         >
+            <h1 className='attention'>Common Create Form</h1>
             <Form
                 {...props.form_schema}
             >
