@@ -71,6 +71,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/role-and-permission', [PermissionController::class, 'index'])->middleware('can:list-role and permission');
     Route::get('/role/{id}', [PermissionController::class, 'show'])->middleware('can:show-role');
 
+    $routeList = [
+        'registration' => RegistrationController::class,
+        'promolist' => PromolistController::class,
+        'branch' => BranchController::class,
+        'school' => SchoolController::class,
+        'parent' => CparentController::class,
+        'student' => StudentController::class,
+        'employee' => EmployeeController::class,
+    ];
+
+    foreach ($routeList as $model => $controller) {
+        Route::get('/' . $model, [$controller, 'index'])->middleware('can:list-' . $model);
+
+        Route::get('/' . $model . '/create', [$controller, 'create'])->middleware('can:create-' . $model);
+        Route::post('/' . $model, [$controller, 'store'])->middleware('can:create-' . $model);
+
+        Route::get('/' . $model . '/{id}', [$controller, 'show'])->middleware('can:show-' . $model);
+
+        Route::get('/' . $model . '/{id}/edit', [$controller, 'edit'])->middleware('can:edit-' . $model);
+        Route::put('/' . $model . '/{id}', [$controller, 'update'])->middleware('can:edit-' . $model);
+    };
+});
+
+
+/*
     // Branch
     Route::get('/branch', [BranchController::class, 'index'])->middleware('can:list-branch');
 
@@ -127,6 +152,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/school/{id}', [SchoolController::class, 'update'])->middleware('can:edit-school');
 
     // Registration
+    
     Route::get('/registration', [RegistrationController::class, 'index'])->middleware('can:list-registration');
 
     Route::get('/registration/create', [RegistrationController::class, 'create'])->middleware('can:create-registration');
@@ -136,7 +162,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/registration/{id}/edit', [RegistrationController::class, 'edit'])->middleware('can:edit-registration');
     Route::put('/registration/{id}', [RegistrationController::class, 'update'])->middleware('can:edit-registration');
-});
+    */
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
