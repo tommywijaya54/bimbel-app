@@ -2,8 +2,6 @@
 
 namespace App; // <- important
 
-use function PHPUnit\Framework\stringStartsWith;
-
 class FormSchema
 {
     protected $original_string;
