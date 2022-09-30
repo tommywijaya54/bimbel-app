@@ -1,7 +1,7 @@
 import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
 import DateInput from '@/Shared/DateInput';
-import { FieldUtil } from '../../util_form';
+import { FieldUtil } from '../util_form';
 
 import NumberInput from '@/Shared/NumberInput';
 import DataListInput from '@/Shared/DataListInput';

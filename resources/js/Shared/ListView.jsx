@@ -1,4 +1,4 @@
-import DisplayField from "@/Pages/Common/Shared/Form/Field/DisplayField";
+import DisplayField from "@/Pages/Common/Shared/Field/DisplayField";
 import { FormObject, DisplayElement as DisplayEl } from "@/util";
 import { InertiaLink } from "@inertiajs/inertia-react"
 import DisplayElement from "./DisplayElement";

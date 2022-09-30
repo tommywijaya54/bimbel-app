@@ -5,8 +5,8 @@ import { FormSchema } from "../util_form"
 import React from 'react';
 import { useForm } from '@inertiajs/inertia-react';
 import LoadingButton from '@/Shared/LoadingButton';
-import InputField from "./Field/InputField";
-import DisplayField from "./Field/DisplayField";
+import InputField from "../Field/InputField";
+import DisplayField from "../Field/DisplayField";
 
 const CreateEditForm = ({Form}) => {
     const method = Form.edit_form ? {_method: 'PUT'} : null;
