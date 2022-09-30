@@ -4,72 +4,6 @@ namespace App; // <- important
 
 use function PHPUnit\Framework\stringStartsWith;
 
-class FormField
-{
-    public $entityname;
-    public $value;
-
-    public $label;
-    public $inputtype;
-    public $element;
-    public $options;
-
-    // public $model;
-    // public $model_value;
-
-    function __construct($StringField)
-    {
-        // field schema -> entityname:label:inputtype
-        if ($StringField == null) {
-            $this->element = 'row';
-        } elseif ($StringField == "_") {
-            $this->element = 'line';
-        } else {
-            $arr = explode(":", $StringField);
-            $this->entityname = $arr[0];
-
-            // label assignment
-            /*
-            if (!isset($arr[1])) {
-                $this->label = $arr[1] ?? ucwords(str_replace('_', ' ', $this->entityname)); // set label -> if label has _ then change it into space
-            }
-            */
-
-            if (isset($arr[1]) && $arr[1] != '') {
-                $this->label = $arr[1];
-            } else {
-                $this->label = ucwords(str_replace('_', ' ', $this->entityname));
-            }
-
-            // type assigning
-            $this->inputtype = $arr[2] ?? 'text';
-            if (str_contains($this->entityname, '_date')) {
-                $this->inputtype = 'date';
-            }
-            if (str_contains($this->entityname, 'date')) {
-                $this->inputtype = 'date';
-            }
-
-            if (str_contains($this->entityname, '_id')) {
-                $this->label = ucwords(str_replace('_id', '', $this->entityname));
-                $this->inputtype = 'datalist';
-                $this->model = str_replace('_id', '', $this->entityname);
-            }
-
-            if (str_contains($this->entityname, 'note')) {
-                $this->inputtype = 'textarea';
-            }
-        }
-    }
-
-    public function hasOptions($options, $inputtype = 'select')
-    {
-        $this->options = $options;
-        $this->inputtype = $inputtype;
-        return $this;
-    }
-}
-
 class FormSchema
 {
     protected $original_string;
@@ -93,7 +27,7 @@ class FormSchema
         $this->modal = $modal;
 
         $this->fields = array_map(function ($string_field) {
-            return new FormField($string_field);
+            return new FieldSchema($string_field);
         }, $this->string_of_fields);
     }
 
@@ -135,7 +69,7 @@ class FormSchema
                 $field->model_value = $data[$model];
                 /*
                 if ($data[$model]) {
-                    $new_field = new FormField($model);
+                    $new_field = new FieldSchema($model);
                     $new_field->value = $data[$model];
 
                     
@@ -171,7 +105,7 @@ class FormSchema
 
     public function addField($field_string)
     {
-        array_push($this->fields, new FormField($field_string));
+        array_push($this->fields, new FieldSchema($field_string));
         return $this;
     }
     public function removeField()
