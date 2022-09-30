@@ -1,3 +1,4 @@
+import { usePage } from "@inertiajs/inertia-react";
 import React from "react";
 
 String.prototype.fromStringArraytoObject = function (){
@@ -107,17 +108,27 @@ class CurrentApp{
 
 class CurrentUser{
     constructor () {
+        console.log(usePage());
+        this.props = usePage().props;
+        this.user = this.props.auth.user;
+
+
+        /*
+
         this._app = window.current_app || new CurrentApp();
         this._data = this._app.data.props.auth.user;
         this.name = this._data.name;
         this.type = this._data.type;
-        this.permissions = this._app.data.props.auth.permissions;
-        this.roles = this._app.data.props.auth.roles;
+        */
+
+        this.permissions = this.props.auth.permissions;
+        this.roles = this.props.auth.roles;
     }
 
     hasPermission(prm){
         return this.permissions.includes(prm);
     }
+
     hasRole(rl){
         return this.roles.includes(rl);
     }
