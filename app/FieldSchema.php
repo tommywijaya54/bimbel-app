@@ -26,13 +26,6 @@ class FieldSchema
             $arr = explode(":", $StringField);
             $this->entityname = $arr[0];
 
-            // label assignment
-            /*
-            if (!isset($arr[1])) {
-            $this->label = $arr[1] ?? ucwords(str_replace('_', ' ', $this->entityname)); // set label -> if label has _ then change it into space
-            }
-            */
-
             if (isset($arr[1]) && $arr[1] != '') {
                 $this->label = $arr[1];
             } else {
