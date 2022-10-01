@@ -14,11 +14,11 @@ class ListSchema
 
     function __construct($StringOfFields = null, $modal = null, $model = null)
     {
-        $StringOfFields = str_replace(' ', '', $StringOfFields);
-
         if ($StringOfFields) {
             $this->original_string = $StringOfFields;
-            $this->string_of_fields = explode(',', $this->original_string);
+            $this->string_of_fields = array_map(function ($string) {
+                return trim($string);
+            }, explode(',', $this->original_string));
         }
 
         $this->modal = $modal;
@@ -27,11 +27,9 @@ class ListSchema
 
         $this->fields = array_map(function ($string_field) {
             $field = new FieldSchema($string_field);
-
             if (isset($field->model)) {
                 array_push($this->with_list, $field->model);
             }
-
             return $field;
         }, $this->string_of_fields);
 

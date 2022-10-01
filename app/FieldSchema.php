@@ -24,28 +24,40 @@ class FieldSchema
             $this->element = 'line';
         } else {
             $arr = explode(":", $StringField);
+            // default label & input type;
             $this->entityname = $arr[0];
+            $this->label = ucwords(str_replace('_', ' ', $this->entityname));
+            $this->inputtype = 'text';
 
-            if (isset($arr[1]) && $arr[1] != '') {
-                $this->label = $arr[1];
-            } else {
-                $this->label = ucwords(str_replace('_', ' ', $this->entityname));
-            }
-
-            // type assigning
-            $this->inputtype = $arr[2] ?? 'text';
+            // check default type base on entity
             if (str_contains($this->entityname, 'date')) {
                 $this->inputtype = 'date';
-            }
-
-            if (str_contains($this->entityname, '_id')) {
+            } else if (str_contains($this->entityname, 'email')) {
+                $this->inputtype = 'email';
+            } else if (str_contains($this->entityname, 'note')) {
+                $this->inputtype = 'textarea';
+            } else if (str_contains($this->entityname, '_id')) {
                 $this->label = ucwords(str_replace('_id', '', $this->entityname));
                 $this->inputtype = 'datalist';
                 $this->model = str_replace('_id', '', $this->entityname);
             }
 
-            if (str_contains($this->entityname, 'note')) {
-                $this->inputtype = 'textarea';
+            if (isset($arr[1])) {
+                if (str_contains($arr[1], '-')) {
+                    $options = explode('-', $arr[1]);
+                    foreach ($options as $key => $option) {
+                        if (isset($option) && $option != "") {
+                            $opt = explode('=', $option);
+                            if ($opt[0] == "inputtype") {
+                                $this->inputtype = $opt[1];
+                            } else if ($opt[0] == "model") {
+                                $this->model = $opt[1];
+                            }
+                        }
+                    }
+                } else {
+                    $this->label = $arr[1];
+                }
             }
         }
     }
