@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Schema;
 
 class CommonController extends Controller
 {
+    public $entity;
+    public $modal;
+
     function init($field_schema = null, $complete = false)
     {
         $this->setup();

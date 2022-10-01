@@ -6,9 +6,10 @@ export default ({student,children}) => {
     <CompRowAndBox
         header={
             <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                {student.name}
+                <a href={'/student/'+student.id} className="link">{student.name}</a>
                 <span className="info">Student Information</span>
             </h2>}
+        className=" student-information"
     >
         <Display
             content={student}

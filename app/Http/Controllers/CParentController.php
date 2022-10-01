@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\FormSchema;
-use App\Models\Cparent;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CparentController extends CommonController
@@ -14,13 +9,43 @@ class CparentController extends CommonController
     function __construct()
     {
         $this->init([
-            'list' => 'id:ID,nik:NIK,name:Parent Name,student:Child Name,phone,blacklist',
+            'list' => 'id:ID,nik:NIK,name:Parent Name,phone,blacklist',
             'form' => 'nik:NIK,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,blacklist',
         ], true);
 
         $this->form->title_format = "{nik} {name}";
     }
+
+    function show($id)
+    {
+        // dd($this->entity::with('students')->get()->toArray());
+
+        // dd($this->entity::find(1)->students->toArray());
+
+        $form_data = $this->form->displayForm($id);
+        return Inertia::render('Parent/Show', [
+            'title' => $form_data->title,
+            'form_schema' => $form_data,
+            'students' => $this->entity::find($id)->students->toArray(),
+        ]);
+
+        /*
+        return Inertia::render('Simple/Show', [
+            'page_title' => $entity->name . ' ' . $this->model_name . ' ',
+            'component_header' => $this->model_name . ' Information',
+
+            'form_fields' => $this->show_form_fields,
+            'data' => $entity,
+
+            'modal' => $this->modal,
+            'form_schema' => $this->form_schema,
+        ]);
+        */
+    }
 }
+
+
+
 
 /*Controller
 {

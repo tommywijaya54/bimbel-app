@@ -1,7 +1,7 @@
-export default ({header, note, footer, children}) => {
+export default ({header, note, footer, className, children}) => {
     return (
         <div className="ui-component row max-w-7xl mx-auto sm:px-6 lg:px-8 mb-6 row">
-            <div className="box bg-white overflow-hidden shadow-lg sm:rounded-lg ">
+            <div className={"box bg-white overflow-hidden shadow-lg sm:rounded-lg "+className}>
                 
                 {header && 
                     <div className="header ">

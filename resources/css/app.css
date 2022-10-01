@@ -401,3 +401,7 @@ span.empty-value {
     margin-top: -1em;
     margin-bottom: 1em;
 }
+
+.student-information .header {
+    background-color: aqua;
+}
