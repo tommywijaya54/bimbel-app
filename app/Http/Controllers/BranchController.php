@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Branch;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class BranchController extends CommonController
 {

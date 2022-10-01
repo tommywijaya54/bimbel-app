@@ -2,38 +2,12 @@
 
 namespace App; // <- important
 
-class ListSchema
+class ListSchema extends CommonSchema
 {
-    protected $original_string;
-    protected $string_of_fields;
-    protected $model;
-    protected $fields;
-    protected $with_list = [];
-
-    public $header;
-
     function __construct($StringOfFields = null, $modal = null, $model = null)
     {
-        if ($StringOfFields) {
-            $this->original_string = $StringOfFields;
-            $this->string_of_fields = array_map(function ($string) {
-                return trim($string);
-            }, explode(',', $this->original_string));
-        }
-
-        $this->modal = $modal;
-        $this->model = $model;
-        $this->item_url = '/' . $modal . '/{id}';
-
-        $this->fields = array_map(function ($string_field) {
-            $field = new FieldSchema($string_field);
-            if (isset($field->model)) {
-                array_push($this->with_list, $field->model);
-            }
-            return $field;
-        }, $this->string_of_fields);
-
-        $this->header = $this->fields;
+        parent::__construct($StringOfFields, $modal, $model);
+        $this->item_url = '/' . $this->modal . '/{id}';
     }
 
     public function table_format()

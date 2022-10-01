@@ -28,7 +28,7 @@ class CommonController extends Controller
     function index()
     {
         return Inertia::render('Common/List', [
-            'title' =>  $this->model_name . " List",
+            'title' =>  $this->modal_name_for_page_title . " List",
             'list' => $this->list->table_format(),
         ]);
     }
@@ -45,7 +45,7 @@ class CommonController extends Controller
     public function create()
     {
         return Inertia::render('Common/CreateForm', [
-            'title' => "Create " . $this->model_name,
+            'title' => "Create " . $this->modal_name_for_page_title,
             'form_schema' => $this->form->createForm(),
         ]);
     }
@@ -54,7 +54,7 @@ class CommonController extends Controller
     {
         $form_data = $this->form->editForm($id);
         return Inertia::render('Common/EditForm', [
-            'title' => 'Edit ' . $form_data->title . ' ' . $this->modal,
+            'title' => 'Edit ' . $form_data->title . ' ' . $this->modal_name_for_page_title,
             'form_schema' => $form_data,
         ]);
     }
@@ -71,20 +71,21 @@ class CommonController extends Controller
         return redirect('/' . $this->modal . '/' . $id);
     }
 
-
-
-
-
     private function setup()
     {
         $model_url = 'App\\Models\\';
         $class_Url = get_class($this);                                                      //"App\Http\Controllers\PromolistController";
-        $controller_name = str_replace('App\\Http\\Controllers\\', '', $class_Url);         // PromolistController
-        $model_name = str_replace('Controller', '', $controller_name);                      //Promolist
-
-        $this->model_name = $model_name;
+        $controller_name = substr($class_Url, strrpos($class_Url, '\\') + 1);               // $controller_name = str_replace('App\\Http\\Controllers\\', '', $class_Url);         // PromolistController
+        $this->model_name = str_replace('Controller', '', $controller_name);                //Promolist
         $this->entity = $model_url . $this->model_name;
-        $this->modal = strtolower($this->model_name);
+
+        $this->modal = strtolower($this->model_name);                                       // modal is for url and display purpose so it's okay to edit it;
+        if ($this->modal == 'cparent') {
+            $this->modal = 'parent';
+        }
+
+        $this->modal_name_for_page_title = ucfirst($this->modal);
+
 
         $this->table_name = with(new $this->entity)->getTable();
         $this->all_table_column = Schema::getColumnListing($this->table_name);

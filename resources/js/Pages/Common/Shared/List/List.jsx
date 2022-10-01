@@ -3,10 +3,10 @@ import DisplayField from "../Field/DisplayField";
 import ListItemField from "../Field/ListItemField";
 
 export default (listprops) => {
-    const {header, data, item_url} = listprops;
+    const {fields, data, item_url} = listprops;
 
     const PrimaryId = "id";
-    const TableTD = header;
+    const TableTD = fields; // Header
     const TableData = data;
 
     return <>

@@ -9,8 +9,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
+class CparentController extends CommonController
+{
+    function __construct()
+    {
+        $this->init([
+            'list' => 'id:ID,nik:NIK,name:Parent Name,student:Child Name,phone,blacklist',
+            'form' => 'nik:NIK,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,blacklist',
+        ], true);
 
-class CparentController extends Controller
+        $this->form->title_format = "{nik} {name}";
+    }
+}
+
+/*Controller
 {
     public $entity = Cparent::class;
     public $modal = 'parent';
@@ -148,3 +160,4 @@ class CparentController extends Controller
         return redirect('/' . $this->modal . '/' . $entity->id);
     }
 }
+*/

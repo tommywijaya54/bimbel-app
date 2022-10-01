@@ -2,45 +2,18 @@
 
 namespace App; // <- important
 
-class FormSchema
+class FormSchema extends CommonSchema
 {
-    protected $original_string;
-    protected $string_of_fields;
-    protected $model;
-    protected $with_list = [];
-
-    public $title_format = '{id}';
-
     // public $options; // create/edit/display_form
 
     public $id;
-    public $title;
-    public $fields;
     public $submit_url;
     public $form_type;
-    public $modal;
     public $data;
-
 
     function __construct($StringOfFields = null, $modal = null, $model = null)
     {
-        if ($StringOfFields) {
-            $this->original_string = $StringOfFields;
-            $this->string_of_fields = array_map(function ($string) {
-                return trim($string);
-            }, explode(',', $this->original_string));
-        }
-
-        $this->modal = $modal;
-        $this->model = $model;
-
-        $this->fields = array_map(function ($string_field) {
-            $field = new FieldSchema($string_field);
-            if (isset($field->model)) {
-                array_push($this->with_list, $field->model);
-            }
-            return $field;
-        }, $this->string_of_fields);
+        parent::__construct($StringOfFields, $modal, $model);
     }
 
     public function field($entityname)
@@ -112,7 +85,7 @@ class FormSchema
     {
         $this->retriveFieldOptions();
         $this->create_form = true;
-        $this->title = 'Create ' . ucfirst($this->modal) . ' Form';
+        $this->title = 'Create ' . $this->modal . ' Form';
         $this->form_type = "create";
         $this->submit_url = '/' . $this->modal;
         return $this;
