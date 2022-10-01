@@ -11,45 +11,34 @@ use Illuminate\Support\Facades\Schema;
 
 class CommonController extends Controller
 {
-    public $model_name = "tom";
-
-    function __construct()
+    function init($field_schema = null, $complete = false)
     {
-        $this->model_name = str_replace('Controller', '', get_class($this));
-        $this->entity = 'App\\Models\\' . $this->model_name;
-        $this->modal = strtolower($this->model_name);
+        $this->setup();
+        $this->field_schema = $field_schema;
 
-        // $this->entity = ('App\\Models\\' . $this->model_name)::class;
+        if (empty($complete)) {
+            $this->tableInformation();
+        }
 
-        $this->table_name = with(new $this->entity)->getTable();
-        $this->all_table_column = Schema::getColumnListing($this->table_name);
-        $this->list = new ListSchema('id', $this->modal, $this->entity);
-
-        //$this->list->include(['student', 'branch']);
-        /*
-        $this->form_schema = new FormSchema('date,,student_id,branch_id,reference,cashback::number,status,note', $this->modal);
-        $this->form_schema->field('student_id')->hasOptions(Student::all(['id', 'name'])->toArray(), 'datalist');
-        $this->form_schema->field('branch_id')->hasOptions(Branch::all(['id', 'name'])->toArray(), 'datalist');
-        */
+        $this->list = new ListSchema($this->field_schema['list'], $this->modal, $this->entity);
+        $this->form = new FormSchema($this->field_schema['form'], $this->modal, $this->entity);
     }
+
 
     function index()
     {
-        //dd($this->entity::all());
-        print_r($this);
-
         return Inertia::render('Common/List', [
-            'title' =>   " List",
+            'title' =>  $this->model_name . " List",
             'list' => $this->list->table_format(),
         ]);
     }
 
     public function show($id)
     {
-        $entity = $this->entity::find($id)->toArray();
+        $form_data = $this->form->displayForm($id);
         return Inertia::render('Common/DisplayForm', [
-            'title' => $entity['id'] . ' ' . $this->model_name . ' ',
-            'form_schema' => $this->form_schema->withValue($entity)->displayForm(),
+            'title' => $form_data->title,
+            'form_schema' => $form_data,
         ]);
     }
 
@@ -57,29 +46,76 @@ class CommonController extends Controller
     {
         return Inertia::render('Common/CreateForm', [
             'title' => "Create " . $this->model_name,
-            'form_schema' => $this->form_schema->createForm(),
+            'form_schema' => $this->form->createForm(),
         ]);
     }
 
     public function edit($id)
     {
-        $entity = $this->entity::find($id);
-        $form_schema = $this->form_schema->withValue($entity)->editForm();
+        $form_data = $this->form->editForm($id);
         return Inertia::render('Common/EditForm', [
-            'title' => 'Edit ' . $entity['id'] . ' ' . $this->modal,
-            'form_schema' => $form_schema,
+            'title' => 'Edit ' . $form_data->title . ' ' . $this->modal,
+            'form_schema' => $form_data,
         ]);
     }
 
     public function store(Request $request)
     {
-        $this->entity::create($this->form_schema->setStoreOrUpdate($request));
+        $this->entity::create($this->form->setStoreOrUpdate($request));
         return redirect('/' . $this->modal);
     }
 
     public function update(Request $request, $id)
     {
-        $this->form_schema->setStoreOrUpdate($request, $this->entity::find($id))->update();
+        $this->form->setStoreOrUpdate($request, $this->entity::find($id))->update();
         return redirect('/' . $this->modal . '/' . $id);
+    }
+
+
+
+
+
+    private function setup()
+    {
+        $model_url = 'App\\Models\\';
+        $class_Url = get_class($this);                                                      //"App\Http\Controllers\PromolistController";
+        $controller_name = str_replace('App\\Http\\Controllers\\', '', $class_Url);         // PromolistController
+        $model_name = str_replace('Controller', '', $controller_name);                      //Promolist
+
+        $this->model_name = $model_name;
+        $this->entity = $model_url . $this->model_name;
+        $this->modal = strtolower($this->model_name);
+
+        $this->table_name = with(new $this->entity)->getTable();
+        $this->all_table_column = Schema::getColumnListing($this->table_name);
+        $this->table_column = array_diff($this->all_table_column, ['id', 'created_at', 'created_by', 'updated_at']);
+    }
+
+    private function tableInformation()
+    {
+        echo "<pre>\n\n\n
+        Add code below to your Controller:\n\n\n
+        ";
+        echo "\$this->init([
+            'list' => 'id," . implode(",", $this->table_column) . "',
+            'form' => '" . implode(",", $this->table_column) . "',
+        ]);
+        \n\n<hr>
+        Add this code to your Model:\n";
+        echo "
+            protected \$fillable = [";
+        foreach ($this->table_column as $column) {
+            echo "\n\t\t\t'" . $column . "',";
+        }
+        echo "
+    ];
+
+            public function xxxx_id () {
+                return \$this->belongsTo(xxxx::class);
+            }
+        ";
+        echo " <//pre><hr><br/>Table Column:<br/>";
+        print_r($this->table_column);
+        die;
     }
 }

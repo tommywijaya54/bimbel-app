@@ -24,7 +24,6 @@ class UserController extends Controller
         $this->model_name = ucfirst($this->modal);
     }
 
-
     public function index()
     {
         $data = $this->entity::all();
