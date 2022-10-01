@@ -31,7 +31,7 @@ export default (listprops) => {
                                     {
                                         TableTD.map((el, keyID) => {
                                             return <td key={keyID}>
-                                                <ListItemField field={el} data={data[el.entityname]}></ListItemField>
+                                                <ListItemField field={el} data={data[el.entityname]} rawdata={data}></ListItemField>
                                             </td>
                                         })
                                     }
