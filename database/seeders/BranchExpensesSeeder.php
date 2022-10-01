@@ -32,7 +32,7 @@ class BranchExpensesSeeder extends Seeder
 
                 'approve_by' => fake('id_ID')->text(),
             ];
-            DB::table('expenses')->insert($arr);
+            DB::table('branch_expenses')->insert($arr);
         }
 
         for ($x = 1; $x <= 10; $x++) {
@@ -50,7 +50,7 @@ class BranchExpensesSeeder extends Seeder
                 'notaris_name' => fake('id_ID')->name(),
                 'notaris_phone' => fake('id_ID')->phoneNumber(),
             ];
-            DB::table('rentals')->insert($arr);
+            DB::table('branch_rentals')->insert($arr);
         }
 
         for ($x = 1; $x <= 10; $x++) {
@@ -61,7 +61,7 @@ class BranchExpensesSeeder extends Seeder
                 'cost' => fake('id_ID')->numberBetween($min = 1500, $max = 6000),
                 'note' => fake('id_ID')->text(50),
             ];
-            DB::table('assets')->insert($arr);
+            DB::table('branch_assets')->insert($arr);
         }
     }
 }

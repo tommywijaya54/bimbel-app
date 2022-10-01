@@ -16,7 +16,7 @@ class ParentSeeder extends Seeder
      */
     public function run()
     {
-        for ($x = 1; $x <= 10; $x++) {
+        for ($x = 1; $x <= 4; $x++) {
             $people = [
                 'nik' => fake('id_ID')->numerify('CPA-###-###-###'),
                 'name' => fake('id_ID')->name(),

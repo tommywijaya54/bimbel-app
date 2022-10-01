@@ -32,15 +32,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('managers', function (Blueprint $table) {
-            $table->id();
-            $table->integer('employee_id');
-            $table->integer('branch_id')->nullable();
-            $table->string('note');
-            $table->integer('created_by')->nullable();
-            $table->timestamps();
-        });
-
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -54,8 +45,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::create('branch_expenses', function (Blueprint $table) {
             $table->id();
             $table->integer('branch_id');
             $table->string('expense_type');
@@ -67,8 +57,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
-        Schema::create('rentals', function (Blueprint $table) {
+        Schema::create('branch_rentals', function (Blueprint $table) {
             $table->id();
             $table->integer('branch_id');
             $table->date('start_date');
@@ -82,8 +71,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
-        Schema::create('assets', function (Blueprint $table) {
+        Schema::create('branch_assets', function (Blueprint $table) {
             $table->id();
             $table->integer('branch_id');
             $table->string('item_name');
@@ -93,7 +81,6 @@ return new class extends Migration
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
-
 
         Schema::create('cparents', function (Blueprint $table) {
             $table->id();
@@ -113,7 +100,6 @@ return new class extends Migration
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
-
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
@@ -136,7 +122,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
         Schema::create('schools', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -147,7 +132,6 @@ return new class extends Migration
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
-
 
         Schema::create('pricelists', function (Blueprint $table) {
             $table->id();
@@ -163,7 +147,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
         Schema::create('promolists', function (Blueprint $table) {
             $table->id();
             $table->date('start_date');
@@ -175,22 +158,19 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
             $table->integer('student_id');
             $table->integer('branch_id');
             $table->date('date');
             $table->string('reference');
-            $table->integer('cashback');
+            $table->string('cashback');
             $table->string('status')->nullable();
             $table->string('note')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
-
-
-        Schema::create('registrationitems', function (Blueprint $table) {
+        Schema::create('registration_items', function (Blueprint $table) {
             $table->id();
             $table->integer('registration_id');
             $table->integer('pricelist_id')->nullable();
@@ -215,6 +195,7 @@ return new class extends Migration
         });
 
 
+        /*
         Schema::create('advisors', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_id');
@@ -244,17 +225,6 @@ return new class extends Migration
         });
 
 
-        Schema::create('employeeroles', function (Blueprint $table) {
-            $table->id();
-            $table->integer('employee_id');
-            $table->string('role_title');
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->integer('created_by')->nullable();
-            $table->timestamps();
-        });
-
-
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->string('model');
@@ -277,6 +247,7 @@ return new class extends Migration
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
+        */
     }
 
     /**

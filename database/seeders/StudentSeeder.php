@@ -24,7 +24,7 @@ class StudentSeeder extends Seeder
 
         for (
             $x = 1;
-            $x <= 20;
+            $x <= 5;
             $x++
         ) {
             $people = [
