@@ -46,6 +46,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function branch()
+    {
+        return $this->hasMany(Branch::class, 'manager_id', 'id');
+    }
+
+
     public static function findByName($fullname)
     {
         return static::where('name', $fullname)->first();
