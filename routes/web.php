@@ -74,6 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     $routeList = [
         'registration' => RegistrationController::class,
         'promolist' => PromolistController::class,
+        'pricelist' => PricelistController::class,
         'branch' => BranchController::class,
         'school' => SchoolController::class,
         'parent' => CparentController::class,
