@@ -25,9 +25,10 @@ class FormSchema
     function __construct($StringOfFields = null, $modal = null, $model = null)
     {
         if ($StringOfFields) {
-            $StringOfFields = str_replace(' ', '', $StringOfFields);
             $this->original_string = $StringOfFields;
-            $this->string_of_fields = explode(',', $this->original_string);
+            $this->string_of_fields = array_map(function ($string) {
+                return trim($string);
+            }, explode(',', $this->original_string));
         }
 
         $this->modal = $modal;
@@ -35,12 +36,9 @@ class FormSchema
 
         $this->fields = array_map(function ($string_field) {
             $field = new FieldSchema($string_field);
-
             if (isset($field->model)) {
-                $field->hasOptions(('App\\Models\\' . ucfirst($field->model))::all(['id', 'name'])->toArray(), 'datalist');
                 array_push($this->with_list, $field->model);
             }
-
             return $field;
         }, $this->string_of_fields);
     }
@@ -75,6 +73,7 @@ class FormSchema
     public function setDataFor($id)
     {
         if (isset($this->with_list)) {
+            //dd($this->with_list);
             $this->data = $this->model::with($this->with_list)->find($id)->toArray();;
         } else {
             $this->data = $this->model::find($id)->toArray();;
@@ -96,6 +95,29 @@ class FormSchema
         }
     }
 
+    public function retriveFieldOptions()
+    {
+        $fields_has_model = array_filter($this->fields, function ($field) {
+            return (isset($field->model) && empty($field->options));
+        });
+        foreach ($fields_has_model as $field) {
+            $this->field($field->entityname)->hasOptions(
+                ('App\\Models\\' . ucfirst($field->model))::all(['id', 'name'])->toArray(),
+                'datalist'
+            );
+        }
+    }
+
+    public function createForm()
+    {
+        $this->retriveFieldOptions();
+        $this->create_form = true;
+        $this->title = 'Create ' . ucfirst($this->modal) . ' Form';
+        $this->form_type = "create";
+        $this->submit_url = '/' . $this->modal;
+        return $this;
+    }
+
     public function displayForm($id)
     {
         $this->setDataFor($id);
@@ -104,17 +126,9 @@ class FormSchema
         return $this;
     }
 
-    public function createForm()
-    {
-        $this->create_form = true;
-        $this->title = 'Create ' . ucfirst($this->modal) . ' Form';
-        $this->form_type = "create";
-        $this->submit_url = '/' . $this->modal;
-        return $this;
-    }
-
     public function editForm($id)
     {
+        $this->retriveFieldOptions();
         $this->setDataFor($id);
         $this->edit_form = true;
         $this->form_type = "edit";
