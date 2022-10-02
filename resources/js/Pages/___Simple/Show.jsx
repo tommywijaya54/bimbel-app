@@ -2,7 +2,7 @@ import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import CompRowAndBox from '@/Shared/CompRowAndBox';
 import Display from '@/Shared/Display';
-import SmartFooterButton from '@/Components/SmartFooterButton';
+import SmartFooterButton from '@/Components/Layout/FormFooterButton';
 
 export default function Show(props) {
     return (

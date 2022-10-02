@@ -1,5 +1,4 @@
 import Icon from "@/Shared/Icon";
-import DisplayField from "../Field/DisplayField";
 import ListItemField from "../Field/ListItemField";
 
 export default (listprops) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
-import StudentDetails from '@/Components/StudentDetails';
-import Form from '../Common/Shared/Form/Form';
+import StudentDetails from '@/Shared/PageComponent/StudentDetails';
+import Form from '@/Shared/DisplayPageComponent/Form/Form';
 
 export default function Show(props) {
     return (
@@ -24,13 +24,3 @@ export default function Show(props) {
         </MainLayout>
     );
 }
-
-/*
-
-            {
-                props?.students?.map((student, keyid)=>{
-                    return <StudentDetails student={student}></StudentDetails>
-                })
-            }
-
-            */

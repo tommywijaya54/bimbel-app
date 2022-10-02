@@ -1,6 +1,6 @@
 import CompRowAndBox from "@/Shared/CompRowAndBox";
 import Display from "@/Shared/Display";
-import SmartFooterButton from "./SmartFooterButton";
+import SmartFooterButton from "./Layout/FormFooterButton";
 
 export default ({user,children}) => {
     return (

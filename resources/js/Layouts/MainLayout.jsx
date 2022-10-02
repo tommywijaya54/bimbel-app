@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import HeaderAction from '@/Components/HeaderAction';
+import HeaderAction from '@/Shared/LayoutComponent/HeaderAction';
 
 export default function MainLayout({auth, errors, title, children}) {
     const {flash} = usePage().props;

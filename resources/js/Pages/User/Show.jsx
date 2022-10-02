@@ -1,11 +1,11 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
-import DebugComponent from '@/Shared/Debug/DebugComponent';
-import UserDetails from '@/Components/UserDetails';
-import ParentDetails from '@/Components/ParentDetails';
-import StudentDetails from '@/Components/StudentDetails';
-import EmployeeDetails from '@/Components/EmployeeDetails';
+
+import UserDetails from '@/Shared/Components/UserDetails';
+import ParentDetails from '@/Shared/Components/ParentDetails';
+import StudentDetails from '@/Shared/PageComponent/StudentDetails';
+import EmployeeDetails from '@/Shared/Components/EmployeeDetails';
 
 export default function Show(props) {
     return (
