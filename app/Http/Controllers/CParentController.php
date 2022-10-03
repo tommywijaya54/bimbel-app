@@ -6,13 +6,17 @@ use Inertia\Inertia;
 
 class CparentController extends CommonController
 {
+    public $modal = 'parent';
+
     function __construct()
     {
-        $this->init([
-            'list' => 'id:ID,nik:NIK,name:Parent Name,phone,blacklist',
-            'form' => 'nik:NIK,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,blacklist',
-        ], true);
-
+        parent::__construct(
+            [
+                'list' => 'id:ID,nik:NIK,name:Parent Name,phone,blacklist',
+                'form' => 'nik:NIK,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,blacklist',
+            ],
+            true
+        );
         $this->form->title_format = "{nik} {name}";
     }
 

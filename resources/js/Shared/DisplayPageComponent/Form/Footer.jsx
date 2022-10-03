@@ -1,38 +1,26 @@
 import { CurrentUser, getAlias } from "@/util";
 
-const FormFooter = ({form, obj}) => {
+const FormFooter = ({form, obj, link}) => {
     const user = new CurrentUser();
     const model = window.location.pathname.split('/')[1];
 
     let component = [];
-
-    if(form.create_form || form.edit_form){
-        return '';
-    }
-
-    if(form.display_form){
-        user.hasPermission('edit-'+model) ? 
-            component.push(<a href={'/'+model+'/'+obj.id+'/edit'} className={'button '}>Edit {model.cap()}</a>) : ''
-    }
     
-    if(model === 'user'){
-        const url = {
-            deactivate:'/user/'+obj.id+'/deactivate',
-            activate:'/user/'+obj.id+'/activate',
-            edit:'/user/'+obj.id+'/edit',
-            resetPassword:'/user/'+obj.id+'/resetpassword',
+    if(link){
+        const linkvar = link.permission.split('-');
+        user.hasPermission(link.permission) ? 
+            component.push(<a href={'/'+linkvar[1]+'/'+link.id+'/edit'} className={'button '}>{linkvar[0].cap()} {linkvar[1].cap()}</a>) : ''
+    }
+
+    if(form && obj){
+        if(form.create_form || form.edit_form){
+            return '';
         }
-        user.hasPermission('deactivate-user') ? 
-            component.push(<a href={url.deactivate} className={'button ' + (obj.disabled ? 'disabled' : '')}>Deactivate user</a>) : ''
 
-        user.hasPermission('activate-user') ? 
-            component.push(<a href={url.activate} className={'button ' + (obj.disabled ? '' : 'disabled')}>Activate user</a>) : ''
-        
-        user.hasPermission('reset password-user') ? 
-            component.push(<a href={url.resetPassword} className={'button '}>Reset Password</a>) : ''
-
-        user.hasPermission('edit-user') ? 
-            component.push(<a href={url.edit} className={'button '}>Edit user</a>) : ''
+        if(form.display_form){
+            user.hasPermission('edit-'+model) ? 
+                component.push(<a href={'/'+model+'/'+obj.id+'/edit'} className={'button '}>Edit {model.cap()}</a>) : ''
+        }
     }
 
     return (<div className="form-footer">

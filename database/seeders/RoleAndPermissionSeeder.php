@@ -24,7 +24,7 @@ class RoleAndPermissionSeeder extends Seeder
         }
 
         $owner_permissions = [
-            'list-role and permission',
+            'list-role',
             'show-role',
             'edit-role',
 

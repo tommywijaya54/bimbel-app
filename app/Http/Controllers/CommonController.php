@@ -14,19 +14,29 @@ class CommonController extends Controller
     public $entity;
     public $modal;
 
-    function init($field_schema = null, $complete = false)
+    function __construct($field_schema = null, $complete = false)
     {
-        $this->setup();
-        $this->field_schema = $field_schema;
+        if (!$this->entity) {
+            $model_url = 'App\\Models\\';
+            $class_Url = get_class($this);                                                      //"App\Http\Controllers\PromolistController";
+            $controller_name = substr($class_Url, strrpos($class_Url, '\\') + 1);               //$controller_name = str_replace('App\\Http\\Controllers\\', '', $class_Url);         // PromolistController
+            $this->model_name = str_replace('Controller', '', $controller_name);                //Promolist
+            $this->entity = $model_url . $this->model_name;
+        }
 
         if (empty($complete)) {
             $this->tableInformation();
         }
 
+        if (!$this->modal) {
+            $this->modal = strtolower($this->model_name);                                   // modal is for url and display purpose so it's okay to edit it;
+        }
+        $this->modal_name_for_page_title = ucfirst($this->modal);
+
+        $this->field_schema = $field_schema;
         $this->list = new ListSchema($this->field_schema['list'], $this->modal, $this->entity);
         $this->form = new FormSchema($this->field_schema['form'], $this->modal, $this->entity);
     }
-
 
     function index()
     {
@@ -35,7 +45,13 @@ class CommonController extends Controller
             'list' => $this->list->table_format(),
         ]);
     }
-
+    public function create()
+    {
+        return Inertia::render('Common/CreateForm', [
+            'title' => "Create " . $this->modal_name_for_page_title,
+            'form_schema' => $this->form->createForm(),
+        ]);
+    }
     public function show($id)
     {
         $form_data = $this->form->displayForm($id);
@@ -44,15 +60,6 @@ class CommonController extends Controller
             'form_schema' => $form_data,
         ]);
     }
-
-    public function create()
-    {
-        return Inertia::render('Common/CreateForm', [
-            'title' => "Create " . $this->modal_name_for_page_title,
-            'form_schema' => $this->form->createForm(),
-        ]);
-    }
-
     public function edit($id)
     {
         $form_data = $this->form->editForm($id);
@@ -67,36 +74,18 @@ class CommonController extends Controller
         $this->entity::create($this->form->setStoreOrUpdate($request));
         return redirect('/' . $this->modal);
     }
-
     public function update(Request $request, $id)
     {
         $this->form->setStoreOrUpdate($request, $this->entity::find($id))->update();
         return redirect('/' . $this->modal . '/' . $id);
     }
 
-    private function setup()
+    private function tableInformation()
     {
-        $model_url = 'App\\Models\\';
-        $class_Url = get_class($this);                                                      //"App\Http\Controllers\PromolistController";
-        $controller_name = substr($class_Url, strrpos($class_Url, '\\') + 1);               // $controller_name = str_replace('App\\Http\\Controllers\\', '', $class_Url);         // PromolistController
-        $this->model_name = str_replace('Controller', '', $controller_name);                //Promolist
-        $this->entity = $model_url . $this->model_name;
-
-        $this->modal = strtolower($this->model_name);                                       // modal is for url and display purpose so it's okay to edit it;
-        if ($this->modal == 'cparent') {
-            $this->modal = 'parent';
-        }
-
-        $this->modal_name_for_page_title = ucfirst($this->modal);
-
-
         $this->table_name = with(new $this->entity)->getTable();
         $this->all_table_column = Schema::getColumnListing($this->table_name);
         $this->table_column = array_diff($this->all_table_column, ['id', 'created_at', 'created_by', 'updated_at']);
-    }
 
-    private function tableInformation()
-    {
         echo "<pre>\n\n\n
         Add code below to your Controller:\n\n\n
         ";

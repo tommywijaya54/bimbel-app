@@ -1,5 +1,6 @@
+import Icon from "@/Shared/Icon";
 
-export default ({header, note, footer, children, className}) => {
+export default ({header, note, footer, children, className, expandable}) => {
     return (
         <div className={'ui-component row max-w-7xl mx-auto sm:px-6 lg:px-8 mb-6 row '+className}>
             <div className="box bg-white overflow-hidden shadow-lg sm:rounded-lg ">

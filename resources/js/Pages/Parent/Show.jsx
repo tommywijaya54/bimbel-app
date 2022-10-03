@@ -15,11 +15,17 @@ export default function Show(props) {
             >
             </Form>
             
-            {
-                props.students.map((student, keyid)=>{
-                    return <StudentDetails student={student}></StudentDetails>
-                })
-            }
+            <div>
+                <fieldset className='shadow'>
+                    <legend>Student / Child information</legend>
+                   
+                    {
+                        props.students.map((student, keyid)=>{
+                            return <StudentDetails key={keyid} student={student}></StudentDetails>
+                        })
+                    }
+                </fieldset>
+            </div>
             
         </MainLayout>
     );

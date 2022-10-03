@@ -17,7 +17,7 @@ class RegistrationController extends CommonController
 {
     function __construct()
     {
-        $this->init([
+        parent::__construct([
             'list' => 'id,date,student_id,branch_id,status',
             'form' => 'date,,student_id,branch_id,reference,cashback::number,status,note'
         ], true);

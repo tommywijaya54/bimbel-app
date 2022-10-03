@@ -8,79 +8,29 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class EmployeeController extends Controller
+class EmployeeController extends CommonController
 {
-    public $entity = Employee::class;
-    public $modal = 'employee';
-
-    // this used on INDEX VIEW
-    public $list_view_fields = "id,nik,name,phone,email";
-
-    // this used on SHOW VIEW
-    public $form_fields = 'nik,,name,address,phone,email,emergency_name,emergency_phone,join_date,exit_date,note,user,branch';
 
     function __construct()
     {
-        $this->model_name = ucfirst($this->modal);
+        parent::__construct([
+            'list' => 'id:ID,nik:NIK,name:Employee Name,phone,branch_id',
+            'form' =>  'nik:NIK,,name,address,phone,email,emergency_name,emergency_phone,join_date,exit_date,note,branch_id'
+        ], true);
 
-        // this used on index view for reducing the data variable
-        $this->list_view_array = explode(",", $this->list_view_fields);
-
-        // for Create View Fields & 
-        $this->create_form_fields = 'nik,,name,address,phone,email,emergency_name,emergency_phone,join_date,exit_date,note,branch_id';  // str_replace(',user', '', $this->form_fields);
-
-        // this used for Store function
-        $this->store_form_fields = str_replace(",,", ',', $this->create_form_fields);
-
-        // for Edit View Fields
-        $this->edit_form_fields = $this->create_form_fields;
-        $this->update_form_fields = str_replace(",,", ',', $this->create_form_fields);
+        $this->form->title_format = "{nik} / {name}";
     }
 
-    public function index()
-    {
-        $data = $this->entity::all($this->list_view_array);
-        return Inertia::render('Simple/Index', [
-            'page_title' => $this->model_name . " List",
-            'fields' => $this->list_view_fields,
-            'data' => $data,
-            'item_url' => "/" . $this->modal . "/{id}",
-            'modal' => $this->modal,
-        ]);
-    }
-
-    public function create()
-    {
-        return Inertia::render('Simple/Create', [
-            'page_title' => "Create " . $this->model_name,
-            'form_fields' => $this->create_form_fields,
-            'form_fields_options' => [
-                'branch_id' => Branch::all(['id', 'name'])
-            ],
-            'modal' => $this->modal,
-            'post_url' => "/" . $this->modal,
-        ]);
-    }
 
     public function store(Request $request)
     {
-        $arr = [];
-        $fieldnames = explode(",", $this->store_form_fields);
+        $employee = $this->entity::create($this->form->setStoreOrUpdate($request));
 
-        foreach ($fieldnames as $a) {
-            if ($request[$a]) {
-                $arr[$a] = $request[$a];
-            }
-        }
-
-        $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'type' => 'Employee',
-            'password' => bcrypt('password'), // '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi', // password
-        ]);
-
-        $employee = $this->entity::create($arr);
+        $user = User::firstOrNew(['email' =>  $request('email')]);
+        $user->name = request('name');
+        $user->type = 'Student';
+        $user->password = bcrypt('password');
+        $user->save();
 
         $employee->user_id = $user->id;
         $employee->update();
@@ -90,59 +40,16 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $entity = $this->entity::with('user', 'branch')->find($id);
-        $entity->role = $entity->user->roles->pluck('name');
+        $form_data = $this->form->displayForm($id);
 
-        // get branch
-        // get user account 
-        // get role
+        $employee_details = $this->entity::with('user', 'branch')->find($id);
+        $roles = $employee_details->user->roles->pluck('name');
 
-        return Inertia::render('Simple/Show', [
-            'page_title' => $entity->name . ' ' . $this->model_name . ' ',
-            'component_header' => $this->model_name . ' Information',
-
-            'form_fields' => $this->form_fields . ',role',
-            'data' => $entity,
-
-            'modal' => $this->modal,
+        return Inertia::render('Employee/Show', [
+            'title' => $form_data->title,
+            'form_schema' => $form_data,
+            // 'employee_details' => $employee_details,
+            'roles' => $roles,
         ]);
-    }
-
-    public function edit($id)
-    {
-        $entity = $this->entity::find($id);
-
-        return Inertia::render('Simple/Edit', [
-            'page_title' => 'Edit ' . $entity->name . ' ' . $this->modal,
-            'component_header' => 'Edit Form ',
-            'component_note' => 'To change name, email & password on your login information you need to contact administrator',
-
-            'form_fields' =>  $this->edit_form_fields,
-            'form_fields_options' => [
-                'branch_id' => Branch::all(['id', 'name'])
-            ],
-
-            'data' => $entity,
-            'post_url' => "/" . $this->modal . "/" . $entity->id,
-
-            'modal' => $this->modal,
-        ]);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $fieldnames = explode(",", $this->update_form_fields);
-
-        $entity = $this->entity::find($id);
-
-        foreach ($fieldnames as $a) {
-            if ($request[$a]) {
-                $entity[$a] = $request[$a];
-            }
-        }
-
-        $entity->update();
-
-        return redirect('/' . $this->modal . '/' . $entity->id);
     }
 }

@@ -405,3 +405,19 @@ span.empty-value {
 .student-information .header {
     background-color: aqua;
 }
+
+fieldset {
+    border: 1px solid #aaa;
+    border-radius: 0.5em;
+    background-color: #fff;
+}
+
+legend {
+    padding: 0.5em 1.3em;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    margin-left: 2em;
+    border-radius: 0.5em;
+    margin-bottom: 1em;
+    font-weight: 700;
+}

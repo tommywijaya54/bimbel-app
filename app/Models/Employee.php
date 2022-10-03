@@ -20,12 +20,11 @@ class Employee extends Model
         'join_date',
         'exit_date',
         'note',
-        'branch_id'
-    ];
-
-    protected $hidden = [
+        'branch_id',
         'user_id'
     ];
+
+    protected $hidden = [];
 
     public function user()
     {

@@ -18,7 +18,6 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        //
         $Schools = School::all();
         $Parents = Cparent::all();
 

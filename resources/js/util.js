@@ -112,7 +112,6 @@ class CurrentUser{
         this.props = usePage().props;
         this.user = this.props.auth.user;
 
-
         /*
 
         this._app = window.current_app || new CurrentApp();
@@ -133,6 +132,7 @@ class CurrentUser{
         return this.roles.includes(rl);
     }
 } 
+
 /*
 window.current_app = new CurrentApp();
 

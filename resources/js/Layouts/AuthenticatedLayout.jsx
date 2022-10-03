@@ -7,6 +7,7 @@ import { Link } from '@inertiajs/inertia-react';
 
 import TopNavigationList from '@/Shared/LayoutComponent/TopNavigationList';
 import DebugComponent from '@/Shared/Debug/DebugComponent';
+import AdminTopNav from '@/Shared/LayoutComponent/AdminTopNav';
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -29,6 +30,7 @@ export default function Authenticated({ auth, header, children }) {
                                 </NavLink>
                                 <TopNavigationList></TopNavigationList>
                             </div>
+                            
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
@@ -114,6 +116,8 @@ export default function Authenticated({ auth, header, children }) {
                     </div>
                 </div>
             </nav>
+
+            {auth.roles.includes('Owner') && <AdminTopNav></AdminTopNav>}
 
             {header && (
                 <header className="bg-white shadow">
