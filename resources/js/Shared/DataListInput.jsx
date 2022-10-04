@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default ({ label, name, className, errors = [], options, ...props }) => {
+  const handleFocus = (event) => event.target.select();
+
   return (
     <div className={className}>
       {label && (
@@ -13,6 +15,7 @@ export default ({ label, name, className, errors = [], options, ...props }) => {
         id={name}
         name={name}
         {...props}
+        onFocus={handleFocus}
         className={`input-field form-input ${errors.length ? 'error' : ''}`}
       />
         <datalist id={name+'_list'}>
