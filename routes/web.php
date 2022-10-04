@@ -63,10 +63,16 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Role & Permission
+    /*
     Route::get('/role', [RoleController::class, 'index'])->middleware('can:list-role');
+    Route::get('/role/create', [RoleController::class, 'create'])->middleware('can:create-);
+        
     Route::get('/role/{id}', [RoleController::class, 'show'])->middleware('can:show-role');
+    Route::get('/role/{id}/edit', [RoleController::class, 'edit'])->middleware('can:edit-role');
+    */
 
     $routeList = [
+        'role' => RoleController::class,
         'user' => UserController::class,
         'registration' => RegistrationController::class,
         'promolist' => PromolistController::class,
