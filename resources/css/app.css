@@ -421,3 +421,25 @@ legend {
     margin-bottom: 1em;
     font-weight: 700;
 }
+
+span.unit.small {
+    color: rgb(40 60 255);
+    padding: 0 0.5em 0;
+    border: none;
+    margin: 0.5em ;
+}
+span.unit.small.check-have {
+    background-color: #042fff;
+    border: 1px solid #093eff;
+    color: #fff;
+    font-weight: 700;
+}
+
+span.unit.small.check-not-have {
+    color: #2e2e2e;
+    opacity: 0.5;
+}
+
+.check-box {
+    white-space: nowrap;
+}
