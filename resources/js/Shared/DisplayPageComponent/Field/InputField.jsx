@@ -1,11 +1,12 @@
+import { FieldUtil } from '../util_form';
+
 import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
 import DateInput from '@/Shared/DateInput';
-import { FieldUtil } from '../util_form';
-
 import NumberInput from '@/Shared/NumberInput';
 import DataListInput from '@/Shared/DataListInput';
 import TextAreaInput from '@/Shared/TextAreaInput';
+import MultipleCheckboxInput from '@/Shared/MultipleCheckboxInput';
 
 export default ({Field, data, errors, setData}) => {
     if(Field.element){
@@ -35,6 +36,7 @@ export default ({Field, data, errors, setData}) => {
             </SelectInput>
         )
     }
+
     if(Field.inputtype == 'datalist'){
         return <DataListInput
             className="w-full pb-8 pr-6 lg:w-1/2"
@@ -58,7 +60,6 @@ export default ({Field, data, errors, setData}) => {
         />
     }
 
-
     if(Field.inputtype == 'date'){
         return <DateInput
             className="w-full pb-8 pr-6 lg:w-1/2"
@@ -80,6 +81,17 @@ export default ({Field, data, errors, setData}) => {
             value={data[Field.entityname]}
             onChange={e => setData(Field.entityname, e.target.value)}
         />
+    }
+
+    if(Field.inputtype == 'multiple-checkbox'){
+        return <MultipleCheckboxInput
+            field={Field}
+            setData={setData}
+            className="w-full pb-8 pr-6"
+            label={Field.label}
+            name={Field.entityname}
+            errors={errors[Field.entityname]}
+        ></MultipleCheckboxInput>
     }
 
     return (
