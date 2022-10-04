@@ -72,10 +72,11 @@ class Field{
 
         if(Array.isArray(value) && value.length > 0){
             return value.map((x,keyId) => {
+                let value = typeof x == 'string' ? x : x.name;
                 return React.createElement('span',{
                     key:keyId,
                     className:field.entityname+" unit"
-                },x.name);
+                },value);
             })
         }
 

@@ -96,10 +96,10 @@ export default (form_schema) => {
                 footer={<FormFooter obj={{id:Form.id}} form={Form}></FormFooter>}
             >
                 {Form.display_form && 
-                    <DisplayField fields={Form.fields} form={Form}></DisplayField> && children}
+                    <DisplayField fields={Form.fields} form={Form}></DisplayField>}
                 
                 {(Form.create_form || Form.edit_form)  && 
-                    <CreateEditForm Form={Form}>{children}</CreateEditForm>}
+                    <CreateEditForm Form={Form}></CreateEditForm>}
         </Component>)
 }
 
