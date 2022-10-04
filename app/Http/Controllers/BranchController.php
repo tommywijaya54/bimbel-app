@@ -15,7 +15,7 @@ class BranchController extends CommonController
 
         $this->form->title_format = "{name}";
         $this->form->field('manager_id')->hasOptions(
-            User::all('id', 'name'),
+            User::role('Branch Manager')->get()->toArray(),
             'datalist'
         );
     }
