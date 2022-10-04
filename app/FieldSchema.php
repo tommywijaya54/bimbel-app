@@ -66,6 +66,8 @@ class FieldSchema
                                 $this->inputtype = $opt[1];
                             } else if ($opt[0] == "model") {
                                 $this->model = $opt[1];
+                            } else if ($opt[0] == 'extrafield') {
+                                $this->extrafield = $opt[1];
                             }
                         }
                     }

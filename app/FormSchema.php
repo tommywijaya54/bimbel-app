@@ -116,7 +116,7 @@ class FormSchema extends CommonSchema
     public function setStoreOrUpdate($request = null, $entity = [])
     {
         foreach ($this->fields as $field) {
-            if ($field->entityname) {
+            if ($field->entityname && !isset($field->extrafield)) {
                 if ($request[$field->entityname]) {
                     $entity[$field->entityname] = $request[$field->entityname];
                 }
