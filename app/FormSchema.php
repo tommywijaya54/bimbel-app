@@ -36,6 +36,8 @@ class FormSchema extends CommonSchema
                 $model = str_replace('_id', '', $field->entityname);
                 $field->model_value = $data[$model];
                 $field->value = $data[$field->entityname] . " : " . $field->model_value['name'];
+            } else if (isset($field->getValue)) {
+                $field->value = $field->getValue($field, $this->id);
             } else if ($field->entityname && isset($data[$field->entityname])) {
                 $field->value = $data[$field->entityname];
             }
@@ -43,19 +45,20 @@ class FormSchema extends CommonSchema
         return $this;
     }
 
-    public function setDataFor($id)
+    public function setDataById($id)
     {
+        // Get Data from model base on their Id
         if (isset($this->with_list)) {
-            //dd($this->with_list);
             $this->data = $this->model::with($this->with_list)->find($id)->toArray();;
         } else {
             $this->data = $this->model::find($id)->toArray();;
         }
-        $this->addValueToField($this->data);
-
 
         // set form id
         $this->id = $this->data['id'];
+
+        // set value to field, using the data that we retrieve
+        $this->addValueToField($this->data);
 
         // set form title
         $this->title = $this->title_format;
@@ -93,7 +96,7 @@ class FormSchema extends CommonSchema
 
     public function displayForm($id)
     {
-        $this->setDataFor($id);
+        $this->setDataById($id);
         $this->display_form = true;
         $this->form_type = "display";
         return $this;
@@ -102,7 +105,8 @@ class FormSchema extends CommonSchema
     public function editForm($id)
     {
         $this->retriveFieldOptions();
-        $this->setDataFor($id);
+        $this->setDataById($id);
+
         $this->edit_form = true;
         $this->form_type = "edit";
         $this->submit_url = "/" . $this->modal . "/" . $this->id;

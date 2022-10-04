@@ -2,8 +2,12 @@
 
 namespace App; // <- important
 
+use Closure;
+
 class FieldSchema
 {
+    // protected $form;
+
     public $entityname;
     public $value;
 
@@ -12,11 +16,21 @@ class FieldSchema
     public $element;
     public $options;
 
+    // public $getValue;
+
     // public $model;
     // public $model_value;
-
-    function __construct($StringField)
+    public function __call($method, $arguments)
     {
+        return call_user_func_array(Closure::bind($this->$method, $this, get_called_class()), $arguments);
+    }
+
+    function __construct($StringField, $form = null)
+    {
+        if ($form) {
+            $this->form = $form;
+        }
+
         // field schema -> entityname:label:inputtype
         if ($StringField == null) {
             $this->element = 'row';
@@ -68,4 +82,17 @@ class FieldSchema
         $this->inputtype = $inputtype;
         return $this;
     }
+
+    /*
+
+    public function hasGetValueFunction($func)
+    {
+        $this->getValue = $func;
+    }
+
+    public function getValue($func)
+    {
+        $func($this->form, $this);
+    }
+    */
 }

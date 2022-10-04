@@ -30,9 +30,11 @@ class CommonSchema
 
         $this->fields = array_map(function ($string_field) {
             $field = new FieldSchema($string_field);
+
             if (isset($field->model)) {
                 array_push($this->with_list, $field->model);
             }
+
             return $field;
         }, $this->string_of_fields);
 
