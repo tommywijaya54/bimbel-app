@@ -16,7 +16,7 @@ export default function Show(props) {
             </Form>
             
             <div>
-                <fieldset className='shadow'>
+                <fieldset className='shadow-lg'>
                     <legend>Student / Child information</legend>
                    
                     {
