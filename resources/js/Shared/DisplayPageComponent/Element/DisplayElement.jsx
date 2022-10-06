@@ -89,15 +89,11 @@ const displayValueElement = (data,el) => {
 
         
     }
-    
-
     return value; // + " -- "+el.entityname;
 }
 
 export default ({fields, content, data, el}) => {
     if(data && el){
-        // console.log(data,el);
-
         return displayValueElement(data, el)
     }
 
@@ -105,12 +101,11 @@ export default ({fields, content, data, el}) => {
         const Fields = new DisplayFields(fields,content);
 
         return Fields.map((a, keyId) => {
-            if(a.element && a.element == 'row'){
-                return(<div key={keyId} className="blank-row w-full"></div>)
-            }else if(a.element && a.element == 'line'){
-                return(<div key={keyId} className="line w-full"></div>)
-            }else{
+            if(a.element){
+                return(<div key={keyId} className={a.element+' e-element'}></div>);
+            }else if(a.entityname){
                 return (<div key={keyId} className="form-component pr-6 pb-8 w-full lg:w-1/2">
+                            This is located at /DisplayPageComponent/Element/DisplayElement.jsx : Fields
                             <label className="form-label">{a.label}:</label> 
                             <div className="form-input">
                                 {displayValueElement(content,a)}

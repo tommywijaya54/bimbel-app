@@ -43,4 +43,9 @@ class CommonSchema
         // if ($schema_name == 'ListSchema') {
         // }
     }
+
+    function includeWith($string)
+    {
+        array_push($this->with_list, $string);
+    }
 }

@@ -21,19 +21,24 @@ export default function Show(props) {
             <Form
                 {...props.form_schema}
             >
-                <div className="form-component pr-6 pb-8 w-full">
-                    <label className="form-label">People that have this role:</label>
-                    <div className="form-input">
-                        {props.users.length == 0 && <span className='empty-value'>No one assign to this role</span>}
-                        {props.users.map((user, keyid) => {
-                            return <span key={keyid} className="unit">{user.name}</span>
-                        })}
+            </Form>
+
+
+            <div>
+                <fieldset className='shadow-lg'>
+                    <legend>Extra Information</legend>
+                    <div className="form-component p-8 pt-2 w-full">
+                        <label className="form-label font-bold">People that have this role:</label>
+                        <div className="form-input">
+                            {props.users.length == 0 && <span className='empty-value'>No one assign to this role</span>}
+                            {props.users.map((user, keyid) => {
+                                return <span key={keyid} className="unit">{user.name}</span>
+                            })}
+                        </div>
                     </div>
-                </div>
-                        
-                <div className='pt-8'>
-                    <div className="form-component pr-6 pb-8 w-full">
-                        <label className="form-label">Permissions that this role have:</label>
+                                
+                    <div className="form-component p-8 pt-0 w-full">
+                        <label className="form-label font-bold">Permissions that this role have:</label>
                         <div className="form-input">
                             <table>
                                 <tbody>
@@ -53,9 +58,11 @@ export default function Show(props) {
                             </table>
                         </div>
                     </div>
-                </div>
-                
-            </Form>
+                </fieldset>
+            </div>
+
+            
+
         </MainLayout>
     );
 }

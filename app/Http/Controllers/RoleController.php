@@ -18,17 +18,24 @@ class RoleController extends CommonController
     function __construct()
     {
         parent::__construct([
-            'list' => 'id,name',
-            'form' => 'name,permissions'
+            'list' => 'id:ID,name:Role Name,user',
+            // 'form' => 'name:Role Name,--,users:-label=People that have this role-extrafield=true,--,permissions'
+            'form' => 'name:Role Name,,permissions'
         ], true);
 
         $this->form->title_format = '{name}';
+        /*
+        $this->list->field('users')->getValue = function ($field, $id) {
+            return Role::findById($id)->users->toArray();
+        };
+        */
 
         $permissions_field = $this->form->field('permissions');
         $permissions_field->hasOptions(
             Permission::pluck('name')->toArray(),
             'multiple-checkbox'
         );
+
         $permissions_field->special_request = 'group-the-options';
         $permissions_field->getValue = function ($field, $id) {
             $role = Role::find($id);

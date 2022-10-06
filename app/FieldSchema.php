@@ -36,6 +36,8 @@ class FieldSchema
             $this->element = 'row';
         } elseif ($StringField == "_") {
             $this->element = 'line';
+        } elseif ($StringField == "--") {
+            $this->element = 'next-full-with';
         } else {
             $arr = explode(":", $StringField);
             // default label & input type;
@@ -68,6 +70,8 @@ class FieldSchema
                                 $this->model = $opt[1];
                             } else if ($opt[0] == 'extrafield') {
                                 $this->extrafield = $opt[1];
+                            } else if ($opt[0] == 'label') {
+                                $this->label = $opt[1];
                             }
                         }
                     }
