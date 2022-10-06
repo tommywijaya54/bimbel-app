@@ -2,6 +2,7 @@ import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import Form from '@/Shared/DisplayPageComponent/Form/Form';
 import UnitMapField from '@/Shared/DisplayPageComponent/Field/UnitMapField';
+import DetailsSummaryComponent from '@/Shared/DisplayPageComponent/Element/DetailsSummaryComponent';
 
 export default function Show(props) {
     return (
@@ -14,16 +15,16 @@ export default function Show(props) {
             >
             </Form>
 
-            <div>
-                <fieldset className='shadow-lg'>
-                    <legend>Extra Information</legend>
-                    
-                    <UnitMapField map={props.user.permission} header={
-                        <h2 className='text-lg'>Permissions</h2>
-                    }></UnitMapField>
-                    
-                </fieldset>
-            </div>
+            
+            <fieldset className='shadow-lg'>
+                <legend>Extra Information</legend>
+                <div className='p-6'>
+                    <DetailsSummaryComponent
+                        header='Permissions'>
+                        <UnitMapField map={props.user.permission}></UnitMapField>
+                    </DetailsSummaryComponent>
+                </div>
+            </fieldset>
         </MainLayout>
     );
 }

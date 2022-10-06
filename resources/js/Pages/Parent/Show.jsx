@@ -18,12 +18,13 @@ export default function Show(props) {
             <div>
                 <fieldset className='shadow-lg'>
                     <legend>Student / Child information</legend>
-                   
-                    {
-                        props.students.map((student, keyid)=>{
-                            return <StudentDetails key={keyid} student={student}></StudentDetails>
-                        })
-                    }
+                    <div className='p-6'>
+                        {
+                            props.students.map((student, keyid)=>{
+                                return <StudentDetails key={keyid} student={student}></StudentDetails>
+                            })
+                        }
+                    </div>
                 </fieldset>
             </div>
             
