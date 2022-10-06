@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('disabled')->nullable(); // null / reason of disabled
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -15,7 +15,7 @@ class EmployeeController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,nik:NIK,name:Employee Name,phone,branch_id',
-            'form' =>  'nik:NIK,,name,address,phone,email,emergency_name,emergency_phone,join_date,exit_date,note,branch_id'
+            'form' =>  'nik:NIK,,name,address,phone,email,emergency_name,emergency_phone,join_date,exit_date,note,branch_id,password:User login password'
         ], true);
 
         $this->form->title_format = "{nik} / {name}";
@@ -24,12 +24,20 @@ class EmployeeController extends CommonController
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nik' => 'required|unique:employees',
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'branch_id' => 'required',
+            'password' => 'required',
+        ]);
+
         $employee = $this->entity::create($this->form->setStoreOrUpdate($request));
 
-        $user = User::firstOrNew(['email' =>  $request('email')]);
-        $user->name = request('name');
-        $user->type = 'Student';
-        $user->password = bcrypt('password');
+        $user = User::firstOrNew(['email' =>  $request['email']]);
+        $user->name = $request['name'];
+        $user->type = 'Employee';
+        $user->password = bcrypt($request['password']);
         $user->save();
 
         $employee->user_id = $user->id;

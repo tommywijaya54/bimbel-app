@@ -15,7 +15,7 @@ class StudentController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,name:Student Name,grade,phone,email',
-            'form' => 'name,grade,address,phone,email,join_date,exit_date,note,exit_reason,birth_date,type,health_condition,cparent_id:Parent,school_id'
+            'form' => 'name,grade,address,phone,email,join_date,exit_date,note,exit_reason,birth_date,type,health_condition,cparent_id:Parent,school_id,password:User login password'
         ], true);
 
         $this->form->field('grade')->hasOptions(
@@ -26,12 +26,20 @@ class StudentController extends CommonController
 
     public function store(Request $request)
     {
+        $request->validate([
+            'cparent_id' => 'required',
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'school_id' => 'required',
+            'password' => 'required',
+        ]);
+
         $student = $this->entity::create($this->form->setStoreOrUpdate($request));
 
-        $user = User::firstOrNew(['email' =>  $request('email')]);
-        $user->name = request('name');
+        $user = User::firstOrNew(['email' =>  $request['email']]);
+        $user->name = $request['name'];
         $user->type = 'Student';
-        $user->password = bcrypt('password');
+        $user->password = bcrypt($request['password']);
         $user->save();
 
         $student->user_id = $user->id;

@@ -16,33 +16,33 @@ return new class extends Migration
 
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('nik');
+            $table->string('nik')->nullable();
             $table->string('name');
-            $table->string('address');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('emergency_name');
-            $table->string('emergency_phone');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('emergency_name')->nullable();
+            $table->string('emergency_phone')->nullable();
             $table->date('join_date')->nullable();
             $table->date('exit_date')->nullable();
             $table->string('note')->nullable();
             $table->integer('user_id')->nullable();
             $table->integer('branch_id')->nullable();
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
-            $table->string('phone');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
             $table->integer('manager_id')->nullable();
-            $table->string('email');
-            $table->date('open_date');
+            $table->string('email')->nullable();
+            $table->date('open_date')->nullable();
             $table->string('status')->nullable();
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('branch_expenses', function (Blueprint $table) {
@@ -53,8 +53,8 @@ return new class extends Migration
             $table->integer('amount');
             $table->date('date');
             $table->string('approve_by')->nullable();
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('branch_rentals', function (Blueprint $table) {
@@ -67,8 +67,8 @@ return new class extends Migration
             $table->string('owner_phone');
             $table->string('notaris_name');
             $table->string('notaris_phone');
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('branch_assets', function (Blueprint $table) {
@@ -78,16 +78,16 @@ return new class extends Migration
             $table->integer('qty');
             $table->integer('cost');
             $table->string('note');
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('cparents', function (Blueprint $table) {
             $table->id();
             $table->string('nik')->nullable();
             $table->string('name');
-            $table->string('address');
-            $table->string('phone');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('emergency_name')->nullable();
@@ -97,29 +97,29 @@ return new class extends Migration
             $table->string('note')->nullable();
             $table->integer('user_id')->nullable();
             $table->string('blacklist')->nullable();
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->integer('cparent_id');
-            $table->integer('school_id');
-            $table->string('grade');
+            $table->integer('cparent_id')->nullable();
+            $table->integer('school_id')->nullable();
+            $table->string('grade')->nullable();
             $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('address');
-            $table->date('join_date');
-            $table->date('exit_date');
-            $table->string('exit_reason');
-            $table->date('birth_date');
-            $table->string('type');
-            $table->string('health_condition');
-            $table->string('note');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->date('join_date')->nullable();
+            $table->date('exit_date')->nullable();
+            $table->string('exit_reason')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('type')->nullable();
+            $table->string('health_condition')->nullable();
+            $table->string('note')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('schools', function (Blueprint $table) {
@@ -129,69 +129,69 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('type')->nullable();
             $table->string('color_code')->nullable();
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('pricelists', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('level');
-            $table->string('school_type');
-            $table->string('subject');
-            $table->integer('price');
-            $table->string('week');
-            $table->integer('branch_id');
-            $table->integer('created_by')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('level')->nullable();
+            $table->string('school_type')->nullable();
+            $table->string('subject')->nullable();
+            $table->integer('price')->nullable();
+            $table->string('week')->nullable();
+            $table->integer('branch_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('promolists', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('label');
-            $table->string('discount_value');
-            $table->integer('branch_id');
-            $table->integer('created_by')->nullable();
+            $table->string('discount_value')->nullable();
+            $table->integer('branch_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id');
-            $table->integer('branch_id');
-            $table->date('date');
-            $table->string('reference');
-            $table->string('cashback');
+            $table->integer('student_id')->nullable();
+            $table->integer('branch_id')->nullable();
+            $table->date('date')->nullable();
+            $table->string('reference')->nullable();
+            $table->string('cashback')->nullable();
             $table->string('status')->nullable();
             $table->string('note')->nullable();
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
         Schema::create('registration_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('registration_id');
+            $table->integer('registration_id')->nullable();
             $table->integer('pricelist_id')->nullable();
             $table->integer('promolist_id')->nullable();
-            $table->string('charges');
+            $table->string('charges')->nullable();
             $table->integer('price')->nullable();
             $table->string('discount_amount')->nullable();
-            $table->integer('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
 
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->integer('employee_id');
-            $table->integer('amount');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('note');
-            $table->integer('created_by')->nullable();
+            $table->integer('employee_id')->nullable();
+            $table->integer('amount')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('note')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
 
@@ -200,8 +200,9 @@ return new class extends Migration
             $table->id();
             $table->integer('employee_id');
             $table->string('note');
-            $table->integer('created_by')->nullable();
+            
             $table->timestamps();
+$table->softDeletes();
         });
 
 
@@ -210,8 +211,9 @@ return new class extends Migration
             $table->integer('employee_id');
             $table->string('subject');
             $table->string('note');
-            $table->integer('created_by')->nullable();
+            
             $table->timestamps();
+$table->softDeletes();
         });
 
 
@@ -220,8 +222,9 @@ return new class extends Migration
             $table->integer('teacher_id');
             $table->string('subject');
             $table->string('school');
-            $table->integer('created_by')->nullable();
+            
             $table->timestamps();
+$table->softDeletes();
         });
 
 
@@ -232,8 +235,9 @@ return new class extends Migration
             $table->string('action');
             $table->string('changes');
             $table->string('note');
-            $table->integer('created_by')->nullable();
+            
             $table->timestamps();
+$table->softDeletes();
         });
 
         Schema::create('schedules', function (Blueprint $table) {
@@ -244,8 +248,9 @@ return new class extends Migration
             $table->string('classroom');
             $table->string('duration');
             $table->date('date');
-            $table->integer('created_by')->nullable();
+            
             $table->timestamps();
+$table->softDeletes();
         });
         */
     }
