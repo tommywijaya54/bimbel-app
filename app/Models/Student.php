@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Panoscape\History\HasHistories;
 
 class Student extends Model
 {
-    use
-        HasFactory,
-        HasHistories;
+    use HasFactory, SoftDeletes, HasHistories;
 
     public function getModelLabel()
     {
