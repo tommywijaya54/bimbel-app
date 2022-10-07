@@ -117,9 +117,9 @@ class FormSchema extends CommonSchema
     {
         foreach ($this->fields as $field) {
             if ($field->entityname && !isset($field->extrafield)) {
-                if ($request[$field->entityname]) {
-                    $entity[$field->entityname] = $request[$field->entityname];
-                }
+                //if ($request[$field->entityname]) {
+                $entity[$field->entityname] = $request[$field->entityname];
+                //}
             }
         }
         return $entity;

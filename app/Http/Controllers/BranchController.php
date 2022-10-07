@@ -12,6 +12,7 @@ class BranchController extends CommonController
             'list' => 'id,name,phone,address,email, manager_id',
             'form' => 'manager_id,name:Branch Name,address,phone,email,open_date,status',
         ], true);
+        $this->list->order_by = 'ASC';
 
         $this->form->title_format = "{name}";
         $this->form->field('manager_id')->hasOptions(

@@ -22,7 +22,7 @@ class RoleController extends CommonController
             // 'form' => 'name:Role Name,--,users:-label=People that have this role-extrafield=true,--,permissions'
             'form' => 'name:Role Name,,permissions'
         ], true);
-
+        $this->list->order_by = 'ASC';
         $this->form->title_format = '{name}';
         /*
         $this->list->field('users')->getValue = function ($field, $id) {

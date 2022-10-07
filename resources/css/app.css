@@ -250,6 +250,10 @@ table.table-padding-row tbody tr td {
 .ui-component .form-input {
     min-height: 42px;
 }
+.ui-component textarea.form-input {
+    max-height: 220px;
+}
+
 
 .content>.child-component {
     margin-top: 3em;

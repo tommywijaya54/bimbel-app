@@ -16,6 +16,7 @@ class SchoolController extends CommonController
             'form' => 'name:School Name,address,city,type,color_code'
         ], true);
 
+        $this->list->order_by = 'ASC';
         $this->form->field('type')->hasOptions(['International', 'National', 'International & National']);
     }
 }
