@@ -1,48 +1,54 @@
-import { getAlias } from "@/util";
 import React from "react";
 
+function getAlias(str){
+    const alias = {
+        'cparent' : 'parent'
+    }
+    
+    if(str.includes('_id')){
+        str = str.replace('_id','');
+    }
+
+    return alias[str] || str
+}
+
 class Field{
-    static displayElement(field){
-        let value = field.value;
-
-        
-        /*
-        if(field.entityname == 'users'){
-            if(Array.isArray(value) && value.length > 0){
-                return value.map((x,keyId) => {
-                    // console.log(x,keyId,field);
-                    return React.createElement('span',{
-                        key:keyId,
-                        className:field.entityname+" unit"
-                    },x.name);
-                })
-
-                console.log(value);
-                return "----X----"
-            }
-            // console.log(value);
-            // return "null";
-            /*
-            return value.map((a,i) => {
-                return React.createElement('span',{
-                    key:{i},
-                    className:field.entityname + " unit"
-                },a);
-            })
-
-            // return "null";
-        }*/
-        /*
-
-        if(Array.isArray(value) && value.length > 0){
-            return value.map((ax,keyId) => {
-                return React.createElement('span',{
-                    key:{keyId},
-                    className:field.entityname + " unit"
-                },ax.name)
-            })
+    constructor(strField){
+        if(!strField){
+            this.element = 'row'
+        }else if(strField === '_'){
+            this.element = 'line'
+        }else{
+            this.entityname = strField;
+            this.label = strField.cap();
         }
-        */
+    }
+    setValueFrom(data){
+        if(this.entityname){
+            this.value = data[this.entityname];
+        }
+    }  
+}
+
+class FieldUtil{
+    static createFields_setData(strFields,data){
+        const Fields = FieldUtil.turnStringToArrayOfField(strFields);
+        
+        Fields.forEach(Field => {
+            Field.setValueFrom(data);
+        });
+
+        return Fields;
+    }
+    
+    // Turn String of Fields to Field of array
+    static turnStringToArrayOfField (stringOfFields){
+        return stringOfFields.split(',').map(strField => new Field(strField));
+    }
+
+    // True Field value to HTML element (if : field.entityname exist)
+    static getProcessedContent(field){
+        let value = field.value;
 
         if(field.model){
             return React.createElement('a',{
@@ -89,6 +95,19 @@ class Field{
         
         return value;
     }
+
+    // return HTML element (if field is element of row or line)
+    static getElementIfExist(field, keyId){
+        if(field.element){
+             if(field.element == 'row'){
+                return React.createElement('div', {className:'row w-full', key:keyId}, '');
+            }else if(field.element == 'line'){
+                return React.createElement('div', {className:'line w-full', key:keyId}, '');
+            }
+        }
+        return null;
+    }
+
 }
 
-export {Field}
+export {FieldUtil}

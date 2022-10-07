@@ -1,5 +1,3 @@
-import { FieldUtil } from '../util_form';
-
 import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
 import DateInput from '@/Shared/DateInput';
@@ -7,10 +5,11 @@ import NumberInput from '@/Shared/NumberInput';
 import DataListInput from '@/Shared/DataListInput';
 import TextAreaInput from '@/Shared/TextAreaInput';
 import MultipleCheckboxInput from '@/Shared/MultipleCheckboxInput';
+import { FieldUtil } from './util_field';
 
 export default ({Field, data, errors, setData}) => {
     if(Field.element){
-        return FieldUtil.check_and_getCommonField(Field);
+        return FieldUtil.getElementIfExist(Field);
     }
 
     if(Field.inputtype == 'select'){

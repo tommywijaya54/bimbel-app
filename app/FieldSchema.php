@@ -88,17 +88,4 @@ class FieldSchema
         $this->inputtype = $inputtype;
         return $this;
     }
-
-    /*
-
-    public function hasGetValueFunction($func)
-    {
-        $this->getValue = $func;
-    }
-
-    public function getValue($func)
-    {
-        $func($this->form, $this);
-    }
-    */
 }

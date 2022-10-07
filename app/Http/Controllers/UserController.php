@@ -44,12 +44,14 @@ class UserController extends CommonController
     {
         $form_data = $this->form->displayForm($id);
         $user = $this->entity::find($id);
+        // $user = ->details()
+
         return Inertia::render('User/Show', [
             'title' => $form_data->title,
             'form_schema' => $form_data,
             'user' => [
                 'permission' => $user->getAllPermissions()->pluck('name'),
-                // 'role' => $user->getRoleNames()
+                'details' => $user->details()
             ]
         ]);
     }

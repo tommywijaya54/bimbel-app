@@ -106,8 +106,8 @@ class User extends Authenticatable
 
         if ($type == 'Parent') {
             $parent = Cparent::where('user_id', $this->id)->first();
-
             $students = Student::where('cparent_id', $parent->id)->get();
+
             //return Cparent::where('user_id', $this->id)->get();
 
             return [
@@ -115,5 +115,7 @@ class User extends Authenticatable
                 'students' => $students
             ];
         }
+
+        return [];
     }
 }

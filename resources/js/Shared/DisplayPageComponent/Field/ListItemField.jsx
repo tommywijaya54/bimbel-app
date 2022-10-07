@@ -1,4 +1,4 @@
-import { Field } from "./util_field";
+import { FieldUtil } from "./util_field";
 
 export default ({field,data,rawdata}) => {
     let FieldOb = {
@@ -10,5 +10,5 @@ export default ({field,data,rawdata}) => {
         FieldOb.model_value = rawdata[field.model];
     }
 
-    return Field.displayElement(FieldOb);
+    return FieldUtil.getProcessedContent(FieldOb);
 }

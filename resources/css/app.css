@@ -6,6 +6,7 @@ body{
     --tw-text-opacity: 1;
     color: rgba(51, 65, 85, var(--tw-text-opacity));
 }
+
 table.table-padding-row td,
 table.table-padding-row th {
     padding-left: 1.5rem;
@@ -443,6 +444,10 @@ span.unit.small.check-not-have {
 
 .check-box {
     white-space: nowrap;
+}
+
+details + details {
+    margin-top: 1.5em;
 }
 
 details {
