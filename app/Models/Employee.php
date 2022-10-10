@@ -4,10 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Panoscape\History\HasHistories;
 
 class Employee extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, HasHistories;
+
+    public function getModelLabel()
+    {
+        return $this->name;
+    }
 
     protected $fillable = [
         'nik',
@@ -20,12 +27,11 @@ class Employee extends Model
         'join_date',
         'exit_date',
         'note',
-        'branch_id'
-    ];
-
-    protected $hidden = [
+        'branch_id',
         'user_id'
     ];
+
+    protected $hidden = [];
 
     public function user()
     {

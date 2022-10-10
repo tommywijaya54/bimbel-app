@@ -9,22 +9,34 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPUnit\Framework\MockObject\Builder\Stub;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Panoscape\History\HasOperations;
+
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasOperations, SoftDeletes;
+
+    /*
+    public function getModelLabel()
+    {
+        return $this->name;
+    }
+    */
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'email',
         'password',
         'type',
-        'status'
+        'status',
+        'disabled'
     ];
 
     /**
@@ -45,6 +57,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function branch()
+    {
+        return $this->hasMany(Branch::class, 'manager_id', 'id');
+    }
+
 
     public static function findByName($fullname)
     {
@@ -87,8 +106,8 @@ class User extends Authenticatable
 
         if ($type == 'Parent') {
             $parent = Cparent::where('user_id', $this->id)->first();
-
             $students = Student::where('cparent_id', $parent->id)->get();
+
             //return Cparent::where('user_id', $this->id)->get();
 
             return [
@@ -96,5 +115,7 @@ class User extends Authenticatable
                 'students' => $students
             ];
         }
+
+        return [];
     }
 }

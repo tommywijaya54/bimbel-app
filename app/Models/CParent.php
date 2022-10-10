@@ -4,10 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Panoscape\History\HasHistories;
 
 class Cparent extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, HasHistories;
+
+    public function getModelLabel()
+    {
+        return $this->name;
+    }
 
     protected $fillable = [
         'nik',
@@ -32,5 +39,10 @@ class Cparent extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
     }
 }

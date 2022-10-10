@@ -1,10 +1,31 @@
-// Student
-Route::get('/school', [SchoolController::class, 'index'])->middleware('can:list-school');
+$table->string('name');
+$table->string('address')->nullable();
+$table->string('city')->nullable();
+$table->string('type')->nullable();
+$table->string('color_code')->nullable();
 
-Route::get('/school/create', [SchoolController::class, 'create'])->middleware('can:create-school');
-Route::post('/school', [SchoolController::class, 'store'])->middleware('can:create-school');
+'id,name,address'
+'name,address,city,type,color_code'
 
-Route::get('/school/{id}', [SchoolController::class, 'show'])->middleware('can:show-school');
 
-Route::get('/school/{id}/edit', [SchoolController::class, 'edit'])->middleware('can:edit-school');
-Route::put('/school/{id}', [SchoolController::class, 'update'])->middleware('can:edit-school');
+// if ($data['id']) {}
+// dd($data, $data->getOriginal());
+
+// print_r($arr);
+/*
+foreach ($arr as $key => $value) {
+$found_key = array_search($key, array_column($this->fields, 'entityname'));
+// var_dump("<br>found_key", $found_key, " : key -> ", $key);
+
+if ($found_key != false) {
+var_dump($found_key . ' -> ' . $this->fields[$found_key]->value);
+$this->fields[$found_key]->value = $value; //"CPA-613-369-762"; // $value;
+var_dump($this->fields[$found_key]->value);
+}
+}*/
+
+// $this->fields[0]->value = "Hello";
+// $this->fields[false]->value = "Hello False";
+
+// print_r($this->fields);
+// die();

@@ -54,6 +54,30 @@ export default () => {
         }</>
     }
 
+    const AutoFill = () => {
+        if(!window.tomatoDebugger){
+            return ''
+        }
+        // find field 
+        const fillTheFields = () => {
+            if(window.tomatoDebugger){
+                const fields = window.tomatoDebugger.form.fields;
+                const setData = window.tomatoDebugger.setData;
+                
+                fields.forEach((field) => {
+                    console.log(field.entityname);
+                    window.setData(field.entityname,'hello');
+                });
+            }else{
+                alert('Debugger not assign')
+            }
+        }
+
+        return <div className='autofill absolute top-10 right-10'>
+            <button className='flex items-center focus:outline-none ml-auto btn-indigo' onClick={fillTheFields}>Auto Fill data</button>
+            </div>
+    }
+
     return <>
         <div className="py-12">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -6,6 +6,7 @@ body{
     --tw-text-opacity: 1;
     color: rgba(51, 65, 85, var(--tw-text-opacity));
 }
+
 table.table-padding-row td,
 table.table-padding-row th {
     padding-left: 1.5rem;
@@ -232,7 +233,7 @@ table.table-padding-row tbody tr td {
 }
 
 .ui-component .header {
-    padding: 1.5em 2em;
+    padding: 1.5em;
     background: cadetblue;
 }
 .header span.info {
@@ -249,6 +250,10 @@ table.table-padding-row tbody tr td {
 .ui-component .form-input {
     min-height: 42px;
 }
+.ui-component textarea.form-input {
+    max-height: 220px;
+}
+
 
 .content>.child-component {
     margin-top: 3em;
@@ -305,8 +310,11 @@ a.button.btn-sm {
     padding: 0;
 }
 
-:is(.edit-form, .create-form) .ui-component .header {
-    background: #8ba1ff;
+:is(.edit-form, .create-form) .header {
+    background: #56c96d;
+}
+:is(.edit-form, .create-form) .header h2 {
+    color: #fff;
 }
 
 :is(.edit-form, .create-form) .ui-component {
@@ -354,14 +362,7 @@ span.permission {
     border-radius: 4px;
 }
 
-span.unit {
-    display: inline-block;
-    margin: 0.1em 0.5em 0 0;
-    background: #f5f5f5;
-    padding: 3px 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+
 
 span.empty-value {
     color: #888;
@@ -370,6 +371,149 @@ span.empty-value {
 .note {
     text-align: center;
     padding: 1em;
-    background-color: #ffcf8f;
-    margin: 2em 2em 0 2em;
+    background-color: #ffe6c4;
+    margin: 1.5em 1.5em 0 1.5em;
+}
+
+.form-create .header h2 {
+    color: white;
+}
+
+.display-form label.form-label {
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.display-form .form-input {
+    border: none;
+    padding: 0;
+}
+
+.display-form .form-component {
+    padding: 0 0 0.5em 0;
+}
+
+.attention {
+    text-align: center;
+    font-size: x-large;
+    margin-top: -1em;
+    margin-bottom: 1em;
+}
+
+.student-information .header {
+    background-color: aqua;
+}
+
+fieldset {
+    border-radius: 0.5em;
+    background-color: #ffffffc9;
+}
+
+legend {
+    padding: 0.5em 1.3em;
+    background-color: #5f9ea0;
+    margin-left: 1.5em;
+    border-radius: 0.5em;
+    margin-bottom: 0em;
+    font-weight: 700;
+    color: #fff;
+}
+
+span.unit {
+    display: inline-block;
+    margin: 0em 1em 1em 0;
+    background: #f5f5f5;
+    padding: 3px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+span.unit.small {
+    color: rgb(40 60 255);
+    padding: 0 0.5em 0;
+    border: none;
+    margin: 0.5em ;
+}
+span.unit.small.check-have {
+    background-color: #042fff;
+    border: 1px solid #093eff;
+    color: #fff;
+    font-weight: 700;
+}
+
+span.unit.small.check-not-have {
+    color: #2e2e2e;
+    opacity: 0.5;
+}
+
+.check-box {
+    white-space: nowrap;
+}
+
+details + details {
+    margin-top: 1.5em;
+}
+
+details {
+    font-size: 1rem;
+    box-shadow: 0 8px 10px 0px rgb(0 0 0 / 10%), 0 5px 10px 0px rgb(0 0 0 / 4%);
+    width: 100%;
+    background: #ffffff;
+    border-radius: 8px;
+    position: relative;
+}
+
+details .summary-title {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight: 700;
+}
+
+details:hover {
+    cursor: pointer;
+}
+
+details .summary-content {
+    border-top: 1px solid #e2e8f0;
+    cursor: default;
+    padding: 1.5em;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+details summary {
+    list-style: none;
+    padding: 1em 1.5em;
+}
+
+details summary:focus {
+    outline: none;
+}
+
+details summary:hover .summary-chevron-up svg {
+    opacity: 1;
+}
+
+details .summary-chevron-up svg {
+    opacity: 0.5;
+}
+
+details .summary-chevron-up,
+details .summary-chevron-down {
+    pointer-events: none;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    background: #ffffff;
+}
+
+details .summary-chevron-up svg,
+details .summary-chevron-down svg {
+    display: block;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
 }

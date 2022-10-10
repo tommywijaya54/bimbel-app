@@ -24,13 +24,14 @@ class RoleAndPermissionSeeder extends Seeder
         }
 
         $owner_permissions = [
-            'list-role and permission',
+            'list-role',
             'show-role',
             'edit-role',
-            'deactivate-branch',
+
+            // 'deactivate-branch',
             'create-branch',
             'edit-branch',
-            'delete-branch'
+            // 'delete-branch'
         ];
 
         $super_admin_permissions = [
@@ -38,21 +39,36 @@ class RoleAndPermissionSeeder extends Seeder
             'show-user',
             'create-user',
             'edit-user',
-            'deactivate-user',
-            'activate-user',
-            'reset password-user'
+            // 'deactivate-user',
+            // 'activate-user',
+            // 'reset password-user'
         ];
 
         $manager_permissions = [
             'list-branch',
             'show-branch',
             'add-branch-expenses',
+
             'list-employee',
             'show-employee',
             'create-employee',
             'edit-employee',
-            'deactivate-employee',
-            'activate-employee'
+            // 'deactivate-employee',
+            // 'activate-employee',
+
+            'list-promolist',
+            'show-promolist',
+            'create-promolist',
+            'edit-promolist',
+            // 'deactivate-promolist',
+            // 'activate-promolist',
+
+            'list-pricelist',
+            'show-pricelist',
+            'create-pricelist',
+            'edit-pricelist',
+            //  'deactivate-pricelist',
+            //  'activate-pricelist',
         ];
 
         $advisor_permissions = [
@@ -60,7 +76,7 @@ class RoleAndPermissionSeeder extends Seeder
             'show-registration',
             'create-registration',
             'edit-registration',
-            'delete-registration',
+            // 'delete-registration',
 
             'list-student',
             'show-student',
@@ -98,6 +114,7 @@ class RoleAndPermissionSeeder extends Seeder
         //echo '</pre>';
 
         Role::findByName('super-admin')->givePermissionTo($super_admin_permissions);
+
         Role::findByName('Branch Manager')->givePermissionTo($manager_permissions);
         Role::findByName('Advisor')->givePermissionTo($advisor_permissions);
 

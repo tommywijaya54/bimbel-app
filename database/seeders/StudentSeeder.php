@@ -18,13 +18,12 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        //
         $Schools = School::all();
         $Parents = Cparent::all();
 
         for (
             $x = 1;
-            $x <= 20;
+            $x <= 5;
             $x++
         ) {
             $people = [

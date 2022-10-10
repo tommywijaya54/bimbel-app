@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             array('Login User Only', 'Not Registered as employee', 'Eko Saputra Wijaya', 'eko.saputra.wijaya@gmail.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
             array('Login User Only', 'Not Registered as employee', 'Shinta Purnama Sari', 'shinta.purnama.sari@outlook.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
             array('Login User Only', 'Not Registered as employee', 'Dewi Puspita Sari', 'dewi.puspita.sari@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi'),
-            array('Login User Only', 'Not Registered as employee', 'Tony', 'tony@email.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi')
+            array('Login User Only', 'Not Registered as employee', 'Tony', 'tonnyho.id@gmail.com', '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi')
         );
 
         runSeederInBatch($seeder, $column, "users");

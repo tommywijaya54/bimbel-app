@@ -4,10 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Panoscape\History\HasHistories;
 
 class Branch extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, HasHistories;
+
+    public function getModelLabel()
+    {
+        return $this->name;
+    }
+
 
     protected $fillable = [
         'name',
@@ -22,8 +30,16 @@ class Branch extends Model
 
     public function manager()
     {
+        return $this->belongsTo(User::class, 'manager_id'); //User::find($this->manager_id);
+    }
+
+    /*
+    public function user()
+    {
         return User::find($this->manager_id);
     }
+    */
+
 
     public function employees()
     {

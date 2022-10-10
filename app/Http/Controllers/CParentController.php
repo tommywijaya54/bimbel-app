@@ -3,12 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cparent;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
-class CparentController extends Controller
+class CparentController extends CommonController
+{
+    public $modal = 'parent';
+
+    function __construct()
+    {
+        parent::__construct(
+            [
+                'list' => 'id:ID,nik:NIK,name:Parent Name,phone,blacklist',
+                'form' => 'nik:NIK,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,blacklist,password:User login password',
+            ],
+            true
+        );
+        $this->form->title_format = "{nik} {name}";
+    }
+
+    function show($id)
+    {
+        // dd($this->entity::with('students')->get()->toArray());
+        // dd($this->entity::find(1)->students->toArray());
+        $form_data = $this->form->displayForm($id);
+        return Inertia::render('Parent/Show', [
+            'title' => $form_data->title,
+            'form_schema' => $form_data,
+            'students' => $this->entity::find($id)->students->toArray(),
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nik' => 'required|unique:cparents',
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+        ]);
+
+        $cparent = $this->entity::create($this->form->setStoreOrUpdate($request));
+
+        $user = Cparent::firstOrNew(['email' =>  $request['email']]);
+        $user->name = $request['name'];
+        $user->type = 'Parent';
+        $user->password = bcrypt($request['password']);
+        $user->save();
+
+        $cparent->user_id = $user->id;
+        $cparent->update();
+
+        return redirect('/' . $this->modal);
+    }
+}
+
+
+
+
+/*Controller
 {
     public $entity = Cparent::class;
     public $modal = 'parent';
@@ -16,17 +70,15 @@ class CparentController extends Controller
     function __construct()
     {
         $this->model_name = ucfirst($this->modal);
-        $this->list_view_action_button = 'create-' . $this->modal;
 
         // this used on Index/List view for reducing the data variable
-        $this->list_view_fields = "id,nik,name,phone,blacklist";
+        $this->list_view_fields = "id,nik,name:Parent Name,student:Child Name,phone,blacklist";
         $this->list_view_array = explode(",", $this->list_view_fields);
 
         $this->show_form_fields = 'nik,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,user,blacklist';
 
         // for Create View Fields & 
         $this->create_form_fields = 'nik,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,user_id,blacklist';
-
         $this->form_fields_options = [];
 
         // this used for Store function
@@ -35,14 +87,20 @@ class CparentController extends Controller
         // for Edit View Fields
         $this->edit_form_fields = $this->create_form_fields;
         $this->update_form_fields = str_replace(",,", ',', $this->create_form_fields);
+
+        $this->form_schema = new FormSchema($this->create_form_fields, $this->modal);
+        $this->form_schema->alter('name', function ($field) {
+            $field->options = [1, 2, 3];
+            return $field;
+        });
     }
 
     public function index()
     {
-        $data = $this->entity::all($this->list_view_array);
+        //$data = $this->entity::all($this->list_view_array);
+        $data = $this->entity::with('student')->get();
         return Inertia::render('Simple/Index', [
             'page_title' => $this->model_name . " List",
-            'action_button' => $this->list_view_action_button,
             'fields' => $this->list_view_fields,
             'data' => $data,
             'item_url' => "/" . $this->modal . "/{id}",
@@ -58,6 +116,7 @@ class CparentController extends Controller
             'form_fields_options' => $this->form_fields_options,
             'modal' => $this->modal,
             'post_url' => "/" . $this->modal,
+            'form_schema' => $this->form_schema,
         ]);
     }
 
@@ -89,6 +148,8 @@ class CparentController extends Controller
     public function show($id)
     {
         $entity = $this->entity::with('user')->find($id);
+        // $this->form_schema->withValue($entity)->displayOnly();
+
         return Inertia::render('Simple/Show', [
             'page_title' => $entity->name . ' ' . $this->model_name . ' ',
             'component_header' => $this->model_name . ' Information',
@@ -97,12 +158,14 @@ class CparentController extends Controller
             'data' => $entity,
 
             'modal' => $this->modal,
+            'form_schema' => $this->form_schema,
         ]);
     }
 
     public function edit($id)
     {
         $entity = $this->entity::find($id);
+        $this->form_schema->withValue($entity);
 
         return Inertia::render('Simple/Edit', [
             'page_title' => 'Edit ' . $entity->name . ' ' . $this->modal,
@@ -116,6 +179,8 @@ class CparentController extends Controller
             'post_url' => "/" . $this->modal . "/" . $entity->id,
 
             'modal' => $this->modal,
+
+            'form_schema' => $this->form_schema,
         ]);
     }
 
@@ -135,3 +200,4 @@ class CparentController extends Controller
         return redirect('/' . $this->modal . '/' . $entity->id);
     }
 }
+*/

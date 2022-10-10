@@ -8,96 +8,87 @@ use App\Models\User;
 use Inertia\Inertia;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class UserController extends CommonController
 {
-    public $entity = User::class;
-    public $modal = 'user';
-
-    public $list_view_fields = "id,name,email,type";
-    public $list_view_action_button = 'create-user';
-
-    public $form_fields = 'name,email,type,status,password';
-
     function __construct()
     {
-        $this->model_name = ucfirst($this->modal);
+        parent::__construct([
+            'list' => 'id:ID,name,email,type',
+            'form' => 'name,email,type,status,password:-extrafield=true,disabled:Deactivation Reason,roles:-extrafield=true'
+        ], true);
+
+        $this->form->title_format = '{name}';
+        $this->form->field('type')->hasOptions([
+            'Employee', 'Student', 'Parent'
+        ], 'select');
+
+        $this->form->field('roles')->hasOptions(
+            Role::pluck('name')->toArray(),
+            'multiple-checkbox'
+        );
+
+        $this->form->field('roles')->getValue = function ($field, $id) {
+            return User::find($id)->getRoleNames();
+
+            // $user = User::with('roles')->find($id);
+            // return $user->roles
+        };
     }
 
-
-    public function index()
-    {
-        $data = $this->entity::all();
-        return Inertia::render('Simple/Index', [
-            'page_title' => $this->model_name . " List",
-            'action_button' => $this->list_view_action_button,
-            'fields' => $this->list_view_fields,
-            'data' => $data,
-            'item_url' => "/" . $this->modal . "/{id}",
-
-        ]);
-    }
 
     public function show($id)
     {
+        $form_data = $this->form->displayForm($id);
         $user = $this->entity::find($id);
-        $details = $user->details();
-
+        // $user = ->details()
 
         return Inertia::render('User/Show', [
-            'user' => $user,
-            'details' => $details,
-            'branch' => Branch::select('id', 'name')->get(),
+            'title' => $form_data->title,
+            'form_schema' => $form_data,
+            'user' => [
+                'permission' => $user->getAllPermissions()->pluck('name'),
+                'details' => $user->details()
+            ]
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Simple/Create', [
-            'page_title' => "Create " . $this->model_name,
-            'postto' => "/" . $this->modal,
-            'forminput' => $this->formInput,
+        return Inertia::render('User/Create', [
+            'title' => "Create " . $this->modal_name_for_page_title,
         ]);
     }
 
     public function store(Request $request)
     {
-        // dd($request, $request['type'], $request['status']);
+        $user = $this->entity::create($this->form->setStoreOrUpdate($request));
 
-        $this->entity::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => $request['password'],
-            'type' => $request['type'],
-            'status' => $request['status'],
-        ]);
+        if (isset($request['password'])) {
+            $user->password = Hash::make($request->password);
+            $user->update();
+        }
+
+        $user->syncRoles($request['roles']);
+
         return redirect('/' . $this->modal);
-    }
-
-    public function edit($id)
-    {
-        $data = User::find($id);
-        return Inertia::render('User/Edit', [
-            'data' => $data
-        ]);
     }
 
     public function update(Request $request, $id)
     {
-        $entity = User::find($id);
+        $user = User::find($id);
 
-        $entity->name = $request->name;
-        $entity->email = $request->email;
-        $entity->password = $request->password;
+        if (isset($request['password'])) {
+            $user->password = Hash::make($request->password);
+            $user->update();
+        }
 
-        $entity->update();
-        return Redirect::route('user.index');
-    }
+        $user->syncRoles($request['roles']);
 
-    public function destroy(User $user)
-    {
-        $user->delete();
-        return Redirect::back()->with('message', 'User deleted.');
+        $this->form->setStoreOrUpdate($request, $this->entity::find($id))->update();
+        return redirect('/' . $this->modal . '/' . $id);
     }
 }

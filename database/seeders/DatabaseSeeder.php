@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             ParentSeeder::class,
             StudentSeeder::class,
 
-
+            OtherSeeder::class,
             AllSeeder::class,
         ]);
     }
