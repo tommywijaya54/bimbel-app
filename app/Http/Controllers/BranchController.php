@@ -9,7 +9,7 @@ class BranchController extends CommonController
     function __construct()
     {
         parent::__construct([
-            'list' => 'id,name,phone,address,email, manager_id',
+            'list' => 'id:ID,name,phone,address,email, manager_id',
             'form' => 'manager_id,name:Branch Name,address,phone,email,open_date,status',
         ], true);
         $this->list->order_by = 'ASC';

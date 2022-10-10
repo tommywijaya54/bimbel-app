@@ -19,7 +19,7 @@ class PermissionController extends Controller
     {
         $this->model_name = ucfirst($this->modal);
 
-        $this->list = new ListSchema('id,name,users', $this->modal, $this->entity);
+        $this->list = new ListSchema('id:ID,name,users', $this->modal, $this->entity);
         $this->list->include(['users']);
 
         $this->form_schema = new FormSchema('date,,student_id,branch_id,reference,cashback::number,status,note', $this->modal);

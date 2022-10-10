@@ -17,7 +17,7 @@ class UserController extends CommonController
     function __construct()
     {
         parent::__construct([
-            'list' => 'id,name,email,type',
+            'list' => 'id:ID,name,email,type',
             'form' => 'name,email,type,status,password:-extrafield=true,disabled:Deactivation Reason,roles:-extrafield=true'
         ], true);
 
@@ -56,6 +56,12 @@ class UserController extends CommonController
         ]);
     }
 
+    public function create()
+    {
+        return Inertia::render('User/Create', [
+            'title' => "Create " . $this->modal_name_for_page_title,
+        ]);
+    }
 
     public function store(Request $request)
     {

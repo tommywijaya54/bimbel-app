@@ -7,7 +7,7 @@ class PricelistController extends CommonController
     function __construct()
     {
         parent::__construct([
-            'list' => 'id, start_date, end_date, branch_id, level,price,school_type,subject,week',
+            'list' => 'id:ID, start_date, end_date, branch_id, level,price,school_type,subject,week',
             'form' => 'branch_id,level,price,school_type,week,subject,start_date,end_date,',
         ], true);
 
