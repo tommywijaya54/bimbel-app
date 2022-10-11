@@ -117,7 +117,7 @@ export default function Authenticated({ auth, header, children }) {
                 </div>
             </nav>
 
-            {auth.roles.includes('Owner') && <AdminTopNav></AdminTopNav>}
+            <AdminTopNav></AdminTopNav>
 
             {header && (
                 <header className="bg-white shadow">

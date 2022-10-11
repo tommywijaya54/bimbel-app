@@ -1,6 +1,5 @@
 import { Link, usePage } from "@inertiajs/inertia-react";
 
-
 export default () => {
     const permissions = usePage().props.auth.permissions;
     const includeFromTopNavList = ['user', 'branch', 'role', 'employee']; // for admin
@@ -24,7 +23,7 @@ export default () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex h-10">   
                 <div className="shrink-0 flex items-center">
-                    Owner Panel
+                
                 </div>     
                 <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <NavList list={permissions}></NavList>

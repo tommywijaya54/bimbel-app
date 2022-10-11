@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cparent;
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CparentController extends CommonController
 {
@@ -19,7 +21,9 @@ class CparentController extends CommonController
             ],
             true
         );
+
         $this->form->title_format = "{nik} {name}";
+        $this->form->field('password')->extrafield = true;
     }
 
     function show($id)
@@ -44,160 +48,51 @@ class CparentController extends CommonController
             'password' => 'required',
         ]);
 
-        $cparent = $this->entity::create($this->form->setStoreOrUpdate($request));
+        $controller = $this;
+        DB::transaction(
+            function () use ($controller, $request) {
+                $cparent = $controller->entity::create($controller->form->setStoreOrUpdate($request));
 
-        $user = Cparent::firstOrNew(['email' =>  $request['email']]);
-        $user->name = $request['name'];
-        $user->type = 'Parent';
-        $user->password = bcrypt($request['password']);
-        $user->save();
+                $user = User::firstOrNew(['email' =>  $request['email']]);
+                $user->name = $request['name'];
+                $user->type = 'Parent';
+                $user->password = bcrypt($request['password']);
+                $user->save();
 
-        $cparent->user_id = $user->id;
-        $cparent->update();
-
-        return redirect('/' . $this->modal);
-    }
-}
-
-
-
-
-/*Controller
-{
-    public $entity = Cparent::class;
-    public $modal = 'parent';
-
-    function __construct()
-    {
-        $this->model_name = ucfirst($this->modal);
-
-        // this used on Index/List view for reducing the data variable
-        $this->list_view_fields = "id,nik,name:Parent Name,student:Child Name,phone,blacklist";
-        $this->list_view_array = explode(",", $this->list_view_fields);
-
-        $this->show_form_fields = 'nik,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,user,blacklist';
-
-        // for Create View Fields & 
-        $this->create_form_fields = 'nik,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,user_id,blacklist';
-        $this->form_fields_options = [];
-
-        // this used for Store function
-        $this->store_form_fields = str_replace(",,", ',', $this->create_form_fields);
-
-        // for Edit View Fields
-        $this->edit_form_fields = $this->create_form_fields;
-        $this->update_form_fields = str_replace(",,", ',', $this->create_form_fields);
-
-        $this->form_schema = new FormSchema($this->create_form_fields, $this->modal);
-        $this->form_schema->alter('name', function ($field) {
-            $field->options = [1, 2, 3];
-            return $field;
-        });
-    }
-
-    public function index()
-    {
-        //$data = $this->entity::all($this->list_view_array);
-        $data = $this->entity::with('student')->get();
-        return Inertia::render('Simple/Index', [
-            'page_title' => $this->model_name . " List",
-            'fields' => $this->list_view_fields,
-            'data' => $data,
-            'item_url' => "/" . $this->modal . "/{id}",
-            'modal' => $this->modal,
-        ]);
-    }
-
-    public function create()
-    {
-        return Inertia::render('Simple/Create', [
-            'page_title' => "Create " . $this->model_name,
-            'form_fields' => $this->create_form_fields,
-            'form_fields_options' => $this->form_fields_options,
-            'modal' => $this->modal,
-            'post_url' => "/" . $this->modal,
-            'form_schema' => $this->form_schema,
-        ]);
-    }
-
-    public function store(Request $request)
-    {
-        $arr = [];
-        $fieldnames = explode(",", $this->store_form_fields);
-
-        foreach ($fieldnames as $a) {
-            if ($request[$a]) {
-                $arr[$a] = $request[$a];
+                $cparent->user_id = $user->id;
+                $cparent->update();
             }
-        }
-
-        $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'type' => 'Parent',
-            'password' => bcrypt('password'), // '$2y$10$5jVX3q8h6GnAqwN9KR9sVekmwYZQh0daV5.i65bzdXJMRYi/mtMZi', // password
-        ]);
-
-        $cparent = $this->entity::create($arr);
-        $cparent->user_id = $user->id;
-        $cparent->update();
+        );
 
         return redirect('/' . $this->modal);
-    }
-
-    public function show($id)
-    {
-        $entity = $this->entity::with('user')->find($id);
-        // $this->form_schema->withValue($entity)->displayOnly();
-
-        return Inertia::render('Simple/Show', [
-            'page_title' => $entity->name . ' ' . $this->model_name . ' ',
-            'component_header' => $this->model_name . ' Information',
-
-            'form_fields' => $this->show_form_fields,
-            'data' => $entity,
-
-            'modal' => $this->modal,
-            'form_schema' => $this->form_schema,
-        ]);
-    }
-
-    public function edit($id)
-    {
-        $entity = $this->entity::find($id);
-        $this->form_schema->withValue($entity);
-
-        return Inertia::render('Simple/Edit', [
-            'page_title' => 'Edit ' . $entity->name . ' ' . $this->modal,
-            'component_header' => 'Edit Form ',
-            'component_note' => 'To change name, email & password on your login information you need to contact administrator',
-
-            'form_fields' =>  $this->edit_form_fields,
-            'form_fields_options' => $this->form_fields_options,
-
-            'data' => $entity,
-            'post_url' => "/" . $this->modal . "/" . $entity->id,
-
-            'modal' => $this->modal,
-
-            'form_schema' => $this->form_schema,
-        ]);
     }
 
     public function update(Request $request, $id)
     {
-        $fieldnames = explode(",", $this->update_form_fields);
+        $cparent = $this->entity::find($id);
 
-        $entity = $this->entity::find($id);
+        $request->validate([
+            'nik' => 'required|unique:cparents,nik,' . $id,
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|unique:users,email,' . $cparent->user_id,
+        ]);
 
-        foreach ($fieldnames as $a) {
-            if ($request[$a]) {
-                $entity[$a] = $request[$a];
+        $controller = $this;
+        DB::transaction(function () use ($controller, $request, $id, $cparent) {
+            $controller->form->setStoreOrUpdate($request, $controller->entity::find($id))->update();
+
+            $user = User::find($cparent->user_id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+
+            if (isset($request->password)) {
+                $user->password = bcrypt($request['password']);
             }
-        }
 
-        $entity->update();
-        return redirect('/' . $this->modal . '/' . $entity->id);
+            $user->update();
+        });
+
+        return redirect('/' . $this->modal . '/' . $id);
     }
 }
-*/
