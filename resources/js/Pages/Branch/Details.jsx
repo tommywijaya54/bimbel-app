@@ -1,12 +1,13 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import Component from '@/Shared/PageComponent/Form/Component';
-import { FieldUtil } from '@/Shared/Util/Field.util';
+import { FieldUtil } from '@/Shared/Util/Field_util';
 import ValueField from '@/Shared/PageComponent/Field/ValueField';
 import { useForm } from '@inertiajs/inertia-react';
-import { Rule, RuleSet } from '@/Shared/Util/Rule.util';
+import { Rule, RuleSet } from '@/Shared/Util/Rule_util';
 import Icon from '@/Shared/Icon';
 import Form from '@/Shared/PageComponent/Form/Form';
+import DetailsSummaryComponent from '@/Shared/PageComponent/Element/DetailsSummaryComponent';
 
 let FieldRules = new RuleSet();
 FieldRules.add(new Rule('entityname','includes',['amount','qty','cost'],(field) => field.input_type = 'number'));
@@ -100,15 +101,18 @@ const MiniComponent = ({header,children}) => {
 
 export default function Show(props) {
     console.log(props.branch);
-
     return (
         <MainLayout
             {...props}
         >
-            <Form
-                {...props.form_schema}
-            >
-            </Form>
+            <DetailsSummaryComponent
+                header="Branch information"
+            >   
+                <Form
+                    {...props.form_schema}
+                >
+                </Form>
+            </DetailsSummaryComponent>
 
             <Component
                 header={

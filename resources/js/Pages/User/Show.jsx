@@ -4,7 +4,7 @@ import Form from '@/Shared/PageComponent/Form/Form';
 import UnitMapField from '@/Shared/PageComponent/Field/UnitMapField';
 import DetailsSummaryComponent from '@/Shared/PageComponent/Element/DetailsSummaryComponent';
 import DisplayForm from '@/Shared/PageComponent/Form/DisplayForm';
-import { FieldUtil } from '@/Shared/Util/Field.util';
+import { FieldUtil } from '@/Shared/Util/Field_util';
 
 export default function Show(props) {
     return (

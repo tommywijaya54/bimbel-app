@@ -1,4 +1,4 @@
-import { FieldUtil } from '@/Shared/Util/Field.util';
+import { FieldUtil } from '@/Shared/Util/Field_util';
 
 export default ({field}) => {
     const {entityname,value} = field;
