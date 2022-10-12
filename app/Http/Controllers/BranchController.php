@@ -11,7 +11,7 @@ class BranchController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,name,phone,address,email, manager_id',
-            'form' => 'manager_id,name:Branch Name,address,phone,email,open_date,status',
+            'form' => 'name:Branch Name,manager_id,address,phone,email,open_date,status',
         ], true);
         $this->list->order_by = 'ASC';
 
