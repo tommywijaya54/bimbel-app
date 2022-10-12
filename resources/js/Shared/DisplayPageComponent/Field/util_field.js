@@ -19,8 +19,14 @@ class Field{
         }else if(strField === '_'){
             this.element = 'line'
         }else{
-            this.entityname = strField;
-            this.label = strField.cap();
+            if(strField.includes(':')){
+                const xo = strField.split(':');
+                this.entityname = xo[0],
+                this.label = (xo[1]||xo[0].cap())
+            }else{
+                this.entityname = strField;
+                this.label = strField.cap();
+            }
         }
     }
     setValueFrom(data){
@@ -119,6 +125,7 @@ class FieldUtil{
         return null;
     }
 
+    
 }
 
 export {FieldUtil}
