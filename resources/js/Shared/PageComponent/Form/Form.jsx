@@ -1,6 +1,6 @@
 import Component from "./Component"
 import FormFooter from "./Footer"
-import { FormSchema } from "./util_form"
+import { FormSchema } from "../../Util/Form.util"
 
 import React from 'react';
 import DisplayForm from "./DisplayForm";

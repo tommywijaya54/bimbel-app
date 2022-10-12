@@ -1,4 +1,4 @@
-import { CurrentUser } from "@/Shared/Util";
+import { CurrentUser } from "@/Shared/Util/CurrentUser.util";
 
 const FormFooter = ({form, obj, link}) => {
     const user = new CurrentUser();

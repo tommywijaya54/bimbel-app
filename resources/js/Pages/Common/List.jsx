@@ -1,6 +1,6 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
-import List from '@/Shared/DisplayPageComponent/List/List';
+import List from '@/Shared/PageComponent/List/List';
 
 export default function Show(props) {
     return (

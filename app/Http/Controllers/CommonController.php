@@ -74,6 +74,7 @@ class CommonController extends Controller
         $this->entity::create($this->form->setStoreOrUpdate($request));
         return redirect('/' . $this->modal);
     }
+
     public function update(Request $request, $id)
     {
         $this->form->setStoreOrUpdate($request, $this->entity::find($id))->update();

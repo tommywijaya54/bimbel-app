@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import StudentDetails from '@/Shared/PageComponent/StudentDetails';
-import Form from '@/Shared/DisplayPageComponent/Form/Form';
+import Form from '@/Shared/PageComponent/Form/Form';
 
 export default function Show(props) {
     return (

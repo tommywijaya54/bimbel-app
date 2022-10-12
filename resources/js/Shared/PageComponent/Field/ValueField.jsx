@@ -1,4 +1,4 @@
-import { FieldUtil } from '@/Shared/DisplayPageComponent/Field/util_field';
+import { FieldUtil } from '@/Shared/Util/Field.util';
 
 export default ({field}) => {
     const {entityname,value} = field;

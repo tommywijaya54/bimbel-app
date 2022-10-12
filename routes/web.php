@@ -96,7 +96,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/' . $model . '/{id}', [$controller, 'update'])->middleware('can:edit-' . $model);
     };
 
-    Route::get('/branch/{id}/details', [BranchController::class, 'details']);
+    Route::group([
+        'prefix' => 'branch'
+    ], function () {
+        Route::get('/{id}/details', [BranchController::class, 'details']);
+        Route::post('/{id}/expense', [BranchController::class, 'add_expense']);
+        Route::post('/{id}/rental', [BranchController::class, 'add_rental']);
+        Route::post('/{id}/asset', [BranchController::class, 'add_asset']);
+
+        Route::delete('/{id}/expense/{item_id}', [BranchController::class, 'delete_expense']);
+        Route::delete('/{id}/rental/{item_id}', [BranchController::class, 'delete_rental']);
+        Route::delete('/{id}/asset/{item_id}', [BranchController::class, 'delete_asset']);
+    });
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

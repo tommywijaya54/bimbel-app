@@ -5,7 +5,7 @@ import NumberInput from '@/Shared/NumberInput';
 import DataListInput from '@/Shared/DataListInput';
 import TextAreaInput from '@/Shared/TextAreaInput';
 import MultipleCheckboxInput from '@/Shared/MultipleCheckboxInput';
-import { FieldUtil } from './util_field';
+import { FieldUtil } from '../../Util/Field.util';
 
 export default ({Field, data, errors, setData}) => {
     if(Field.element){

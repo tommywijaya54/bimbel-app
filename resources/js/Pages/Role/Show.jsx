@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
-import Form from '@/Shared/DisplayPageComponent/Form/Form';
-import UnitMapField from '@/Shared/DisplayPageComponent/Field/UnitMapField';
+import Form from '@/Shared/PageComponent/Form/Form';
+import UnitMapField from '@/Shared/PageComponent/Field/UnitMapField';
 
 export default function Show(props) {
     const groupedPermissions = props.available_permissions.reduce((group, permission) => {

@@ -1,56 +1,90 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
-import Component from '@/Shared/DisplayPageComponent/Form/Component';
-import { FieldUtil } from '@/Shared/DisplayPageComponent/Field/util_field';
-import ValueField from '@/Shared/DisplayPageComponent/Field/ValueField';
+import Component from '@/Shared/PageComponent/Form/Component';
+import { FieldUtil } from '@/Shared/Util/Field.util';
+import ValueField from '@/Shared/PageComponent/Field/ValueField';
 import { useForm } from '@inertiajs/inertia-react';
+import { Rule, RuleSet } from '@/Shared/Util/Rule.util';
+import Icon from '@/Shared/Icon';
+import Form from '@/Shared/PageComponent/Form/Form';
 
-const TableList = ({header, data, className, post_to}) => {
-    const th = FieldUtil.turnStringToArrayOfField(header);
-    
-    const inline_form_obj = {};
-    th.forEach(f => inline_form_obj[f.entityname] = '');
+let FieldRules = new RuleSet();
+FieldRules.add(new Rule('entityname','includes',['amount','qty','cost'],(field) => field.input_type = 'number'));
+FieldRules.add(new Rule('entityname','includes',['date'],(field) => field.input_type = 'date'));
 
-    const { data, setData, post, processing, errors } = useForm(inline_form_obj);   
-    
+const fieldtypeAdder = (field) => {
+    if(!FieldRules.check(field)){
+        field.input_type = 'text';
+    }
+}
+
+const TableList = ({header, table_data, className, post_to}) => {
+    let th = FieldUtil.turnStringToArrayOfField(header);
+    th.forEach(f => fieldtypeAdder(f));
+
+    const { data, setData, post, processing, errors } = useForm(th.reduce((obj,field) => (obj[field.entityname] = '',obj),{})); 
+    const {delete : destroy} = useForm();
+
     function submit(e) {
         e.preventDefault();
-        post(post_to);
+        post(post_to,
+            {
+                preserveScroll: true,
+                // onSuccess: () => reset('password'),
+            });
     }
     
-
+    function delete_item(id){
+        destroy(post_to+'/'+id,
+            {
+                preserveScroll: true,
+            }
+        );
+    }
+    
     return <>
-        <table className={'table-border-compact w-full '+className}>
-            <thead>
-                <tr>
-                    {th.map((t,i) => <th key={i}>{t.label}</th>)}
-                </tr>
-            </thead>
-            <tbody>
-                    {data.map((d,keyId) => {
-                        return <tr key={keyId}>
-                            {th.map((f,keyf) => {
-                                return <td key={keyf}>
-                                    <ValueField field={{...f,value:d[f.entityname]}}></ValueField>
+        <form onSubmit={submit}>
+            <table className={'table-border-compact w-full '+className}>
+                <thead>
+                    <tr>
+                        {th.map((t,i) => <th key={i}>{t.label}</th>)}
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {table_data.map((d,keyId) => {
+                            return <tr key={keyId}>
+                                {th.map((f,keyf) => {
+                                    return <td key={keyf}>
+                                        <ValueField field={{...f,value:d[f.entityname]}}></ValueField>
+                                    </td>
+                                })}
+                                <td>
+                                    <button type="button" className='delete-button' onClick={e => delete_item(d.id)}>
+                                        <Icon name="trash" className="block w-5 h-5 text-sky-500 fill-current"></Icon>
+                                    </button>
                                 </td>
-                            })}
-                        </tr>
-                    })}
-                    {inline_form && <form onSubmit={submit}>
-                        <tr>
+                            </tr>
+                        })}
+                        <tr className='table-inline-form'>
                         {th.map((f,ki) => {
-                            return <td>
-                                <input type="text" value={data[f.entityname]} onChange={e => setData(f.entityname, e.target.value)} />
-                                    {errors[f.entityname] && <div>{errors[f.entityname]}</div>}
+                            return <td key={ki}>
+                                <input 
+                                    type={f.input_type} 
+                                    value={data[f.entityname]} 
+                                    onChange={e => setData(f.entityname, e.target.value)}
+                                    placeholder={f.label}    
+                                    />
+                                {errors[f.entityname] && <div>{errors[f.entityname]}</div>}
                             </td>
                         })}
                         <td>
-                            <button type="submit" disabled={processing}>Login</button>
+                            <button type="submit" className='post-form' disabled={processing}>Save</button>
                         </td>
                         </tr>
-                    </form>}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </form>
     </>
 }
 
@@ -71,22 +105,33 @@ export default function Show(props) {
         <MainLayout
             {...props}
         >
+            <Form
+                {...props.form_schema}
+            >
+            </Form>
+
             <Component
                 header={
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                        {props.branch.name}
-                        <span className="info">
-                            {props.branch.address}
-                        </span>
-                    </h2>
+                    <div className='flex justify-between'>
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                            {props.branch.name}<br/>
+                            <small>{props.branch.address}</small>
+                            
+                        </h2>
+                        <div class='flex item-center'>  
+                            <a className='button block' href='edit'>Edit</a>
+                        </div>
+                    </div>
+                    
                 }
             > 
                 <MiniComponent 
                     header="Expenses">
                     <TableList
                         header="date:Tanggal,expense_type:Type,description:Description,amount:Nominal"
-                        data={props.branch.expenses}
-                        post_to={'branch/'+props.branch.id+'/addexpense'}
+                        table_data={props.branch.expenses}
+                        post_to='expense'
+                        className="w-full"
                     ></TableList>
                 </MiniComponent>
 
@@ -94,8 +139,9 @@ export default function Show(props) {
                     header="Rental">
                     <TableList
                         header="start_date:Kontrak Mulai,end_date:Kontrak Habis,owner_name:Pemilik,owner_phone:Phone"
-                        data={props.branch.rentals}
-                        post_to={'branch/'+props.branch.id+'/addrental'}
+                        table_data={props.branch.rentals}
+                        post_to='rental'
+                        className="w-full"
                     ></TableList>
                 </MiniComponent>
 
@@ -103,9 +149,9 @@ export default function Show(props) {
                     header="Assets">
                     <TableList
                         header="item_name:Description,qty:Quantity,cost:Cost"
-                        data={props.branch.assets}
-                        post_to={'branch/'+props.branch.id+'/addasset'}
-                        className="w-1/2"
+                        table_data={props.branch.assets}
+                        post_to='asset'
+                        className="w-3/4"
                     ></TableList>
                 </MiniComponent>
             </Component>

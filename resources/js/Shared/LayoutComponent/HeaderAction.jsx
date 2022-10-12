@@ -1,4 +1,4 @@
-import { CurrentUser } from "../Util";
+import { CurrentUser } from "../Util/CurrentUser.util";
 
 export default ({action}) => {
     const user = new CurrentUser();

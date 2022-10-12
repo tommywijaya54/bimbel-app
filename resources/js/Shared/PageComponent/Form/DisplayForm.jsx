@@ -1,4 +1,4 @@
-import { FieldUtil } from "../Field/util_field";
+import { FieldUtil } from "../../Util/Field.util";
 export default ({fields}) => {
     if(fields){
         return fields.map((field,keyId) => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
-import Form from '@/Shared/DisplayPageComponent/Form/Form';
-import UnitMapField from '@/Shared/DisplayPageComponent/Field/UnitMapField';
-import DetailsSummaryComponent from '@/Shared/DisplayPageComponent/Element/DetailsSummaryComponent';
-import DisplayForm from '@/Shared/DisplayPageComponent/Form/DisplayForm';
-import { FieldUtil } from '@/Shared/DisplayPageComponent/Field/util_field';
+import Form from '@/Shared/PageComponent/Form/Form';
+import UnitMapField from '@/Shared/PageComponent/Field/UnitMapField';
+import DetailsSummaryComponent from '@/Shared/PageComponent/Element/DetailsSummaryComponent';
+import DisplayForm from '@/Shared/PageComponent/Form/DisplayForm';
+import { FieldUtil } from '@/Shared/Util/Field.util';
 
 export default function Show(props) {
     return (
