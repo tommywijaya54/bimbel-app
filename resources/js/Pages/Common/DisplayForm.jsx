@@ -7,7 +7,6 @@ export default function Show(props) {
         <MainLayout
             {...props}
         >
-            <h1 className='attention'>Common Display Form</h1>
             <Form
                 {...props.form_schema}
             >

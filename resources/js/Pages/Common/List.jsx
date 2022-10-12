@@ -7,7 +7,6 @@ export default function Show(props) {
         <MainLayout
             {...props}
         >
-            <h1 className='attention'>Common List</h1>
             <List 
                 {...props.list}
             ></List>
