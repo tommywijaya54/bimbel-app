@@ -2,7 +2,10 @@ import _ from 'lodash';
 window._ = _;
 window.locale = {
     code: "id-ID",
-    dateFormat : { year: 'numeric', month: 'short', day: '2-digit' }
+    dateFormat : { year: 'numeric', month: 'short', day: '2-digit' },
+    currency:{
+        sign:'Rp.'
+    }
 };
 
 /**

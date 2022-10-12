@@ -76,6 +76,17 @@ class FieldUtil{
             }
         }
 
+        if(typeof value == 'number'){
+            if(field.entityname.includes('amount') || field.entityname.includes('cost')){
+                return React.createElement('span',{
+                    className:'currency'
+                },[
+                    React.createElement('span',{className:'sign'},locale.currency.sign),
+                    field.value.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+                ]);
+            }
+        }
+
         if(Array.isArray(value) && value.length > 0){
             return value.map((x,keyId) => {
                 let value = typeof x == 'string' ? x : x.name;
