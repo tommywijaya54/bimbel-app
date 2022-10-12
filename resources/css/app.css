@@ -19,6 +19,28 @@ table.table-padding-row tbody tr td {
     border-top-width: 1px;
 }
 
+table.table-border-compact {
+    border: 1px solid #ddd;
+}
+
+table.table-border-compact thead {
+    background-color: aliceblue;
+}
+
+table.table-border-compact td,
+table.table-border-compact th {
+    text-align:
+        left;
+    padding: 0.6em 1em;
+    border: 1px solid #ddd;
+    border-width: 1px 0;
+}
+
+
+table.table-border-compact tr:hover td {
+    background: linen;
+}
+
 .btn-indigo {
     @apply px-6 py-3 rounded bg-indigo-700 text-white text-sm font-bold whitespace-nowrap;
 }
@@ -516,4 +538,21 @@ details .summary-chevron-down svg {
 
 details summary::-webkit-details-marker {
     display: none;
+}
+
+span.currency {
+    width: 100%;
+    text-align: right;
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 40px;
+    position: relative;
+}
+
+span.currency .sign {
+    padding-right: 10px;
+    display: inline-block;
+    float: left;
+    position: absolute;
+    left: 0px;
 }
