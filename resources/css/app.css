@@ -29,11 +29,15 @@ table.table-border-compact thead {
 
 table.table-border-compact td,
 table.table-border-compact th {
-    text-align:
-        left;
-    padding: 0.6em 1em;
+    text-align: left;
+    padding: 1em;
     border: 1px solid #ddd;
     border-width: 1px 0;
+    vertical-align: top;
+}
+
+table.table-border-compact th {
+    padding: 0.6em 1em;
 }
 
 
@@ -228,14 +232,6 @@ table.table-border-compact tr:hover td {
     border-top: 1px dashed #888;
 }
 
-/* 
-.parsed-object {
-    background: white;
-    padding: 1em;
-    border-radius: 10px;
-    margin-bottom: 1.5em;
-} */
-
 .debug code {
     white-space: break-spaces;
     word-break: break-all;
@@ -260,7 +256,7 @@ table.table-border-compact tr:hover td {
 }
 .header span.info {
     float: right;
-    color: #fff;
+    color: #1d494b;
 }
 .header span.black-listed {
     background: #ffda00;
@@ -540,7 +536,7 @@ details summary::-webkit-details-marker {
     display: none;
 }
 
-span.currency {
+.currency {
     width: 100%;
     text-align: right;
     display: inline-block;
@@ -549,10 +545,13 @@ span.currency {
     position: relative;
 }
 
-span.currency .sign {
+.currency .sign {
     padding-right: 10px;
-    display: inline-block;
+    display: block;
     float: left;
     position: absolute;
     left: 0px;
+}
+.no-wrap{
+    white-space: nowrap;
 }

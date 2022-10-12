@@ -1,16 +1,23 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import Component from '@/Shared/DisplayPageComponent/Form/Component';
+import { FieldUtil } from '@/Shared/DisplayPageComponent/Field/util_field';
 import ValueField from '@/Shared/DisplayPageComponent/Field/ValueField';
+import { useForm } from '@inertiajs/inertia-react';
 
-const Table = ({header,data, className}) => {
-    const th = header.split(',').map(h => {
-        const heading = h.split(':');
-        return {
-            entityname:heading[0],
-            label:(heading[1]||heading[0].cap())
-        }
-    });
+const TableList = ({header, data, className, post_to}) => {
+    const th = FieldUtil.turnStringToArrayOfField(header);
+    
+    const inline_form_obj = {};
+    th.forEach(f => inline_form_obj[f.entityname] = '');
+
+    const { data, setData, post, processing, errors } = useForm(inline_form_obj);   
+    
+    function submit(e) {
+        e.preventDefault();
+        post(post_to);
+    }
+    
 
     return <>
         <table className={'table-border-compact w-full '+className}>
@@ -20,22 +27,36 @@ const Table = ({header,data, className}) => {
                 </tr>
             </thead>
             <tbody>
-                    {data.map((d,i) => {
-                        return <tr key={i}>
-                            {th.map((t,y) => <td key={y}>
-                                <ValueField field={t} data={data[i]}></ValueField>
-                            </td>)}
+                    {data.map((d,keyId) => {
+                        return <tr key={keyId}>
+                            {th.map((f,keyf) => {
+                                return <td key={keyf}>
+                                    <ValueField field={{...f,value:d[f.entityname]}}></ValueField>
+                                </td>
+                            })}
                         </tr>
                     })}
+                    {inline_form && <form onSubmit={submit}>
+                        <tr>
+                        {th.map((f,ki) => {
+                            return <td>
+                                <input type="text" value={data[f.entityname]} onChange={e => setData(f.entityname, e.target.value)} />
+                                    {errors[f.entityname] && <div>{errors[f.entityname]}</div>}
+                            </td>
+                        })}
+                        <td>
+                            <button type="submit" disabled={processing}>Login</button>
+                        </td>
+                        </tr>
+                    </form>}
             </tbody>
         </table>
     </>
 }
-// 
 
 const MiniComponent = ({header,children}) => {
     return <>
-        <div className='w-full mb-8'>
+        <div className='w-full mb-12'>
             <h2 className="font-semibold text-lg text-gray-800 leading-tight mb-2">{header}</h2>
             {children}
         </div>
@@ -62,27 +83,30 @@ export default function Show(props) {
             > 
                 <MiniComponent 
                     header="Expenses">
-                    <Table
+                    <TableList
                         header="date:Tanggal,expense_type:Type,description:Description,amount:Nominal"
                         data={props.branch.expenses}
-                    ></Table>
+                        post_to={'branch/'+props.branch.id+'/addexpense'}
+                    ></TableList>
                 </MiniComponent>
 
                 <MiniComponent 
                     header="Rental">
-                    <Table
+                    <TableList
                         header="start_date:Kontrak Mulai,end_date:Kontrak Habis,owner_name:Pemilik,owner_phone:Phone"
                         data={props.branch.rentals}
-                    ></Table>
+                        post_to={'branch/'+props.branch.id+'/addrental'}
+                    ></TableList>
                 </MiniComponent>
 
                 <MiniComponent 
                     header="Assets">
-                    <Table
+                    <TableList
                         header="item_name:Description,qty:Quantity,cost:Cost"
                         data={props.branch.assets}
+                        post_to={'branch/'+props.branch.id+'/addasset'}
                         className="w-1/2"
-                    ></Table>
+                    ></TableList>
                 </MiniComponent>
             </Component>
         </MainLayout>
