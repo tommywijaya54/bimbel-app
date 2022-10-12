@@ -45,4 +45,19 @@ class Branch extends Model
     {
         return $this->hasMany(Employee::class);
     }
+
+    public function assets()
+    {
+        return $this->hasMany(BranchAsset::class, 'branch_id', 'id');
+    }
+
+    public function rentals()
+    {
+        return $this->hasMany(BranchRental::class, 'branch_id', 'id');
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(BranchExpense::class, 'branch_id', 'id');
+    }
 }

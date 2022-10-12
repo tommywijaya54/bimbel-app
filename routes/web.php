@@ -95,6 +95,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/' . $model . '/{id}/edit', [$controller, 'edit'])->middleware('can:edit-' . $model);
         Route::put('/' . $model . '/{id}', [$controller, 'update'])->middleware('can:edit-' . $model);
     };
+
+    Route::get('/branch/{id}/details', [BranchController::class, 'details']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

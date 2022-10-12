@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Inertia\Inertia;
 
 class BranchController extends CommonController
 {
@@ -19,5 +20,19 @@ class BranchController extends CommonController
             User::role('Branch Manager')->get()->toArray(),
             'datalist'
         );
+    }
+
+    public function details($id)
+    {
+        $branch = $this->entity::with('assets', 'rentals', 'expenses', 'manager')->find($id);
+        // $assets = $branch->assets;
+        // dd($branch->assets());
+
+        return Inertia::render('Branch/Details', [
+            'title' => 'Branch Details',
+            'branch' => $branch,
+            // 'branch' => compact('branch'),
+            // 'assets' => $assets
+        ]);
     }
 }
