@@ -598,3 +598,21 @@ details summary::-webkit-details-marker {
 .no-wrap{
     white-space: nowrap;
 }
+
+.inline-note {
+    width: 8em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    
+}
+
+.inline-note:hover {
+    /* transition: width 1s, height 2s; */
+
+    width: auto;
+    white-space: normal;
+    overflow: auto;
+    text-overflow: initial;
+}
