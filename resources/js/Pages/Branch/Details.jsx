@@ -105,34 +105,26 @@ export default function Show(props) {
         <MainLayout
             {...props}
         >
-            <DetailsSummaryComponent
-                header="Branch information"
-            >   
-                <Form
-                    {...props.form_schema}
-                >
-                </Form>
-            </DetailsSummaryComponent>
-
             <Component
-                header={
-                    <div className='flex justify-between'>
-                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                            {props.branch.name}<br/>
-                            <small>{props.branch.address}</small>
-                            
+                header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                            <a href={'/branch/'+props.branch.id}>
+                                {props.branch.name}
+                                <span className='info'>{props.branch.address}
+                                    <Icon
+                                        name='office'
+                                        className="inline-block w-5 h-5 ml-6 text-white fill-current"
+                                        >
+
+                                    </Icon>
+                                </span>
+                            </a>
                         </h2>
-                        <div class='flex item-center'>  
-                            <a className='button block' href='edit'>Edit</a>
-                        </div>
-                    </div>
-                    
                 }
             > 
                 <MiniComponent 
                     header="Expenses">
                     <TableList
-                        header="date:Tanggal,expense_type:Type,description:Description,amount:Nominal"
+                        header="date:Tanggal,expense_type:Type,description:Description,amount:Nominal,note"
                         table_data={props.branch.expenses}
                         post_to='expense'
                         className="w-full"
@@ -142,7 +134,7 @@ export default function Show(props) {
                 <MiniComponent 
                     header="Rental">
                     <TableList
-                        header="start_date:Kontrak Mulai,end_date:Kontrak Habis,owner_name:Pemilik,owner_phone:Phone"
+                        header="start_date:Kontrak Mulai,end_date:Kontrak Habis,owner_name:Pemilik,owner_phone:Phone,note"
                         table_data={props.branch.rentals}
                         post_to='rental'
                         className="w-full"
@@ -152,13 +144,26 @@ export default function Show(props) {
                 <MiniComponent 
                     header="Assets">
                     <TableList
-                        header="item_name:Description,qty:Quantity,cost:Cost"
+                        header="purchase_date:Tanggal Beli,item_name:Description,qty:Quantity,cost:Cost,note"
                         table_data={props.branch.assets}
                         post_to='asset'
-                        className="w-3/4"
+                        className="w-full"
                     ></TableList>
                 </MiniComponent>
             </Component>
         </MainLayout>
     );
 }
+
+/*
+<DetailsSummaryComponent
+                    header="Branch information"
+                    className="mb-8"
+                >   
+                    <Form
+                        {...props.form_schema}
+                    >
+                    </Form>
+                </DetailsSummaryComponent>
+                
+                */
