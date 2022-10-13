@@ -18,24 +18,25 @@ class BranchExpensesSeeder extends Seeder
     {
         $Branches = Branch::all();
 
-        for ($x = 1; $x <= 10; $x++) {
+        for ($x = 1; $x <= 30; $x++) {
             $arr = [
                 'branch_id' => $Branches->random()->id,
 
-                'expense_type' => fake('id_ID')->text(),
+                'expense_type' => fake('id_ID')->text(10),
 
-                'description' => fake('id_ID')->text(),
+                'description' => fake('id_ID')->text(10),
 
                 'amount' => fake('id_ID')->numberBetween($min = 1500, $max = 6000),
 
                 'date' => fake('id_ID')->date(),
 
                 'approve_by' => fake('id_ID')->text(),
+                'note' => fake('id_ID')->text(50),
             ];
             DB::table('branch_expenses')->insert($arr);
         }
 
-        for ($x = 1; $x <= 10; $x++) {
+        for ($x = 1; $x <= 30; $x++) {
             $arr = [
                 'branch_id' => $Branches->random()->id,
 
@@ -49,12 +50,15 @@ class BranchExpensesSeeder extends Seeder
 
                 'notaris_name' => fake('id_ID')->name(),
                 'notaris_phone' => fake('id_ID')->phoneNumber(),
+
+                'note' => fake('id_ID')->text(50),
             ];
             DB::table('branch_rentals')->insert($arr);
         }
 
-        for ($x = 1; $x <= 10; $x++) {
+        for ($x = 1; $x <= 30; $x++) {
             $arr = [
+                'purchase_date' => fake('id_ID')->date(),
                 'branch_id' => $Branches->random()->id,
                 'item_name' => fake('id_ID')->name(),
                 'qty' => fake('id_ID')->randomDigitNotNull(),

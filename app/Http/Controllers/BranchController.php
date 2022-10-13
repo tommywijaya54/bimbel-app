@@ -25,6 +25,8 @@ class BranchController extends CommonController
             User::role('Branch Manager')->get()->toArray(),
             'datalist'
         );
+
+        // $this->rental_form =
     }
 
     public function details($id)
@@ -36,7 +38,7 @@ class BranchController extends CommonController
         return Inertia::render('Branch/Details', [
             'title' => 'Branch Details',
             'branch' => $branch,
-            'form_schema' => $this->form->displayForm($id),
+            // 'form_schema' => $this->form->displayForm($id),
             // 'branch' => compact('branch'),
             // 'assets' => $assets
         ]);
@@ -53,22 +55,18 @@ class BranchController extends CommonController
         ]);
     }
 
-    public function delete_expense($id, $item_id)
-    {
-        $branch = Branch::find($id);
-        $item = $branch->expenses()->find($item_id);
-        $item->delete();
-    }
-
-
     public function add_rental($id, Request $request)
     {
         $branch = Branch::find($id);
         $branch->rentals()->create([
-            'date' => $request->date,
-            'expense_type' => $request->expense_type,
-            'description' => $request->description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
             'amount' => $request->amount,
+            'owner_name' => $request->owner_name,
+            'owner_phone' => $request->owner_phone,
+            'notaris_name' => $request->notaris_name,
+            'notaris_phone' => $request->notaris_phone,
+            'note' => $request->note,
         ]);
     }
 
@@ -76,10 +74,32 @@ class BranchController extends CommonController
     {
         $branch = Branch::find($id);
         $branch->assets()->create([
-            'date' => $request->date,
-            'expense_type' => $request->expense_type,
-            'description' => $request->description,
-            'amount' => $request->amount,
+            'purchase_date' => $request->purchase_date,
+            'item_name' => $request->item_name,
+            'qty' => $request->qty,
+            'cost' => $request->cost,
+            'note' => $request->note
         ]);
+    }
+
+    public function delete_expense($id, $item_id)
+    {
+        $branch = Branch::find($id);
+        $item = $branch->expenses()->find($item_id);
+        $item->delete();
+    }
+
+    public function delete_asset($id, $item_id)
+    {
+        $branch = Branch::find($id);
+        $item = $branch->assets()->find($item_id);
+        $item->delete();
+    }
+
+    public function delete_rental($id, $item_id)
+    {
+        $branch = Branch::find($id);
+        $item = $branch->rentals()->find($item_id);
+        $item->delete();
     }
 }
