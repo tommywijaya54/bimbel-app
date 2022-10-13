@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  font-family: sans-serif;
 }
 /*internet connection*/
 .internet-connection {
@@ -68,7 +69,8 @@ body {
   margin: 10px;
 }
 .messenger-listView .m-body {
-  margin-top: 141px;
+  /* margin-top: 141px; */
+  margin-top: 81px;
 }
 .messenger-messagingView {
   position: relative;
@@ -76,8 +78,8 @@ body {
   width: 100%;
 }
 .messenger-messagingView .m-body {
-  padding-top: 15px;
-  height: calc(100% - 90px);
+  padding-top: 25px;
+  height: calc(100% - 105px);
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -318,7 +320,7 @@ body {
 .message-card {
   display: flex;
   flex-direction: column;
-  margin: 2px 15px;
+  margin: 2px 15px 8px;
   width: calc(100% - 30px);
 }
 .message-card div {
@@ -567,7 +569,7 @@ body {
 .app-btn {
   cursor: pointer;
   border: none;
-  padding: 3px 15px;
+  padding: 8px 18px;
   border-radius: 20px;
   margin: 1px;
   font-size: 14px;
