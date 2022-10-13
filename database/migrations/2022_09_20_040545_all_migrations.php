@@ -16,8 +16,12 @@ return new class extends Migration
 
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('nik')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->string('name');
+
+            $table->string('nik')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
@@ -28,58 +32,65 @@ return new class extends Migration
             $table->string('note')->nullable();
             $table->integer('user_id')->nullable();
             $table->integer('branch_id')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->string('name');
+
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->integer('manager_id')->nullable();
             $table->string('email')->nullable();
             $table->date('open_date')->nullable();
             $table->string('status')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('branch_expenses', function (Blueprint $table) {
             $table->id();
-            $table->integer('branch_id');
-            $table->string('expense_type');
-            $table->string('description');
-            $table->integer('amount');
-            $table->date('date');
-            $table->string('approve_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->integer('branch_id');
+            $table->date('date');
+            $table->string('expense_type');
+            $table->integer('amount');
+
+            $table->string('description')->nullable();
+            $table->string('approve_by')->nullable();
+            $table->string('note')->nullable();
         });
 
         Schema::create('branch_rentals', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->integer('branch_id');
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('amount');
             $table->string('owner_name');
             $table->string('owner_phone');
-            $table->string('notaris_name');
-            $table->string('notaris_phone');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->string('notaris_name')->nullable();
+            $table->string('notaris_phone')->nullable();
+            $table->string('note')->nullable();
         });
 
         Schema::create('branch_assets', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->integer('branch_id');
+            $table->date('purchase_date');
             $table->string('item_name');
             $table->integer('qty');
             $table->integer('cost');
-            $table->string('note');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->string('note')->nullable();
         });
 
         Schema::create('cparents', function (Blueprint $table) {
