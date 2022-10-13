@@ -1,5 +1,5 @@
-export default ({header,children}) => {
-    return (<details>
+export default ({header, children, className }) => {
+    return (<details className={className}>
                 <summary>
                     <span className="summary-title">{header}</span>
                     <div className="summary-chevron-up">

@@ -9,6 +9,7 @@ export default ({header, note, footer, children, className, expandable}) => {
                         {header}
                     </div>
                 }
+
                 {note && 
                     <div className="note">
                         {note}
