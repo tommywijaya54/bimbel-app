@@ -19,7 +19,7 @@ export default (form_schema) => {
     }else if(display_form){
         component_header = 
         <>
-            {Form.getValue('name') || Form.id}
+            {Form.title || Form.getValue('name') || Form.id}
             <span className="info">
                 {Form.modal.cap() + ' Information'}
             </span>
@@ -27,7 +27,7 @@ export default (form_schema) => {
     }else if(edit_form){
         component_header = 
         <>
-            {Form.getValue('name') || Form.id}
+            {Form.title || Form.getValue('name') || Form.id}
             <span className="info">
                 Edit Form
             </span>
