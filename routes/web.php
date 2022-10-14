@@ -27,6 +27,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\RoletypeController;
 
 use App\Http\Controllers\ActionhistoryController;
+use App\Http\Controllers\BranchRentalController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScheduleController;
@@ -101,7 +102,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ], function () {
         Route::get('/{id}/details', [BranchController::class, 'details']);
         Route::post('/{id}/expense', [BranchController::class, 'add_expense']);
-        Route::post('/{id}/rental', [BranchController::class, 'add_rental']);
+
+
+        Route::group([
+            'prefix' => '/{branch_id}/rental'
+        ], function () {
+            Route::get('/create', [BranchRentalController::class, 'create_rental']);
+            Route::post('', [BranchRentalController::class, 'store_rental']);
+
+            Route::get('/{rental_id}', [BranchRentalController::class, 'show_rental']);
+
+            Route::get('/{rental_id}/edit', [BranchRentalController::class, 'edit_rental']);
+            Route::put('/{rental_id}', [BranchRentalController::class, 'update_rental']);
+        });
+
         Route::post('/{id}/asset', [BranchController::class, 'add_asset']);
 
         Route::delete('/{id}/expense/{item_id}', [BranchController::class, 'delete_expense']);
@@ -115,3 +129,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 require __DIR__ . '/auth.php';
+
+/*
+Route::get('/{branch_id}/rental/create', [BranchRentalController::class, 'create']);
+        // Route::post('', [BranchRentalController::class, 'add_rental']);
+
+        Route::get('/{branch_id}/rental/{rental_id}', [BranchRentalController::class, 'show']);
+
+        Route::get('/{branch_id}/rental/{rental_id}/edit', [BranchRentalController::class, 'edit']);
+        Route::put('/{branch_id}/rental/{rental_id}', [BranchRentalController::class, 'update']);
+        */
