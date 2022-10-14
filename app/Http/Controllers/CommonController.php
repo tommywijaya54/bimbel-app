@@ -31,11 +31,18 @@ class CommonController extends Controller
         if (!$this->modal) {
             $this->modal = strtolower($this->model_name);                                   // modal is for url and display purpose so it's okay to edit it;
         }
+
         $this->modal_name_for_page_title = ucfirst($this->modal);
 
         $this->field_schema = $field_schema;
-        $this->list = new ListSchema($this->field_schema['list'], $this->modal, $this->entity);
-        $this->form = new FormSchema($this->field_schema['form'], $this->modal, $this->entity);
+
+        if (isset($this->field_schema['list'])) {
+            $this->list = new ListSchema($this->field_schema['list'], $this->modal, $this->entity);
+        }
+
+        if (isset($this->field_schema['form'])) {
+            $this->form = new FormSchema($this->field_schema['form'], $this->modal, $this->entity);
+        }
     }
 
     function index()
