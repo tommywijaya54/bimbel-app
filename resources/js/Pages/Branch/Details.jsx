@@ -19,7 +19,7 @@ const fieldtypeAdder = (field) => {
     }
 }
 
-const TableList = ({header, table_data, className, post_to}) => {
+const TableList = ({header, table_data, className, post_to, delete_url, row_link, children}) => {
     let th = FieldUtil.turnStringToArrayOfField(header);
     th.forEach(f => fieldtypeAdder(f));
 
@@ -36,16 +36,15 @@ const TableList = ({header, table_data, className, post_to}) => {
     }
     
     function delete_item(id){
-        destroy(post_to+'/'+id,
+        destroy(delete_url+'/'+id,
             {
                 preserveScroll: true,
             }
         );
     }
-    
-    return <>
-        <form onSubmit={submit}>
-            <table className={'table-border-compact w-full '+className}>
+
+    const TableElement = ({children, className, table_data, th, row_link}) => {
+        return <table className={'table-border-compact w-full '+className}>
                 <thead>
                     <tr>
                         {th.map((t,i) => <th key={i}>{t.label}</th>)}
@@ -53,40 +52,66 @@ const TableList = ({header, table_data, className, post_to}) => {
                     </tr>
                 </thead>
                 <tbody>
-                        {table_data.map((d,keyId) => {
-                            return <tr key={keyId}>
-                                {th.map((f,keyf) => {
-                                    return <td key={keyf}>
-                                        <ValueField field={{...f,value:d[f.entityname]}}></ValueField>
-                                    </td>
-                                })}
-                                <td>
-                                    <button type="button" className='delete-button' onClick={e => delete_item(d.id)}>
-                                        <Icon name="trash" className="block w-5 h-5 text-sky-500 fill-current"></Icon>
-                                    </button>
+                    {table_data.map((d,keyId) => {
+                        return <tr key={keyId}>
+                            {th.map((f,keyf) => {
+                                return <td key={keyf}>
+                                    <ValueField field={{...f,value:d[f.entityname]}}></ValueField>
                                 </td>
-                            </tr>
-                        })}
-                        <tr className='table-inline-form'>
-                        {th.map((f,ki) => {
-                            return <td key={ki}>
-                                <input 
-                                    type={f.input_type} 
-                                    value={data[f.entityname]} 
-                                    onChange={e => setData(f.entityname, e.target.value)}
-                                    placeholder={f.label}    
-                                    />
-                                {errors[f.entityname] && <div>{errors[f.entityname]}</div>}
+                            })}
+                            <td className="text-right">
+                                <button type="button" className='delete-button' onClick={e => delete_item(d.id)}>
+                                    <Icon name="trash" className="block w-5 h-5 text-sky-500 fill-current"></Icon>
+                                </button>
+                                {row_link && 
+                                    <a 
+                                        href={row_link.replace('{id}',d['id'])} 
+                                        className="link goto link inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                            <Icon
+                                                name="cheveron-right"
+                                                className="block w-6 h-6 text-gray-400 fill-current"
+                                            />
+                                    </a>
+                                }
                             </td>
-                        })}
-                        <td>
-                            <button type="submit" className='post-form' disabled={processing}>Save</button>
-                        </td>
                         </tr>
+                    })}
                 </tbody>
+                {children}
             </table>
-        </form>
-    </>
+    }
+
+
+    if(post_to){
+        return <>
+            <form onSubmit={submit}>
+                <TableElement th={th} table_data={table_data} className={className} row_link={row_link}>
+                    <tfoot>
+                        <tr className='table-inline-form'>
+                            {th.map((f,ki) => {
+                                return <td key={ki}>
+                                    <input 
+                                        type={f.input_type} 
+                                        value={data[f.entityname]} 
+                                        onChange={e => setData(f.entityname, e.target.value)}
+                                        placeholder={f.label}    
+                                        />
+                                    {errors[f.entityname] && <div>{errors[f.entityname]}</div>}
+                                </td>
+                            })}
+                            <td>
+                                <button type="submit" className='post-form' disabled={processing}>Save</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </TableElement>
+            </form>
+        </>
+    }else{
+        return <TableElement th={th} table_data={table_data} className={className} row_link={row_link}>
+            {children}
+        </TableElement>
+    }
 }
 
 const MiniComponent = ({header,children}) => {
@@ -97,8 +122,6 @@ const MiniComponent = ({header,children}) => {
         </div>
     </>
 }
-
-
 export default function Show(props) {
     console.log(props.branch);
     return (
@@ -121,12 +144,14 @@ export default function Show(props) {
                         </h2>
                 }
             > 
+
                 <MiniComponent 
                     header="Expenses">
                     <TableList
                         header="date:Tanggal,expense_type:Type,description:Description,amount:Nominal,note"
                         table_data={props.branch.expenses}
                         post_to='expense'
+                        delete_url='expense'
                         className="w-full"
                     ></TableList>
                 </MiniComponent>
@@ -136,9 +161,18 @@ export default function Show(props) {
                     <TableList
                         header="start_date:Kontrak Mulai,end_date:Kontrak Habis,owner_name:Pemilik,owner_phone:Phone,note"
                         table_data={props.branch.rentals}
-                        post_to='rental'
+                        row_link={'rental/{id}'}
+                        delete_url='rental'
                         className="w-full"
-                    ></TableList>
+                    >
+                        <tfoot>
+                            <tr>
+                                <td colSpan='6' className='text-right'>
+                                    <a href='rental/create' className='button link'>Create New Rental</a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </TableList>
                 </MiniComponent>
 
                 <MiniComponent 
@@ -147,6 +181,7 @@ export default function Show(props) {
                         header="purchase_date:Tanggal Beli,item_name:Description,qty:Quantity,cost:Cost,note"
                         table_data={props.branch.assets}
                         post_to='asset'
+                        delete_url='asset'
                         className="w-full"
                     ></TableList>
                 </MiniComponent>
