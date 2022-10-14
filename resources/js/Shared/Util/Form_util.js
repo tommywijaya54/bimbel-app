@@ -1,5 +1,8 @@
 export class FormSchema {
     constructor(form_schema){
+        Object.assign(this,form_schema);
+
+        /*
         this.schema = {...form_schema};
 
         this.modal = this.schema.modal;
@@ -15,8 +18,13 @@ export class FormSchema {
         this.edit_form = this.schema.edit_form;
 
         this.submit_url = this.schema.submit_url;
+        */
+
+        this.fields_has_entity = this.fields.filter(field => {
+            return field.entityname
+        });
     }
-    
+
     getValue(params){
         return this.fields_has_entity.find(field => field.entityname == params)?.value;
     }
@@ -24,4 +32,14 @@ export class FormSchema {
     getVariableForUseForm(){
         return this.fields.reduce((obj, item) => Object.assign(obj, { [item.entityname] : (item.value || '') }), {});
     }
+    
+    /*
+    getValue(params){
+        return this.fields_has_entity.find(field => field.entityname == params)?.value;
+    }
+
+    getVariableForUseForm(){
+        return this.fields.reduce((obj, item) => Object.assign(obj, { [item.entityname] : (item.value || '') }), {});
+    }
+    */
 }

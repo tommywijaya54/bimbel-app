@@ -53,19 +53,21 @@ class FieldUtil{
     }
 
     // True Field value to HTML element (if : field.entityname exist)
-    static getProcessedContent(field){
+    static getProcessedContent(field, key){
         let value = field.value;
 
         if(field.model){
             return React.createElement('a',{
                 href:'/'+getAlias(field.entityname)+'/'+value,
-                className:getAlias(field.entityname)+' link'
+                className:getAlias(field.entityname)+' link',
+                key:key
             },field.model_value.name);
         }
 
         if(value == null || value == '' || value.length == 0){
             return React.createElement('span',{
-                className:"empty-value"
+                className:"empty-value",
+                key:key
             },'---');
         }
 
@@ -73,7 +75,8 @@ class FieldUtil{
             if(field.entityname === 'email'){
                 return React.createElement('a',{
                     href:'mailto:'+value,
-                    className:getAlias(field.entityname)+' link'
+                    className:getAlias(field.entityname)+' link',
+                    key:key
                 },value);
             }
 
@@ -85,9 +88,13 @@ class FieldUtil{
         if(typeof value == 'number'){
             if(field.entityname.includes('amount') || field.entityname.includes('cost')){
                 return React.createElement('span',{
-                    className:'currency'
+                    className:'currency',
+                    key:key
                 },[
-                    React.createElement('span',{className:'sign'},locale.currency.sign),
+                    React.createElement('span',{
+                        className:'sign',
+                        key:key
+                    },locale.currency.sign),
                     field.value.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
                 ]);
             }
@@ -98,7 +105,8 @@ class FieldUtil{
                 let value = typeof x == 'string' ? x : x.name;
                 return React.createElement('span',{
                     key:keyId,
-                    className:field.entityname+" unit"
+                    className:field.entityname+" unit",
+                    key:key
                 },value);
             })
         }
@@ -106,7 +114,8 @@ class FieldUtil{
         if(typeof value === 'object'){
             return React.createElement('a',{   
                 href:'/'+getAlias(field.entityname)+'/'+value.id, 
-                className:getAlias(field.entityname)+' link'
+                className:getAlias(field.entityname)+' link',
+                key:key
             },value.name);
         }
         
