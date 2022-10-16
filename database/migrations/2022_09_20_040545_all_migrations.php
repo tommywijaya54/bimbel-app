@@ -34,6 +34,17 @@ return new class extends Migration
             $table->integer('branch_id')->nullable();
         });
 
+        Schema::create('employee_salaries', function (Blueprint $table) {
+            $table->date('start_date')->nullable();
+            $table->integer('employee_id')->nullable();
+            $table->integer('amount')->nullable();
+            $table->string('note')->nullable();
+
+            $table->id();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
@@ -194,16 +205,7 @@ return new class extends Migration
         });
 
 
-        Schema::create('salaries', function (Blueprint $table) {
-            $table->id();
-            $table->integer('employee_id')->nullable();
-            $table->integer('amount')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->string('note')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+
 
 
         /*

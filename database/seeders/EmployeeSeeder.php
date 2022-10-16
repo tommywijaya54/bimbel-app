@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Branch;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -35,19 +36,31 @@ class EmployeeSeeder extends Seeder
                 'note' => fake('id_ID')->text(50),
             ];
 
-            $user = [
+            $user_data = [
                 'name' => $people['name'],
                 'email' => $people['email'],
                 'type' => 'Employee',
                 'password' => 'xxx - employee'
             ];
 
-            $User = User::create($user);
+            $user = User::create($user_data);
+            $user->assignRole('Employee');
 
-            $people['user_id'] = $User->id;
+            $people['user_id'] = $user->id;
             $people['branch_id'] = $Branches->random()->id;
 
-            DB::table('employees')->insert($people);
+            Employee::create($people);
         }
+
+        $employees = Employee::all();
+        $employees->each(function ($employee, $key) {
+            for ($y = 1; $y <= 5; $y++) {
+                $salary = [
+                    'start_date' => fake('id_ID')->date(),
+                    'amount' => fake('id_ID')->randomElement([3200000, 47000000, 5500000]),
+                ];
+                $employee->salaries()->create($salary);
+            }
+        });
     }
 }
