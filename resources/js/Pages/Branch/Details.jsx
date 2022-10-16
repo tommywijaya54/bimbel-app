@@ -4,24 +4,14 @@ import Component from '@/Shared/PageComponent/Form/Component';
 import { FieldUtil } from '@/Shared/Util/Field_util';
 import ValueField from '@/Shared/PageComponent/Field/ValueField';
 import { useForm } from '@inertiajs/inertia-react';
-import { Rule, RuleSet } from '@/Shared/Util/Rule_util';
+
 import Icon from '@/Shared/Icon';
 import Form from '@/Shared/PageComponent/Form/Form';
 import DetailsSummaryComponent from '@/Shared/PageComponent/Element/DetailsSummaryComponent';
 
-let FieldRules = new RuleSet();
-FieldRules.add(new Rule('entityname','includes',['amount','qty','cost'],(field) => field.input_type = 'number'));
-FieldRules.add(new Rule('entityname','includes',['date'],(field) => field.input_type = 'date'));
-
-const fieldtypeAdder = (field) => {
-    if(!FieldRules.check(field)){
-        field.input_type = 'text';
-    }
-}
-
 const TableList = ({header, table_data, className, post_to, delete_url, row_link, children}) => {
     let th = FieldUtil.turnStringToArrayOfField(header);
-    th.forEach(f => fieldtypeAdder(f));
+    FieldUtil.Rules.processFields(th);
 
     const { data, setData, post, processing, errors } = useForm(th.reduce((obj,field) => (obj[field.entityname] = '',obj),{})); 
     const {delete : destroy} = useForm();
