@@ -31,23 +31,20 @@ class EmployeeController extends CommonController
 
         $controller = $this;
         $this->form->field('roles')->getValue = function ($field, $id) use ($controller) {
-            //dd($this->entity::find($id));
             return $controller->entity::find($id)->user->getRoleNames();
         };
     }
 
     public function show($id)
     {
-        $form_data = $this->form->displayForm($id);
-
-        $employee_details = $this->entity::with('user', 'branch')->find($id);
-        $roles = $employee_details->user->roles->pluck('name');
+        $form = $this->form->displayForm($id);
+        $roles = $form->item->user->roles->pluck('name');
 
         return Inertia::render('Employee/Show', [
-            'title' => $form_data->title,
-            'form_schema' => $form_data,
-            // 'employee_details' => $employee_details,
+            'title' => $form->title,
+            'form_schema' => $form,
             'roles' => $roles,
+            'salaries' => $form->item->salaries->toArray(),
         ]);
     }
 
@@ -109,5 +106,22 @@ class EmployeeController extends CommonController
         });
 
         return redirect('/' . $this->modal . '/' . $id);
+    }
+
+    public function add_salary($id, Request $request)
+    {
+        $employee = Employee::find($id);
+        $employee->salaries()->create([
+            'start_date' => $request->start_date,
+            'amount' => $request->amount,
+            'note' => $request->note,
+        ]);
+    }
+
+    public function delete_salary($id, $salary_id)
+    {
+        $employee = Employee::find($id);
+        $item = $employee->salaries()->find($salary_id);
+        $item->delete();
     }
 }
