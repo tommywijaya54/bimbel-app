@@ -1,33 +1,42 @@
 import React from 'react';
 import MainLayout from '@/Layouts/MainLayout';
-import StudentDetails from '@/Shared/PageComponent/StudentDetails';
 import Form from '@/Shared/PageComponent/Form/Form';
-
+import { FieldUtil } from '@/Shared/Util/Field_util';
+import DetailsSummaryComponent from '@/Shared/PageComponent/Element/DetailsSummaryComponent';
+import DisplayForm from '@/Shared/PageComponent/Form/DisplayForm';
 export default function Show(props) {
     return (
         <MainLayout
             {...props}
-        >
-            <h1 className='attention'>Parent Show</h1>
-            
+        >   
             <Form
                 {...props.form_schema}
             >
             </Form>
             
-            <div>
-                <fieldset className='shadow-lg'>
-                    <legend>Student / Child information</legend>
-                    <div className='p-6'>
-                        {
-                            props.students.map((student, keyid)=>{
-                                return <StudentDetails key={keyid} student={student}></StudentDetails>
-                            })
-                        }
-                    </div>
-                </fieldset>
-            </div>
-            
+            <fieldset className='shadow-lg'>
+                <legend>Their child information</legend>
+                <div className='p-6'>
+                    {props.students && 
+                        props.students.map((student, keyid) => {
+                            
+                            return <DetailsSummaryComponent
+                                key={keyid}
+                                header={student.name}>
+                                    <div className='flex flex-wrap w-full display-form'>
+                                        <DisplayForm 
+                                            fields={
+                                                FieldUtil.createFields_setData(
+                                                    'name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note',
+                                                    student)
+                                            }></DisplayForm>
+                                    </div>
+                            </DetailsSummaryComponent>
+                        })
+                        
+                    }
+                </div>
+            </fieldset>
         </MainLayout>
     );
 }

@@ -28,6 +28,9 @@ class Field{
                 this.entityname = strField;
                 this.label = strField.cap();
             }
+            if(this.label.includes('_')){
+                this.label = this.label.replaceAll('_',' ');
+            }
         }
     }
     setValueFrom(data){
@@ -59,7 +62,7 @@ class FieldUtil{
 
         if(field.model){
             return React.createElement('a',{
-                href:'/'+getAlias(field.entityname)+'/'+value,
+                href:'/'+getAlias(field.entityname)+'/'+field.model_value.id,
                 className:getAlias(field.entityname)+' link',
                 key:key
             },field.model_value.name);

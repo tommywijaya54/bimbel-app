@@ -98,11 +98,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     };
 
     Route::group([
+        'prefix' => 'employee'
+    ], function () {
+        Route::post('/{id}/salary', [EmployeeController::class, 'add_salary'])->name('add.employee.salary');
+        Route::delete('/{id}/salary/{salary_id}', [EmployeeController::class, 'delete_salary'])->name('delete.employee.salary');
+    });
+
+    Route::group([
         'prefix' => 'branch'
     ], function () {
         Route::get('/{id}/details', [BranchController::class, 'details']);
         Route::post('/{id}/expense', [BranchController::class, 'add_expense']);
-
 
         Route::group([
             'prefix' => '/{branch_id}/rental'

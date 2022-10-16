@@ -7,7 +7,6 @@ export default function EditForm(props) {
         <MainLayout
             {...props}
         >
-            <h1 className='attention'>Role Edit Form</h1>
             <Form
                 {...props.form_schema}
             >

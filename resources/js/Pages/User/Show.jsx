@@ -11,7 +11,6 @@ export default function Show(props) {
         <MainLayout
             {...props}
         >
-            <h1 className='attention'>Show User details</h1>
             <Form
                 {...props.form_schema}
             >
@@ -28,7 +27,7 @@ export default function Show(props) {
                     {props.user.details && props.user.details.employee && 
                         <DetailsSummaryComponent
                             header='Employment Details'>
-                                <div className='flex flex-wrap w-full'>
+                                <div className='flex flex-wrap w-full display-form'>
                                     <DisplayForm 
                                         fields={
                                             FieldUtil.createFields_setData(
@@ -38,10 +37,11 @@ export default function Show(props) {
                                 </div>
                         </DetailsSummaryComponent>
                     }
+
                     {props.user.details && props.user.details.parent && 
                         <DetailsSummaryComponent
                             header='Information of this user : their parent information'>
-                                <div className='flex flex-wrap w-full'>
+                                <div className='flex flex-wrap w-full display-form'>
                                     <DisplayForm 
                                         fields={
                                             FieldUtil.createFields_setData(
@@ -51,10 +51,11 @@ export default function Show(props) {
                                 </div>
                         </DetailsSummaryComponent>
                     }
+                    
                     {props.user.details && props.user.details.student && 
                         <DetailsSummaryComponent
                             header='Their student information'>
-                                <div className='flex flex-wrap w-full'>
+                                <div className='flex flex-wrap w-full display-form'>
                                     <DisplayForm 
                                         fields={
                                             FieldUtil.createFields_setData(
