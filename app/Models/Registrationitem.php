@@ -17,7 +17,9 @@ class Registrationitem extends Model
     }
 
     /*
- protected $fillable = [
+ protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
+protected $fillable = [
         'student_id',
         'branch_id',
         'reference',

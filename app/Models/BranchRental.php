@@ -17,6 +17,8 @@ class BranchRental extends Model
         return $this->expense_type . ' ' . $this->amount;
     }
 
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
     protected $fillable = [
         'start_date',
         'end_date',

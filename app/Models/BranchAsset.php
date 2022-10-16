@@ -16,6 +16,8 @@ class BranchAsset extends Model
         return $this->expense_type . ' ' . $this->amount;
     }
 
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
     protected $fillable = [
         'purchase_date',
         'item_name',

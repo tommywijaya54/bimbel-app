@@ -16,6 +16,8 @@ class Registration extends Model
         return '#' . $this->id;
     }
 
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
     protected $fillable = [
         'student_id',
         'branch_id',

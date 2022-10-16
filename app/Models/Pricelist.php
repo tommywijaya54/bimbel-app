@@ -16,6 +16,8 @@ class Pricelist extends Model
         return $this->subject;
     }
 
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
     protected $fillable = [
         'branch_id',
         'end_date',

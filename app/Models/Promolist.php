@@ -16,6 +16,8 @@ class Promolist extends Model
         return $this->label;
     }
 
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
     protected $fillable = [
         'label', 'branch_id', 'start_date', 'end_date', 'discount_value'
     ];

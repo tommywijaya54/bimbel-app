@@ -16,6 +16,8 @@ class School extends Model
         return $this->name;
     }
 
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
     protected $fillable = [
         'name',
         'address',

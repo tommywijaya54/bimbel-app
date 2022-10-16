@@ -16,6 +16,8 @@ class Employee extends Model
         return $this->name;
     }
 
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
     protected $fillable = [
         'nik',
         'name',
@@ -31,7 +33,6 @@ class Employee extends Model
         'user_id'
     ];
 
-    protected $hidden = [];
 
     public function user()
     {
@@ -41,5 +42,10 @@ class Employee extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    public function salaries()
+    {
+        return $this->hasMany(EmployeeSalary::class);
     }
 }
