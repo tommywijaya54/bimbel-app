@@ -21,6 +21,8 @@ export default () => {
         let parsedOb = []; 
 
         for(const propKey in debugOb){
+            window['_'+propKey] = debugOb[propKey];
+
             parsedOb.push({
                 id:propKey,
                 value:debugOb[propKey]
@@ -41,6 +43,7 @@ export default () => {
                     */
 
                 return <pre key={i}><code>
+                    
                     props.{ob.id} : {JSON.stringify(ob.value)}
                     </code>
                 </pre>

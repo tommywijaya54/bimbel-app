@@ -1,4 +1,5 @@
 import React from "react";
+import { Rule, RuleSet } from "./Rule_util";
 
 function getAlias(str){
     const alias = {
@@ -134,7 +135,26 @@ class FieldUtil{
         return null;
     }
 
-    
+    static Rules = (() => {
+        
+        let FieldRules = new RuleSet();
+
+        // process input type
+        FieldRules.add(new Rule('entityname','includes',['amount','qty','cost'],(field) => field.input_type = 'number'));
+        FieldRules.add(new Rule('entityname','includes',['date'],(field) => field.input_type = 'date'));
+        FieldRules._else((field) => field.input_type = 'text' );
+
+        FieldRules.processFields = (fields) => {
+            fields.forEach((field) => FieldRules.process(field));
+        }
+
+        return FieldRules;
+    })();
+
+
+    static processWithRules(field){
+
+    }
 }
 
 export {FieldUtil}

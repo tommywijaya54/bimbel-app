@@ -53,13 +53,24 @@ export class Rule{
 export class RuleSet {
     constructor(){
         this.set = [];
+        this.else = null;
     }
     add(rule){
         this.set.push(rule);
     }
-    check(field){
-        return this.set.some(rule => {
+    _else(fn){
+        this.else = fn;
+    }
+    process(field){
+        const finalResult = this.set.some(rule => {
             return rule.run(field);
-        })
+        });
+
+        if(this.else && !finalResult){
+            this.else(field);
+            return true
+        }
+
+        return finalResult
     }
 }
