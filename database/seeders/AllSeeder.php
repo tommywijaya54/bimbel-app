@@ -120,7 +120,7 @@ class AllSeeder extends Seeder
             DB::table('promolists')->insert($arr);
         }
 
-        for ($x = 1; $x <= 50; $x++) {
+        for ($x = 1; $x <= 20; $x++) {
             $arr = ['student_id' => fake('id_ID')->numberBetween($min = 1, $max = 10), 'branch_id' => fake('id_ID')->numberBetween($min = 1, $max = 4), 'date' => fake('id_ID')->date(), 'reference' => fake('id_ID')->text(50), 'cashback' => fake('id_ID')->randomElement([100000, 280000, 300000]), 'status' => fake('id_ID')->text(10), 'note' => fake('id_ID')->text(50),];
             DB::table('registrations')->insert($arr);
         }
