@@ -16,8 +16,6 @@ class Cparent extends Model
         return $this->name;
     }
 
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
-
     protected $fillable = [
         'nik',
         'name',
@@ -34,7 +32,10 @@ class Cparent extends Model
     ];
 
     protected $hidden = [
-        'user_id'
+        'user_id',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
 

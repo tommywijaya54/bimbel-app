@@ -16,8 +16,6 @@ class Student extends Model
         return $this->name;
     }
 
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
-
     protected $fillable = [
         'name',
         'grade',
@@ -36,7 +34,7 @@ class Student extends Model
     ];
 
     protected $hidden = [
-        'user_id'
+        'user_id', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     public function cparent()

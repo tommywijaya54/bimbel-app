@@ -15,25 +15,4 @@ class Registrationitem extends Model
     {
         return '#Registration item : ' . $this->id;
     }
-
-    /*
- protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
-
-protected $fillable = [
-        'student_id',
-        'branch_id',
-        'reference',
-        'cashback',
-        'status',
-        'note'
-    ];
-
-    $table->integer('student_id');
-        $table->integer('branch_id');
-        $table->date('date');
-        $table->string('reference');
-        $table->integer();
-        $table->string('status')->nullable();
-        $table->string('note')->nullable();
-        */
 }

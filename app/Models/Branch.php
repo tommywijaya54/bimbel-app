@@ -35,14 +35,6 @@ class Branch extends Model
         return $this->belongsTo(User::class, 'manager_id'); //User::find($this->manager_id);
     }
 
-    /*
-    public function user()
-    {
-        return User::find($this->manager_id);
-    }
-    */
-
-
     public function employees()
     {
         return $this->hasMany(Employee::class);
