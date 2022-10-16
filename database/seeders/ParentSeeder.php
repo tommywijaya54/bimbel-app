@@ -41,6 +41,8 @@ class ParentSeeder extends Seeder
             ];
 
             $User = User::create($user);
+            $User->assignRole('parent');
+
             $people['user_id'] = $User->id;
 
             DB::table('cparents')->insert($people);

@@ -49,6 +49,7 @@ class StudentSeeder extends Seeder
             ];
 
             $User = User::create($user);
+            $User->assignRole('student');
 
             $people['user_id'] = $User->id;
             $people['cparent_id'] = $Parents->random()->id;
