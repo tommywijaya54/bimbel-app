@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default ({ label, name, className, errors = [], options, ...props }) => {
+export default ({ label, name, className, errors = [], options, Field, ...props }) => {
   const handleFocus = (event) => event.target.select();
+  const [valueid, setValueid] = useState(Field.model_value.id);
+  
+  const handleOnInput = (e) => {
+    const val = e.target.value;
+    const opts = e.target.list.childNodes; 
+    setValueid('');
+    for (var i = 0; i < opts.length; i++) {
+      if (opts[i].value === val) {
+        setValueid(opts[i].dataset.valueid);
+        break;
+      }
+    }
+  }
 
   return (
     <div className={className}>
@@ -10,17 +23,24 @@ export default ({ label, name, className, errors = [], options, ...props }) => {
           {label}:
         </label>
       )}
+
       <input
         list={name+'_list'}
+        data-valueid={valueid}
+
         id={name}
         name={name}
+
         {...props}
+
         onFocus={handleFocus}
-        className={`input-field form-input ${errors.length ? 'error' : ''}`}
+        onInput={handleOnInput}
+
+        className={`input-field form-input ${errors.length ? 'error' : ''}`}        
       />
-        <datalist id={name+'_list'}>
-            {options.map((value, keyId) => {
-              return  <option key={keyId} value={value.id+" : "+value.name}>{value.id+" : "+value.name}</option>
+        <datalist id={name+'_list'} >
+            {options.map((option, keyId) => {
+              return  <option key={keyId} data-valueid={option.id} value={option.name}></option>
             })}
         </datalist>
     

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Panoscape\History\HasHistories;
 
-class Registrationitem extends Model
+class RegistrationItem extends Model
 {
     use HasFactory, SoftDeletes, HasHistories;
 

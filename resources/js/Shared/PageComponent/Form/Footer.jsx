@@ -26,7 +26,7 @@ const FormFooter = ({form, obj, link, children}) => {
     if(form.urls){
         return <>
             <div className="form-footer">
-                <div className="px-6 py-4 bg-gray-50 flex justify-end">
+                <div className="px-6 py-6 bg-gray-50 flex justify-end">
                     {form.urls.map((url, keyId) => <a href={url.link} className='button' key={keyId}>{url.label}</a>)}
                 </div>
             </div>
@@ -34,7 +34,7 @@ const FormFooter = ({form, obj, link, children}) => {
     }
 
     return (<div className="form-footer">
-                <div className="px-6 py-4 bg-gray-50 flex justify-end">
+                <div className="px-6 py-6 bg-gray-50 flex justify-end">
                     {component.map((comp,keyId)=>{
                         return <div key={keyId}>{comp}</div>
                     })}

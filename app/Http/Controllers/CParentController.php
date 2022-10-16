@@ -22,7 +22,7 @@ class CparentController extends CommonController
             true
         );
 
-        $this->form->title_format = "{nik} {name}";
+        $this->form->title_format = "{nik} / {name}";
         $this->form->field('password')->extrafield = true;
     }
 
