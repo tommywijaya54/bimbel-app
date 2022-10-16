@@ -49,9 +49,11 @@ class FormSchema extends CommonSchema
     {
         // Get Data from model base on their Id
         if (isset($this->with_list)) {
-            $this->data = $this->model::with($this->with_list)->find($id)->toArray();;
+            $this->item = $this->model::with($this->with_list)->find($id);
+            $this->data = $this->item->toArray();;
         } else {
-            $this->data = $this->model::find($id)->toArray();;
+            $this->item = $this->model::find($id);
+            $this->data = $this->item->toArray();;
         }
 
         // set form id
