@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 
 export default ({ label, name, className, errors = [], options, Field, ...props }) => {
   const handleFocus = (event) => event.target.select();
-  const inputFieldRef = React.createRef();
-
   const [valueid, setValueid] = useState(Field.model_value.id);
   
-  const dataListRef = React.createRef();
   const handleOnInput = (e) => {
     const val = e.target.value;
-    const opts = dataListRef.current.childNodes;
-
+    const opts = e.target.list.childNodes; 
+    setValueid('');
     for (var i = 0; i < opts.length; i++) {
       if (opts[i].value === val) {
         setValueid(opts[i].dataset.valueid);
@@ -29,20 +26,19 @@ export default ({ label, name, className, errors = [], options, Field, ...props 
 
       <input
         list={name+'_list'}
-        onInput={handleOnInput}
-        
-        ref={inputFieldRef}
-        
+        data-valueid={valueid}
+
         id={name}
         name={name}
+
         {...props}
 
         onFocus={handleFocus}
-        className={`input-field form-input ${errors.length ? 'error' : ''}`}
+        onInput={handleOnInput}
 
-        data-valueid={valueid}
+        className={`input-field form-input ${errors.length ? 'error' : ''}`}        
       />
-        <datalist id={name+'_list'} ref={dataListRef}>
+        <datalist id={name+'_list'} >
             {options.map((option, keyId) => {
               return  <option key={keyId} data-valueid={option.id} value={option.name}></option>
             })}

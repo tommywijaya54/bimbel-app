@@ -45,7 +45,19 @@ export default ({Field, data, errors, setData}) => {
             value={data[Field.entityname]}
             onChange={e => setData(Field.entityname, e.target.value)}
             options={Field.options}
+            Field={Field}
         />
+    }
+
+    if(Field.inputtype == 'multiple-checkbox'){
+        return <MultipleCheckboxInput
+            field={Field}
+            setData={setData}
+            className="w-full pb-8 pr-6"
+            label={Field.label}
+            name={Field.entityname}
+            errors={errors[Field.entityname]}
+        ></MultipleCheckboxInput>
     }
 
     if(Field.inputtype == 'textarea'){
@@ -58,6 +70,7 @@ export default ({Field, data, errors, setData}) => {
             onChange={e => setData(Field.entityname, e.target.value)}
         />
     }
+
 
     if(Field.inputtype == 'date'){
         return <DateInput
@@ -80,17 +93,6 @@ export default ({Field, data, errors, setData}) => {
             value={data[Field.entityname]}
             onChange={e => setData(Field.entityname, e.target.value)}
         />
-    }
-
-    if(Field.inputtype == 'multiple-checkbox'){
-        return <MultipleCheckboxInput
-            field={Field}
-            setData={setData}
-            className="w-full pb-8 pr-6"
-            label={Field.label}
-            name={Field.entityname}
-            errors={errors[Field.entityname]}
-        ></MultipleCheckboxInput>
     }
 
     return (
