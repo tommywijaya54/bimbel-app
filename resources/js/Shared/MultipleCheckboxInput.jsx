@@ -1,22 +1,22 @@
 import { useState } from 'react';
 
-const MultipleCheckboxInput = ({field, label, name, className,setData, errors = [], ...props }) => {
-    const [fieldValue, setFieldValue] = useState([...field.value]);
+const MultipleCheckboxInput = ({Field, label, name, className, data, setData, errors = [], ...props }) => {
+    const [fieldValue, setFieldValue] = useState([...Field.value]);
 
     const handleChange = (e) => {
         let value = e.target.value;
         if (e.target.checked) {
-            setData(field.entityname, [...data[field.entityname], value]);
-            setFieldValue([...data[field.entityname], value]);
+            setData(Field.entityname, [...data[Field.entityname], value]);
+            setFieldValue([...data[Field.entityname], value]);
         } else {
-            const values = data[field.entityname].filter((item) =>  item !== value);
-            setData(field.entityname,values);
+            const values = data[Field.entityname].filter((item) =>  item !== value);
+            setData(Field.entityname,values);
             setFieldValue(values);
         }
     }
 
-    if(field.special_request == "group-the-options"){
-        field.groupedOptions = field.options.reduce((group, permission) => {
+    if(Field.special_request == "group-the-options"){
+        Field.groupedOptions = Field.options.reduce((group, permission) => {
             const group_name = permission.split("-")[1];
             group[group_name] = group[group_name] ?? [];
             group[group_name].push(permission);
@@ -35,20 +35,20 @@ const MultipleCheckboxInput = ({field, label, name, className,setData, errors = 
             {label}:
             </label>
         )}
-        {field.groupedOptions &&
+        {Field.groupedOptions &&
         <table>
             <tbody>
-                {Object.keys(field.groupedOptions).map((propertyKey, keyid)=>{
+                {Object.keys(Field.groupedOptions).map((propertyKey, keyid)=>{
                     return (
                         <tr key={keyid} className='hover:bg-gray-100 focus-within:bg-gray-100'>
                             <td className='p-2'><strong className='pr-6'>{propertyKey.cap()}</strong></td>
                             {
-                                field.groupedOptions[propertyKey].map((option, keyId) => {
+                                Field.groupedOptions[propertyKey].map((option, keyId) => {
                                     return (
                                         <td key={keyId}>
                                         <label  className="pr-6 check-box">
                                             <input type="checkbox" 
-                                                name={field.entityname} 
+                                                name={Field.entityname} 
                                                 value={option} 
                                                 onChange={handleChange} 
                                                 checked={checkState(option)}
@@ -68,11 +68,11 @@ const MultipleCheckboxInput = ({field, label, name, className,setData, errors = 
         </table>
         }
 
-        {!field.groupedOptions && field.options.map((option, index) => {
+        {!Field.groupedOptions && Field.options.map((option, index) => {
             return (
                 <label  className="pr-6 check-box" key={index}>
                     <input type="checkbox" 
-                        name={field.entityname} 
+                        name={Field.entityname} 
                         value={option} 
                         onChange={handleChange} 
                         checked={checkState(option)}
