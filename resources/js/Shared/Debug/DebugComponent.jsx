@@ -3,6 +3,7 @@ import ArrayList from "./ArrayList";
 
 export default () => {
     const data = usePage().props;
+    window._ = data;
     const user =  data.auth;
     const permissions = user.permissions;
     const roles = user.roles;
