@@ -23,10 +23,17 @@ class BranchController extends CommonController
         $this->list->item_url = '/branch/{id}/details';
 
         $this->form->title_format = "{name}";
-        $this->form->field('manager_id')->hasOptions(
+
+        $manager_field = $this->form->field('manager_id');
+        $manager_field->hasOptions(
             User::role('Branch Manager')->get()->toArray(),
             'datalist'
         );
+
+
+        $this->form->field('manager_id')->route['show'] = 'user.show';
+
+        // dd($manager_field);
 
         // $this->rental_form = new FormSchema('branch_id,_,start_date,end_date,amount,_,owner_name,owner_phone,notaris_name,notaris_phone,note', 'Branch Rental', BranchRental::class);
 
