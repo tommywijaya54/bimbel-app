@@ -1,4 +1,3 @@
-import { FieldUtil } from "../../Util/Field_util";
 import ValueField from "../Field/ValueField";
 
 export default ({fields}) => {

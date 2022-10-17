@@ -31,7 +31,7 @@ export default function Show(props) {
                                     <DisplayForm 
                                         fields={
                                             FieldUtil.createFields_setData(
-                                                'nik,,name,email,phone,,address,note,join_date,exit_date,_,emergency_name,emergency_phone,branch_id',
+                                                props.employee_form_fields,
                                                 props.user.details.employee)
                                         }></DisplayForm>
                                 </div>
@@ -45,7 +45,7 @@ export default function Show(props) {
                                     <DisplayForm 
                                         fields={
                                             FieldUtil.createFields_setData(
-                                                'nik,blacklist,name,email,phone,birth_date,address,note,emergency_name,emergency_phone,bank_account_name,virtual_account_name,',
+                                                props.parent_form_fields,
                                                 props.user.details.parent)
                                         }></DisplayForm>
                                 </div>
@@ -59,7 +59,7 @@ export default function Show(props) {
                                     <DisplayForm 
                                         fields={
                                             FieldUtil.createFields_setData(
-                                                'name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note',
+                                                props.student_form_fields,
                                                 props.user.details.student)
                                         }></DisplayForm>
                                 </div>
