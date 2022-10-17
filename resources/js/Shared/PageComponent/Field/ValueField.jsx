@@ -1,22 +1,69 @@
 import { FieldUtil } from '@/Shared/Util/Field_util';
 
+const FieldComponents = {
+    element:{
+        'row' : () => {
+            return <div className='row w-full'></div>
+        },
+        'line' : () => {
+            return <div className='line w-full'></div>
+        }
+    },
+    inputtype:{
+        'date' : ({value}) => {
+            return <div className='no-wrap'>{(new Date(value)).toLocaleDateString(locale.code,locale.dateFormat)}</div>
+        },
+        'note' : ({value}) => {
+            return <div className='inline-note'>{value}</div>
+        },
+        'currency' : ({value}) => {
+            return  <span className='currency'>
+                        <span className='sign'>{locale.currency.sign || '$'}</span>
+                        {parseInt(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                    </span>
+        },
+        'datalist' : (field) => {
+            return <a href={route(field.route.show,field.model_value.id)} className={field.model + ' unit link'}>{field.value}</a>
+        },
+        'text' : ({value}) => {
+            return value
+        },
+        'email' : ({value}) => {
+            return <a href={'mailto:'+value} className='email link'>{value}</a>
+        },
+        'multiple-checkbox' : ({value}) => {
+            return value.map((val, i) => <span key={i} className='unit'>{val}</span>)
+        }
+    }
+}
+
+const FieldWrapper = ({label, children}) => {
+    return <div className="form-component pr-6 pb-4 w-full lg:w-1/2">
+        <label className="form-label">{label}:</label> 
+        <div className="form-input">
+            {children}
+        </div>
+    </div>
+}
+
+// ValueField on accept validation using inputtype NOT entityname
 export default ({field}) => {
-    const {entityname, value, inputtype} = field;
+    const {value, inputtype, element, label} = field;
 
-
-    if(entityname.includes('date')){
-        return <div className='no-wrap'>{(new Date(value)).toLocaleDateString(locale.code,locale.dateFormat)}</div>;
+    if(element){
+        return FieldComponents.element[element]();
     }
 
-    if(entityname.includes('note')){
-        return <div className='inline-note'>{value}</div>;
+    if(!value){
+        return <FieldWrapper label={label}>
+            <span className='empty-value'>---</span>
+        </FieldWrapper>
     }
 
-    if(entityname.includes('amount') || entityname.includes('cost')){
-        return <span className='currency'>
-            <span className='sign'>{locale.currency.sign || '$'}</span>
-            {value.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-        </span>
+    if(inputtype){
+        return <FieldWrapper label={label}>
+            {FieldComponents.inputtype[inputtype] ?  FieldComponents.inputtype[inputtype](field) : value}
+        </FieldWrapper> 
     }
 
     return value; 
