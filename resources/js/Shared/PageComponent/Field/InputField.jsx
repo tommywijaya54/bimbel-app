@@ -6,21 +6,30 @@ import DataListInput from '@/Shared/DataListInput';
 import TextAreaInput from '@/Shared/TextAreaInput';
 import MultipleCheckboxInput from '@/Shared/MultipleCheckboxInput';
 import { FieldUtil } from '../../Util/Field_util';
+import ValueField from './ValueField';
 
 export default ({Field, data, errors, setData}) => {
-    if(Field.element){
-        return FieldUtil.getElementIfExist(Field);
+    let {element, inputtype, entityname, label, className} = Field;
+
+    if(element){
+        return <ValueField Field={Field}></ValueField>
+        // return FieldUtil.getElementIfExist(Field);
     }
 
-    if(Field.inputtype == 'select'){
+    let inputProps = { 
+        label, 
+        'name':entityname,
+        'errors':errors[entityname],
+        'value':data[entityname],
+        'onChange':(e) => {setData(entityname, e.target.value)},
+        'className':'w-full pb-8 pr-6 lg:w-1/2 '+className,
+        Field
+    }
+
+    if(inputtype == 'select'){
         return (
             <SelectInput
-                className="w-full pb-8 pr-6 lg:w-1/2"
-                label={Field.label}
-                name={Field.entityname}
-                errors={errors[Field.entityname]}
-                value={data[Field.entityname]}
-                onChange={e => setData(Field.entityname, e.target.value)}
+                {...inputProps}
             >
                 <option value=''></option>
                 {Field.options.map((option, keyID) => {
@@ -36,73 +45,42 @@ export default ({Field, data, errors, setData}) => {
         )
     }
 
-    if(Field.inputtype == 'datalist'){
+    if(inputtype == 'datalist'){
         return <DataListInput
-            className="w-full pb-8 pr-6 lg:w-1/2"
-            label={Field.label}
-            name={Field.entityname}
-            errors={errors[Field.entityname]}
-            value={data[Field.entityname]}
-            onChange={e => setData(Field.entityname, e.target.value)}
+            {...inputProps}
             options={Field.options}
-            Field={Field}
         />
     }
 
-    if(Field.inputtype == 'multiple-checkbox'){
+    if(inputtype == 'multiple-checkbox'){
+        
         return <MultipleCheckboxInput
-            field={Field}
+            {...inputProps}
             setData={setData}
+            data={data}
             className="w-full pb-8 pr-6"
-            label={Field.label}
-            name={Field.entityname}
-            errors={errors[Field.entityname]}
-        ></MultipleCheckboxInput>
+        >
+        </MultipleCheckboxInput>
     }
 
-    if(Field.inputtype == 'textarea'){
+    if(inputtype == 'textarea'){
         return <TextAreaInput
-            className="w-full pb-8 pr-6 lg:w-1/2"
-            label={Field.label}
-            name={Field.entityname}
-            errors={errors[Field.entityname]}
-            value={data[Field.entityname]}
-            onChange={e => setData(Field.entityname, e.target.value)}
+            {...inputProps}
+            
         />
     }
 
-
-    if(Field.inputtype == 'date'){
-        return <DateInput
-            className="w-full pb-8 pr-6 lg:w-1/2"
-            label={Field.label}
-            name={Field.entityname}
-            errors={errors[Field.entityname]}
-            value={data[Field.entityname]}
-            onChange={e => setData(Field.entityname, e.target.value)}
-        />
+    
+    /*
+    if(inputtype == 'date'){
+        return <DateInput {...inputProps} />
     }
 
-    if(Field.inputtype == 'number'){
-        return <NumberInput
-            className="w-full pb-8 pr-6 lg:w-1/2"
-            step="100000"
-            label={Field.label}
-            name={Field.entityname}
-            errors={errors[Field.entityname]}
-            value={data[Field.entityname]}
-            onChange={e => setData(Field.entityname, e.target.value)}
-        />
-    }
+    if(inputtype == 'number'){
+        return <NumberInput {...inputProps} />
+    }*/
 
     return (
-        <TextInput
-            className="w-full pb-8 pr-6 lg:w-1/2"
-            label={Field.label}
-            name={Field.entityname}
-            errors={errors[Field.entityname]}
-            value={data[Field.entityname]}
-            onChange={e => setData(Field.entityname, e.target.value)}
-        />
+        <TextInput {...inputProps} type={Field.inputtype}/>
     )
 }

@@ -6,6 +6,7 @@ export default ({
   className,
   children,
   errors = [],
+  Field,
   ...props
 }) => {
   return (
