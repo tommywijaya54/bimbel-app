@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ label, name, className, errors = [], ...props }) => {
+export default ({ label, name, className, errors = [], Field, ...props }) => {
   return (
     <div className={className}>
       {label && (

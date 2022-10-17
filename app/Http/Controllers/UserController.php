@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\CommonSchema;
+use App\FormSchema;
 use App\Models\Branch;
+use App\Models\Cparent;
+use App\Models\Employee;
 use App\Models\User;
 
 use Inertia\Inertia;
@@ -37,6 +41,11 @@ class UserController extends CommonController
             // $user = User::with('roles')->find($id);
             // return $user->roles
         };
+
+        // Support Form Field
+        $this->student_form = new CommonSchema('name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note');
+        $this->employee_form = new CommonSchema('nik,,name,email,phone,,address,note,join_date,exit_date,_,emergency_name,emergency_phone,branch_id');
+        $this->parent_form = new CommonSchema('nik,blacklist,name,email,phone,birth_date,address,note,emergency_name,emergency_phone,bank_account_name,virtual_account_name');
     }
 
 
@@ -44,11 +53,13 @@ class UserController extends CommonController
     {
         $form_data = $this->form->displayForm($id);
         $user = $this->entity::find($id);
-        // $user = ->details()
 
         return Inertia::render('User/Show', [
             'title' => $form_data->title,
             'form_schema' => $form_data,
+            'student_form_fields' => $this->student_form->fields,
+            'employee_form_fields' => $this->employee_form->fields,
+            'parent_form_fields' => $this->parent_form->fields,
             'user' => [
                 'permission' => $user->getAllPermissions()->pluck('name'),
                 'details' => $user->details()

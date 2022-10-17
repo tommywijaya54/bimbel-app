@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CommonSchema;
+use App\FormSchema;
 use App\Models\Cparent;
+use App\Models\Student;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -24,17 +27,25 @@ class CparentController extends CommonController
 
         $this->form->title_format = "{nik} / {name}";
         $this->form->field('password')->extrafield = true;
+
+        $student_form = new CommonSchema('name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note');
+        $this->student_form_fields = $student_form->fields;
     }
 
     function show($id)
     {
         // dd($this->entity::with('students')->get()->toArray());
         // dd($this->entity::find(1)->students->toArray());
+
+        // dd($this->student_form->fields);
+
         $form_data = $this->form->displayForm($id);
+
         return Inertia::render('Parent/Show', [
             'title' => $form_data->title,
             'form_schema' => $form_data,
             'students' => $this->entity::find($id)->students->toArray(),
+            'student_form_fields' => $this->student_form_fields
         ]);
     }
 

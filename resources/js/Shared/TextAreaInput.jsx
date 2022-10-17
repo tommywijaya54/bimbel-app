@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export default ({ label, name, className, errors = [], ...props }) => {
+export default ({ label, name, className, errors = [], Field, ...props }) => {
   const handleKeyDown = (e) => {
     e.target.style.height = 'inherit';
     e.target.style.height = `${e.target.scrollHeight}px`;

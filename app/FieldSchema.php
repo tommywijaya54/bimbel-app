@@ -40,6 +40,7 @@ class FieldSchema
             $this->element = 'next-full-with';
         } else {
             $arr = explode(":", $StringField);
+
             // default label & input type;
             $this->entityname = $arr[0];
             $this->label = ucwords(str_replace('_', ' ', $this->entityname));
@@ -56,6 +57,9 @@ class FieldSchema
                 $this->label = ucwords(str_replace('_id', '', $this->entityname));
                 $this->inputtype = 'datalist';
                 $this->model = str_replace('_id', '', $this->entityname);
+                $this->route = [
+                    'show' => $this->model . '.show'
+                ];
             }
 
             if (isset($arr[1])) {

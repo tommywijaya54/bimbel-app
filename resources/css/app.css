@@ -584,7 +584,6 @@ details summary::-webkit-details-marker {
 
 .currency {
     width: 100%;
-    text-align: right;
     display: inline-block;
     white-space: nowrap;
     padding-left: 40px;

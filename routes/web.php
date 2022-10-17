@@ -91,7 +91,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/' . $model . '/create', [$controller, 'create'])->middleware('can:create-' . $model);
         Route::post('/' . $model, [$controller, 'store'])->middleware('can:create-' . $model);
 
-        Route::get('/' . $model . '/{id}', [$controller, 'show'])->middleware('can:show-' . $model);
+        Route::get('/' . $model . '/{id}', [$controller, 'show'])->middleware('can:show-' . $model)->name($model . '.show');
 
         Route::get('/' . $model . '/{id}/edit', [$controller, 'edit'])->middleware('can:edit-' . $model);
         Route::put('/' . $model . '/{id}', [$controller, 'update'])->middleware('can:edit-' . $model);

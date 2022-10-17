@@ -15,22 +15,26 @@ function getAlias(str){
 
 class Field{
     constructor(strField){
-        if(!strField){
+        if(typeof strField === 'string'){
+            if(!strField){
             this.element = 'row'
-        }else if(strField === '_'){
-            this.element = 'line'
-        }else{
-            if(strField.includes(':')){
-                const xo = strField.split(':');
-                this.entityname = xo[0],
-                this.label = (xo[1]||xo[0].cap())
+            }else if(strField === '_'){
+                this.element = 'line'
             }else{
-                this.entityname = strField;
-                this.label = strField.cap();
+                if(strField.includes(':')){
+                    const xo = strField.split(':');
+                    this.entityname = xo[0],
+                    this.label = (xo[1]||xo[0].cap())
+                }else{
+                    this.entityname = strField;
+                    this.label = strField.cap();
+                }
+                if(this.label.includes('_')){
+                    this.label = this.label.replaceAll('_',' ');
+                }
             }
-            if(this.label.includes('_')){
-                this.label = this.label.replaceAll('_',' ');
-            }
+        }else{
+            Object.assign(this,strField);
         }
     }
     setValueFrom(data){
@@ -41,9 +45,11 @@ class Field{
 }
 
 class FieldUtil{
-    static createFields_setData(strFields,data){
-        const Fields = FieldUtil.turnStringToArrayOfField(strFields);
-        
+    static createFields_setData(strOrFields,data){
+        const Fields = (typeof strOrFields === 'string') ? 
+            FieldUtil.turnStringToArrayOfField(strOrFields) : 
+            strOrFields.map(f => new Field(f));
+
         Fields.forEach(Field => {
             Field.setValueFrom(data);
         });

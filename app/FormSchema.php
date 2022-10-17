@@ -78,10 +78,10 @@ class FormSchema extends CommonSchema
         $fields_has_model = array_filter($this->fields, function ($field) {
             return (isset($field->model) && empty($field->options));
         });
+        
         foreach ($fields_has_model as $field) {
             $this->field($field->entityname)->hasOptions(
-                ('App\\Models\\' . ucfirst($field->model))::all(['id', 'name'])->toArray(),
-                'datalist'
+                ('App\\Models\\' . ucfirst($field->model))::all(['id', 'name'])->toArray(),'datalist'
             );
         }
     }

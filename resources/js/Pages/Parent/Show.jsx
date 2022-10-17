@@ -27,7 +27,7 @@ export default function Show(props) {
                                         <DisplayForm 
                                             fields={
                                                 FieldUtil.createFields_setData(
-                                                    'name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note',
+                                                    props.student_form_fields,
                                                     student)
                                             }></DisplayForm>
                                     </div>
