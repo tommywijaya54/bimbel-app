@@ -33,6 +33,9 @@ const FieldComponents = {
         },
         'multiple-checkbox' : ({value}) => {
             return value.map((val, i) => <span key={i} className='unit'>{val}</span>)
+        },
+        'color':({value}) => {
+            return <input type="color" id="head" name="head" value={value} disabled />
         }
     }
 }

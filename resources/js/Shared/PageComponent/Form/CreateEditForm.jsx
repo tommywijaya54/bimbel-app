@@ -15,8 +15,7 @@ const CreateEditForm = ({Form, children}) => {
         Form.fields.filter(f => f.inputtype == 'currency').forEach(field => {
             data[field.entityname] = data[field.entityname].replace(/\D/g, '');
         });
-
-
+        
         return data;
     })
 
