@@ -26,7 +26,27 @@ class CparentController extends CommonController
         );
 
         $this->form->title_format = "{nik} / {name}";
+
         $this->form->field('password')->extrafield = true;
+        $this->form->field('password')->required = false;
+
+        $this->form->getField(
+            ['bank_account_name', 'virtual_account_name', 'note'],
+            function ($selected_field) {
+                $selected_field->Hello = 'World 88';
+                $selected_field->moon = 'Reflected of sun';
+            },
+            function ($else_field) {
+                $else_field->else_var = '1892';
+            }
+        );
+
+
+        // dd($this->form->fields);
+
+        $this->form->generateValidationData();
+
+
 
         $student_form = new CommonSchema('name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note');
         $this->student_form_fields = $student_form->fields;

@@ -37,11 +37,6 @@ class CommonSchema
 
             return $field;
         }, $this->string_of_fields);
-
-        // dd(get_class($this));
-        // $schema_name = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
-        // if ($schema_name == 'ListSchema') {
-        // }
     }
 
     function includeWith($string)

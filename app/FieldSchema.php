@@ -6,8 +6,6 @@ use Closure;
 
 class FieldSchema
 {
-    // protected $form;
-
     public $entityname;
     public $value;
 
@@ -16,11 +14,8 @@ class FieldSchema
     public $element;
     public $options;
     public $className = '';
+    public $required = true;
 
-    // public $getValue;
-
-    // public $model;
-    // public $model_value;
     public function __call($method, $arguments)
     {
         return call_user_func_array(Closure::bind($this->$method, $this, get_called_class()), $arguments);
@@ -75,6 +70,7 @@ class FieldSchema
                                 $this->model = $opt[1];
                             } else if ($opt[0] == 'extrafield') {
                                 $this->extrafield = $opt[1];
+                                $this->required = false;
                             } else if ($opt[0] == 'label') {
                                 $this->label = $opt[1];
                             }
