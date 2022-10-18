@@ -625,6 +625,18 @@ details summary::-webkit-details-marker {
     border-style: dashed;
 }
 
+.currency-input-field .sign {
+    float: left;
+    position: absolute;
+    z-index: 1;
+    padding: 0.5em;
+}
+
+.currency-input-field input {
+    text-align: right;
+}
+
+
 @layer base{
 
     .dialog{

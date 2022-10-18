@@ -6,6 +6,7 @@ export default ({
   className,
   children,
   errors = [],
+  options,
   Field,
   ...props
 }) => {
@@ -22,7 +23,16 @@ export default ({
         {...props}
         className={`input-field form-select ${errors.length ? 'error' : ''}`}
       >
-        {children}
+        <option value=''></option>
+        {options.map((option, keyID) => {
+            if(typeof option == 'string'){
+                return  <option value={option} key={keyID}> {option} </option>
+            }else if(typeof option == 'object'){
+                return  <option value={option.id} key={keyID}>
+                            {option.name}
+                        </option>
+            }
+        })}
       </select>
       {errors && <div className="form-error">{errors}</div>}
     </div>

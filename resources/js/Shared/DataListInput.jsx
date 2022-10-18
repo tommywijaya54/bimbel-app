@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export default ({ label, name, className, errors = [], options, Field, ...props }) => {
   const handleFocus = (event) => event.target.select();
-  const [valueid, setValueid] = useState(Field.model_value.id);
+  const [valueid, setValueid] = useState(Field.model_value?.id || null);
   
   const handleOnInput = (e) => {
     const val = e.target.value;

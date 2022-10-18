@@ -15,6 +15,7 @@ class FieldSchema
     public $inputtype;
     public $element;
     public $options;
+    public $className = '';
 
     // public $getValue;
 

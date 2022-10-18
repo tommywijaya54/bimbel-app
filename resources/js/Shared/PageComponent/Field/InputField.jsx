@@ -7,13 +7,13 @@ import TextAreaInput from '@/Shared/TextAreaInput';
 import MultipleCheckboxInput from '@/Shared/MultipleCheckboxInput';
 import { FieldUtil } from '../../Util/Field_util';
 import ValueField from './ValueField';
+import CurrencyInput from '@/Shared/CurrencyInput';
 
 export default ({Field, data, errors, setData}) => {
     let {element, inputtype, entityname, label, className} = Field;
 
     if(element){
-        return <ValueField Field={Field}></ValueField>
-        // return FieldUtil.getElementIfExist(Field);
+        return <ValueField field={Field}></ValueField>
     }
 
     let inputProps = { 
@@ -30,17 +30,8 @@ export default ({Field, data, errors, setData}) => {
         return (
             <SelectInput
                 {...inputProps}
+                options={Field.options}
             >
-                <option value=''></option>
-                {Field.options.map((option, keyID) => {
-                    if(typeof option == 'string'){
-                        return  <option value={option} key={keyID}> {option} </option>
-                    }else if(typeof option == 'object'){
-                        return  <option value={option.id} key={keyID}>
-                                    {option.name}
-                                </option>
-                    }
-                })}
             </SelectInput>
         )
     }
@@ -66,21 +57,14 @@ export default ({Field, data, errors, setData}) => {
     if(inputtype == 'textarea'){
         return <TextAreaInput
             {...inputProps}
-            
         />
     }
 
-    
-    /*
-    if(inputtype == 'date'){
-        return <DateInput {...inputProps} />
+    if(inputtype == 'currency'){
+        return <CurrencyInput {...inputProps}  type={inputtype}/>
     }
 
-    if(inputtype == 'number'){
-        return <NumberInput {...inputProps} />
-    }*/
-
     return (
-        <TextInput {...inputProps} type={Field.inputtype}/>
+        <TextInput {...inputProps} type={inputtype}/>
     )
 }
