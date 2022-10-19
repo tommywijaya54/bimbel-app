@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export default ({ label, name, className, errors = [], Field, ...props }) => {
+export default ({ label, name, className, errors = [],required, Field, ...props }) => {
   const handleKeyDown = (e) => {
     e.target.style.height = 'inherit';
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -31,6 +31,7 @@ export default ({ label, name, className, errors = [], Field, ...props }) => {
         id={name}
         name={name}
         {...props}
+        required={required}
         rows="1"
         onKeyDown={handleKeyDown} 
         ref={textAreaRef}

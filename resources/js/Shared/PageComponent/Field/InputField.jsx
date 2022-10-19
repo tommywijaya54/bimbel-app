@@ -10,7 +10,7 @@ import ValueField from './ValueField';
 import CurrencyInput from '@/Shared/CurrencyInput';
 
 export default ({Field, data, errors, setData}) => {
-    let {element, inputtype, entityname, label, className} = Field;
+    let {element, inputtype, entityname, label, className, required} = Field;
 
     if(element){
         return <ValueField field={Field}></ValueField>
@@ -23,6 +23,7 @@ export default ({Field, data, errors, setData}) => {
         'value':data[entityname],
         'onChange':(e) => {setData(entityname, e.target.value)},
         'className':'w-full pb-8 pr-6 lg:w-1/2 '+className,
+        required,
         Field
     }
 

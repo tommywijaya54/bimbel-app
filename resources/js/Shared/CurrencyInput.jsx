@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default ({ label, name, className, errors = [], options, Field, ...props }) => {
+export default ({ label, name, className, errors = [], options,required, Field, ...props }) => {
   const handleOnInput = (e) => {
     const val = e.target.value.replace(/\D/g, '');
     e.target.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -17,7 +17,7 @@ export default ({ label, name, className, errors = [], options, Field, ...props 
       <input
         id={name}
         name={name}
-
+        required={required}
         {...props}
         onInput={handleOnInput}
         className={`input-field form-input ${errors.length ? 'error' : ''}`}        
