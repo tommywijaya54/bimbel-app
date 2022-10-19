@@ -19,7 +19,6 @@ class RoleController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,name:Role Name,user',
-            // 'form' => 'name:Role Name,--,users:-label=People that have this role-extrafield=true,--,permissions'
             'form' => 'name:Role Name,,permissions'
         ], true);
         $this->list->order_by = 'ASC';
