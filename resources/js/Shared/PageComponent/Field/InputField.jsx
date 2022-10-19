@@ -24,6 +24,7 @@ export default ({Field, data, errors, setData}) => {
         'onChange':(e) => {setData(entityname, e.target.value)},
         'className':'w-full pb-8 pr-6 lg:w-1/2 '+className,
         required,
+        ...Field.attr,
         Field
     }
 

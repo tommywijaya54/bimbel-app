@@ -16,7 +16,7 @@ class BranchController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,name,phone,address,email, manager_id',
-            'form' => 'name:Branch Name,manager_id,address,phone,email,open_date,status',
+            'form' => 'name:Branch Name,manager_id,address,phone,email|nr,open_date|nr,status|nr',
         ], true);
 
         $this->list->order_by = 'ASC';
@@ -30,14 +30,9 @@ class BranchController extends CommonController
             'datalist'
         );
 
+        $this->form->field('name')->attr['placeholder'] = 'Fill Branch Name';
 
         $this->form->field('manager_id')->route['show'] = 'user.show';
-
-        // dd($manager_field);
-
-        // $this->rental_form = new FormSchema('branch_id,_,start_date,end_date,amount,_,owner_name,owner_phone,notaris_name,notaris_phone,note', 'Branch Rental', BranchRental::class);
-
-        // $this->rental_form =
     }
 
     public function details($id)

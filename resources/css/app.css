@@ -636,6 +636,10 @@ details summary::-webkit-details-marker {
     text-align: right;
 }
 
+.input-field:required {
+    border-color: #ff8282;
+}
+
 
 @layer base{
 
