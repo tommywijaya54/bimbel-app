@@ -13,6 +13,7 @@ class CommonController extends Controller
 {
     public $entity;
     public $modal;
+    public $beforeRender = [];
 
     function __construct($field_schema = null, $complete = false)
     {
@@ -54,26 +55,45 @@ class CommonController extends Controller
     }
     public function create()
     {
-        return Inertia::render('Common/CreateForm', [
+        $renderData = [
             'title' => "Create " . $this->modal_name_for_page_title,
             'form_schema' => $this->form->createForm(),
-        ]);
+        ];
+
+        if (isset($this->form->beforeRender['create'])) {
+            $renderData = $this->form->beforeRender['create']($renderData);
+        }
+
+        return Inertia::render('Common/CreateForm', $renderData);
     }
     public function show($id)
     {
         $form_data = $this->form->displayForm($id);
-        return Inertia::render('Common/DisplayForm', [
+
+        $renderData = [
             'title' => $form_data->title,
             'form_schema' => $form_data,
-        ]);
+        ];
+
+        if (isset($this->form->beforeRender['show'])) {
+            $renderData = $this->form->beforeRender['show']($renderData);
+        }
+
+        return Inertia::render('Common/DisplayForm', $renderData);
     }
     public function edit($id)
     {
         $form_data = $this->form->editForm($id);
-        return Inertia::render('Common/EditForm', [
+        $renderData = [
             'title' => 'Edit ' . $form_data->title . ' ' . $this->modal_name_for_page_title,
             'form_schema' => $form_data,
-        ]);
+        ];
+
+        if (isset($this->form->beforeRender['edit'])) {
+            $renderData = $this->form->beforeRender['edit']($renderData);
+        }
+
+        return Inertia::render('Common/EditForm', $renderData);
     }
 
     public function store(Request $request)

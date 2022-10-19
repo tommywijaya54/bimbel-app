@@ -6,6 +6,7 @@ use App\Models\Cparent;
 use Illuminate\Database\Schema\ColumnDefinition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Closure;
 
 class FormSchema extends CommonSchema
 {
@@ -15,6 +16,12 @@ class FormSchema extends CommonSchema
     public $submit_url;
     public $form_type;
     public $data;
+    public $beforeRender = [];
+
+    public function __call($method, $arguments)
+    {
+        return call_user_func_array(Closure::bind($this->$method, $this, get_called_class()), $arguments);
+    }
 
     function __construct($StringOfFields = null, $modal = null, $model = null)
     {

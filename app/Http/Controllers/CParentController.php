@@ -20,7 +20,20 @@ class CparentController extends CommonController
         parent::__construct(
             [
                 'list' => 'id:ID,nik:NIK,name:Parent Name,phone,blacklist',
-                'form' => 'nik:NIK,name,address|nr,phone,email,birth_date|nr,emergency_name|nr,emergency_phone|nr,bank_account_name|nr,virtual_account_name|nr,note|nr,blacklist|nr,password:User login password|nr',
+                'form' => '
+                        nik:NIK,
+                        name,
+                        address|nr,
+                        phone,
+                        email,
+                        birth_date|nr,
+                        emergency_name|nr,
+                        emergency_phone|nr,
+                        bank_account_name|nr,
+                        virtual_account_name|nr,
+                        note|nr,
+                        blacklist|nr,
+                        password:User login password|nr',
             ],
             true
         );
@@ -29,6 +42,13 @@ class CparentController extends CommonController
 
         $this->form->field('password')->extrafield = true;
         $this->form->field('password')->required = false;
+
+        $this->form->beforeRender['create'] = function ($renderData) {
+            $renderData['form_schema']->field('password')->required = true;
+            return $renderData;
+        };
+
+
 
         // $this->form->validate['store']['nik'] = 'required|unique:cparents';
         // $this->form->validate['store']['password'] = 'required';
