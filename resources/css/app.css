@@ -621,7 +621,7 @@ details summary::-webkit-details-marker {
 
 .line {
     border-width: 1px 0 0 0;
-    margin: 1em 1.5em 3em 0;
+    margin: 0em 1.5em 1.5em 0;
     border-style: dashed;
 }
 
