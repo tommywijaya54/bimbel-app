@@ -2,6 +2,11 @@
 
 namespace App; // <- important
 
+use App\Models\Cparent;
+use Illuminate\Database\Schema\ColumnDefinition;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
 class FormSchema extends CommonSchema
 {
     // public $options; // create/edit/display_form
@@ -14,6 +19,11 @@ class FormSchema extends CommonSchema
     function __construct($StringOfFields = null, $modal = null, $model = null)
     {
         parent::__construct($StringOfFields, $modal, $model);
+
+        $this->validate = [
+            'store' => $this->generateValidationData(),
+            'update' => $this->generateValidationData()
+        ];
     }
 
     public function field($entityname)
@@ -51,13 +61,17 @@ class FormSchema extends CommonSchema
     public function generateValidationData()
     {
         $fields = collect($this->fields);
+
         $validationData = $fields->filter(function ($field) {
             return $field->required;
-        })->map(function ($field) {
-            return [$field->entityname => 'required'];
-        });
+        })->reduce(function ($validationData, $field) {
+            $validationData[$field->entityname] = 'required';
+            return $validationData;
+        }, []);
+
         return $validationData;
     }
+
 
     public function alter($entityname, $changes)
     {

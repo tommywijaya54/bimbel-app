@@ -78,12 +78,16 @@ class CommonController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate($this->form->validate['store']);
+
         $this->entity::create($this->form->setStoreOrUpdate($request));
         return redirect('/' . $this->modal);
     }
 
     public function update(Request $request, $id)
     {
+        $request->validate($this->form->validate['update']);
+
         $this->form->setStoreOrUpdate($request, $this->entity::find($id))->update();
         return redirect('/' . $this->modal . '/' . $id);
     }
