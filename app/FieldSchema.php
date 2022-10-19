@@ -30,8 +30,10 @@ class FieldSchema
         // field schema -> entityname:label:inputtype
         if ($StringField == null) {
             $this->element = 'row';
+            $this->required = false;
         } elseif ($StringField == "_") {
             $this->element = 'line';
+            $this->required = false;
         } else {
 
             // get entityname:label|nr|ex
