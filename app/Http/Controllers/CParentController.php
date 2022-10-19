@@ -20,7 +20,7 @@ class CparentController extends CommonController
         parent::__construct(
             [
                 'list' => 'id:ID,nik:NIK,name:Parent Name,phone,blacklist',
-                'form' => 'nik:NIK,name,address,phone,email,birth_date,emergency_name,emergency_phone,bank_account_name,virtual_account_name,note,blacklist,password:User login password',
+                'form' => 'nik:NIK,name,address|nr,phone,email,birth_date|nr,emergency_name|nr,emergency_phone|nr,bank_account_name|nr,virtual_account_name|nr,note|nr,blacklist|nr,password:User login password|nr',
             ],
             true
         );
@@ -30,6 +30,10 @@ class CparentController extends CommonController
         $this->form->field('password')->extrafield = true;
         $this->form->field('password')->required = false;
 
+        // $this->form->validate['store']['nik'] = 'required|unique:cparents';
+        // $this->form->validate['store']['password'] = 'required';
+
+        /*
         $this->form->getField(
             ['bank_account_name', 'virtual_account_name', 'note'],
             function ($selected_field) {
@@ -41,11 +45,10 @@ class CparentController extends CommonController
             }
         );
 
-
         // dd($this->form->fields);
 
         $this->form->generateValidationData();
-
+        */
 
 
         $student_form = new CommonSchema('name,birth_date,type,grade,email,phone,address,,join_date,exit_date,health_condition,exit_reason,note');
@@ -78,6 +81,7 @@ class CparentController extends CommonController
             'email' => 'required|unique:users',
             'password' => 'required',
         ]);
+
 
         $controller = $this;
         DB::transaction(
