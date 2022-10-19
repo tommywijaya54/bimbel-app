@@ -32,13 +32,16 @@ class FieldSchema
             $this->element = 'row';
         } elseif ($StringField == "_") {
             $this->element = 'line';
-        } elseif ($StringField == "--") {
-            $this->element = 'next-full-with';
         } else {
+
+            // get entityname:label|nr|ex
+
             $arr = explode(":", $StringField);
+            $entityname = explode("|", $arr[0]);
 
             // default label & input type;
-            $this->entityname = $arr[0];
+            $this->entityname = $entityname[0];
+
             $this->label = ucwords(str_replace('_', ' ', $this->entityname));
             $this->inputtype = 'text';
 
@@ -58,29 +61,26 @@ class FieldSchema
                 ];
             }
 
+            if (str_contains($StringField, '|')) {
+                if (str_contains($StringField, '|nr')) {
+                    $this->required = false;
+                }
+                if (str_contains($StringField, '|ex')) {
+                    $this->extrafield = false;
+                }
+            }
+
             if (isset($arr[1])) {
-                if (str_contains($arr[1], '-')) {
-                    $options = explode('-', $arr[1]);
-                    foreach ($options as $key => $option) {
-                        if (isset($option) && $option != "") {
-                            $opt = explode('=', $option);
-                            if ($opt[0] == "inputtype") {
-                                $this->inputtype = $opt[1];
-                            } else if ($opt[0] == "model") {
-                                $this->model = $opt[1];
-                            } else if ($opt[0] == 'extrafield') {
-                                $this->extrafield = $opt[1];
-                                $this->required = false;
-                            } else if ($opt[0] == 'label') {
-                                $this->label = $opt[1];
-                            }
-                        }
-                    }
-                } else {
-                    $this->label = $arr[1];
+                $label = explode('|', $arr[1]);
+                if (isset($label[0]) && $label[0] != '') {
+                    $this->label = $label[0];
                 }
             }
         }
+    }
+
+    public function identify()
+    {
     }
 
     public function hasOptions($options, $inputtype = 'select')
