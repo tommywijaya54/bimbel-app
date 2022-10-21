@@ -11,6 +11,7 @@ class RegistrationItem extends Model
 {
     use HasFactory, SoftDeletes, HasHistories;
 
+
     public function getModelLabel()
     {
         return '#Registration item : ' . $this->id;

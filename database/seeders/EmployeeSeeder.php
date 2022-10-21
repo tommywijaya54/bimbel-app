@@ -22,7 +22,7 @@ class EmployeeSeeder extends Seeder
 
         $Branches = Branch::all();
 
-        for ($x = 1; $x <= 5; $x++) {
+        for ($x = 1; $x <= 10; $x++) {
             $people = [
                 'nik' => fake('id_ID')->randomDigit() . '99-999-Employee',
                 'name' => fake('id_ID')->name(),
@@ -45,6 +45,7 @@ class EmployeeSeeder extends Seeder
 
             $user = User::create($user_data);
             $user->assignRole('Employee');
+            $user->assignRole('Teacher');
 
             $people['user_id'] = $user->id;
             $people['branch_id'] = $Branches->random()->id;

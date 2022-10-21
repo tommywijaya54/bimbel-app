@@ -83,6 +83,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'parent' => CparentController::class,
         'student' => StudentController::class,
         'employee' => EmployeeController::class,
+        'schedule' => ScheduleController::class
     ];
 
     foreach ($routeList as $model => $controller) {

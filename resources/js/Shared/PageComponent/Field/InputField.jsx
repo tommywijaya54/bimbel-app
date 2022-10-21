@@ -8,6 +8,7 @@ import MultipleCheckboxInput from '@/Shared/MultipleCheckboxInput';
 import { FieldUtil } from '../../Util/Field_util';
 import ValueField from './ValueField';
 import CurrencyInput from '@/Shared/CurrencyInput';
+import DataListMultipleValueInput from '@/Shared/DataListMultipleValueInput';
 
 export default ({Field, data, errors, setData}) => {
     let {element, inputtype, entityname, label, className, required} = Field;
@@ -41,6 +42,14 @@ export default ({Field, data, errors, setData}) => {
     if(inputtype == 'datalist'){
         return <DataListInput
             {...inputProps}
+            options={Field.options}
+        />
+    }
+    
+    if(inputtype == 'datalist-multiple-value'){
+        return <DataListMultipleValueInput
+            {...inputProps}
+            setData={setData}
             options={Field.options}
         />
     }

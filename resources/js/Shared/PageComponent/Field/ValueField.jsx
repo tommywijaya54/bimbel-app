@@ -25,6 +25,15 @@ const FieldComponents = {
         'datalist' : (field) => {
             return <a href={route(field.route.show,field.model_value.id)} className={field.model + ' unit link'}>{field.value}</a>
         },
+        'datalist-multiple-value' : (field) => {
+            const ListValue = ({ list, getterProp, id}) => {
+                const item = list.find(i => {
+                    return i[getterProp] == id
+                });
+                return <span className='bg-gray br-1 py-1 px-2 mr-2 mb-2 inline-block'>{item.name}</span>;
+            }            
+            return field.value?.split(',').map((val, i) => <ListValue list={field.options} getterProp='id' id={val} key={i}></ListValue>)
+        },
         'text' : ({value}) => {
             return value
         },
