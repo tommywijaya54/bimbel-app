@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\ListSchema;
+use App\Models\ScheduleItem;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -25,11 +27,16 @@ class ScheduleController extends CommonController
 
         $teacher_field->route['show'] = 'user.show';
 
-
         $students_field = $this->form->field('students');
         $students_field->hasOptions(
             User::role('Student')->get(['id', 'name'])->toArray(),
             'datalist-multiple-value'
         );
+
+        $items = [];
+        $items['list'] = new ListSchema('start_at,end_at', 'Schedule Item', ScheduleItem::class);
+        $items['list']->order_by = 'ASC';
+
+        $this->form->subform = [$items];
     }
 }
