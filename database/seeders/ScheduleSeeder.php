@@ -26,6 +26,7 @@ class ScheduleSeeder extends Seeder
             $x++
         ) {
             $week = fake('id_ID')->randomElement([6, 8, 12]);
+
             $schedule_data = [
                 'class_subject' => fake('id_ID')->randomElement(['English', 'Math', 'Science']),
                 'class_room' => fake('id_ID')->randomElement(['Room A', 'Room B', 'Room C']),
@@ -37,9 +38,9 @@ class ScheduleSeeder extends Seeder
             $schedule = Schedule::create($schedule_data);
 
             for (
-                $x = 0;
-                $x < $week;
-                $x++
+                $y = 0;
+                $y < $week;
+                $y++
             ) {
                 $item = [
                     'start_at' => fake('id_ID')->date(),
