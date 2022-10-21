@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
 
             OtherSeeder::class,
             AllSeeder::class,
+
+            RegistrationSeeder::class,
         ]);
     }
 }

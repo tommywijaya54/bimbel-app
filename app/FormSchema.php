@@ -2,6 +2,12 @@
 
 namespace App; // <- important
 
+use App\Models\Cparent;
+use Illuminate\Database\Schema\ColumnDefinition;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Closure;
+
 class FormSchema extends CommonSchema
 {
     // public $options; // create/edit/display_form
@@ -10,10 +16,21 @@ class FormSchema extends CommonSchema
     public $submit_url;
     public $form_type;
     public $data;
+    public $beforeRender = [];
+
+    public function __call($method, $arguments)
+    {
+        return call_user_func_array(Closure::bind($this->$method, $this, get_called_class()), $arguments);
+    }
 
     function __construct($StringOfFields = null, $modal = null, $model = null)
     {
         parent::__construct($StringOfFields, $modal, $model);
+
+        $this->validate = [
+            'store' => $this->generateValidationData(),
+            'update' => $this->generateValidationData()
+        ];
     }
 
     public function field($entityname)
@@ -21,6 +38,47 @@ class FormSchema extends CommonSchema
         $found_key = array_search($entityname, array_column($this->fields, 'entityname'));
         return $this->fields[$found_key];
     }
+
+    public function getField($entitynames = [], $func = null, $elseFunc = null)
+    {
+        // $field_entitynames = collect($entitynames);
+        $fields = collect($this->fields);
+
+        $selected_fields = $fields->filter(function ($field) use ($entitynames) {
+            return in_array($field->entityname, $entitynames);
+        })->each(function ($field) use ($func) {
+            $func($field);
+        });
+
+        if ($elseFunc) {
+            $else_fields = $fields->filter(function ($field) use ($entitynames) {
+                return !in_array($field->entityname, $entitynames);
+            })->each(function ($field) use ($elseFunc) {
+                $elseFunc($field);
+            });
+
+            return [
+                'selected_fields' => $selected_fields,
+                'else_fields' => $else_fields
+            ];
+        }
+        return $selected_fields;
+    }
+
+    public function generateValidationData()
+    {
+        $fields = collect($this->fields);
+
+        $validationData = $fields->filter(function ($field) {
+            return $field->required;
+        })->reduce(function ($validationData, $field) {
+            $validationData[$field->entityname] = 'required';
+            return $validationData;
+        }, []);
+
+        return $validationData;
+    }
+
 
     public function alter($entityname, $changes)
     {
@@ -78,10 +136,11 @@ class FormSchema extends CommonSchema
         $fields_has_model = array_filter($this->fields, function ($field) {
             return (isset($field->model) && empty($field->options));
         });
-        
+
         foreach ($fields_has_model as $field) {
             $this->field($field->entityname)->hasOptions(
-                ('App\\Models\\' . ucfirst($field->model))::all(['id', 'name'])->toArray(),'datalist'
+                ('App\\Models\\' . ucfirst($field->model))::all(['id', 'name'])->toArray(),
+                'datalist'
             );
         }
     }

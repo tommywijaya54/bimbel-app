@@ -38,7 +38,7 @@ class OtherSeeder extends Seeder
                 'label' => fake('id_ID')->sentence(3),
                 'discount_value' => fake('id_ID')->randomElement([
                     '30%',
-                    '-200000'
+                    '200000'
                 ]),
                 'branch_id' => fake('id_ID')->numberBetween(
                     $min = 1,

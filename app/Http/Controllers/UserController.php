@@ -22,7 +22,7 @@ class UserController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,name,email,type',
-            'form' => 'name,email,type,status,password:-extrafield=true,disabled:Deactivation Reason,roles:-extrafield=true'
+            'form' => 'name,email,type,status,password:|ex,disabled:Deactivation Reason,roles:|ex'
         ], true);
 
         $this->form->title_format = '{name}';

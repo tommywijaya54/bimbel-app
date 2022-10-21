@@ -6,8 +6,6 @@ use Closure;
 
 class FieldSchema
 {
-    // protected $form;
-
     public $entityname;
     public $value;
 
@@ -16,11 +14,8 @@ class FieldSchema
     public $element;
     public $options;
     public $className = '';
+    public $required = true;
 
-    // public $getValue;
-
-    // public $model;
-    // public $model_value;
     public function __call($method, $arguments)
     {
         return call_user_func_array(Closure::bind($this->$method, $this, get_called_class()), $arguments);
@@ -35,15 +30,20 @@ class FieldSchema
         // field schema -> entityname:label:inputtype
         if ($StringField == null) {
             $this->element = 'row';
+            $this->required = false;
         } elseif ($StringField == "_") {
             $this->element = 'line';
-        } elseif ($StringField == "--") {
-            $this->element = 'next-full-with';
+            $this->required = false;
         } else {
+
+            // get entityname:label|nr|ex
+
             $arr = explode(":", $StringField);
+            $entityname = explode("|", $arr[0]);
 
             // default label & input type;
-            $this->entityname = $arr[0];
+            $this->entityname = $entityname[0];
+
             $this->label = ucwords(str_replace('_', ' ', $this->entityname));
             $this->inputtype = 'text';
 
@@ -63,28 +63,26 @@ class FieldSchema
                 ];
             }
 
+            if (str_contains($StringField, '|')) {
+                if (str_contains($StringField, '|nr')) {
+                    $this->required = false;
+                }
+                if (str_contains($StringField, '|ex')) {
+                    $this->extrafield = false;
+                }
+            }
+
             if (isset($arr[1])) {
-                if (str_contains($arr[1], '-')) {
-                    $options = explode('-', $arr[1]);
-                    foreach ($options as $key => $option) {
-                        if (isset($option) && $option != "") {
-                            $opt = explode('=', $option);
-                            if ($opt[0] == "inputtype") {
-                                $this->inputtype = $opt[1];
-                            } else if ($opt[0] == "model") {
-                                $this->model = $opt[1];
-                            } else if ($opt[0] == 'extrafield') {
-                                $this->extrafield = $opt[1];
-                            } else if ($opt[0] == 'label') {
-                                $this->label = $opt[1];
-                            }
-                        }
-                    }
-                } else {
-                    $this->label = $arr[1];
+                $label = explode('|', $arr[1]);
+                if (isset($label[0]) && $label[0] != '') {
+                    $this->label = $label[0];
                 }
             }
         }
+    }
+
+    public function identify()
+    {
     }
 
     public function hasOptions($options, $inputtype = 'select')

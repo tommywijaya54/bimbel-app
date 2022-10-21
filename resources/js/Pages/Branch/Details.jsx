@@ -112,6 +112,7 @@ const MiniComponent = ({header,children}) => {
         </div>
     </>
 }
+
 export default function Show(props) {
     console.log(props.branch);
     return (

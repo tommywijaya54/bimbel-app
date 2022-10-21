@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class EmployeeController extends CommonController
 {
@@ -16,22 +17,49 @@ class EmployeeController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,nik:NIK,name:Employee Name,phone,branch_id',
-            'form' =>  'nik:NIK,,name,address,phone,email,emergency_name,emergency_phone,join_date,exit_date,note,branch_id,password:User login password,roles'
+            'form' =>  '
+                    nik:NIK,,
+                    name,
+                    address,
+                    phone,
+                    email,
+                    emergency_name,
+                    emergency_phone,
+                    join_date,
+                    exit_date,
+                    note,
+                    branch_id,
+                    password:User login password,
+                    roles'
         ], true);
 
         $this->form->title_format = "{nik} / {name}";
         $this->form->field('password')->extrafield = true;
 
+        $exceptRole = ['Owner', 'super-admin', 'Parent', 'Student'];
+        $employee_only_role = array_values(array_diff(Role::pluck('name')->toArray(), $exceptRole));
+
         $this->form->field('roles')->hasOptions(
-            ['Branch Manager', 'Advisor', 'Teacher', 'HRD', 'Finance'],
+            $employee_only_role,
             'multiple-checkbox'
         );
+
         $this->form->field('roles')->value = [];
         $this->form->field('roles')->extrafield = true;
 
         $controller = $this;
         $this->form->field('roles')->getValue = function ($field, $id) use ($controller) {
             return $controller->entity::find($id)->user->getRoleNames();
+        };
+
+        $this->form->beforeRender['create'] = function ($renderData) {
+            $renderData['form_schema']->field('roles')->value = ['Employee'];
+            return $renderData;
+        };
+
+        $this->form->beforeRender['edit'] = function ($renderData) {
+            $renderData['form_schema']->field('password')->required = false;
+            return $renderData;
         };
     }
 
