@@ -639,7 +639,13 @@ details summary::-webkit-details-marker {
 .input-field:required {
     border-color: #ff8282;
 }
-
+.bg-gray{
+    background: #f5f5f5;
+}
+.br-1{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
 
 @layer base{
 
