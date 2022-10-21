@@ -94,9 +94,16 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-school',
         ];
 
+        $teacher_permissions = [
+            'list-schedule',
+            'show-schedule',
+            'create-schedule',
+            'edit-schedule',
+        ];
+
         // $permissions + $manager_permissions + $advisor_permissions;
 
-        $all_permissions =  array_merge($super_admin_permissions,  $owner_permissions, $manager_permissions, $advisor_permissions);
+        $all_permissions =  array_merge($super_admin_permissions,  $owner_permissions, $manager_permissions, $advisor_permissions, $teacher_permissions);
 
         // echo "\r\n";
         // echo $all_permissions;
@@ -117,6 +124,8 @@ class RoleAndPermissionSeeder extends Seeder
 
         Role::findByName('Branch Manager')->givePermissionTo($manager_permissions);
         Role::findByName('Advisor')->givePermissionTo($advisor_permissions);
+        Role::findByName('Teacher')->givePermissionTo($teacher_permissions);
+
 
         Role::findByName('Owner')->givePermissionTo($all_permissions);
     }

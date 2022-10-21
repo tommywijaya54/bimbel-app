@@ -7,26 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Panoscape\History\HasHistories;
 
-class Schedule extends Model
+class ScheduleItem extends Model
 {
     use HasFactory, SoftDeletes, HasHistories;
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     protected $fillable = [
-        'class_subject',
-        'class_room',
-        'teacher_id',
-        'students',
-        'week'
+        'schedule_id',
+        'start_at',
+        'end_at'
     ];
 
     public function getModelLabel()
     {
-        return '#Schedule : ' . $this->id;
+        return '#Schedule item : ' . $this->id;
     }
 
-    public function items()
+    public function schedule()
     {
-        return $this->hasMany(ScheduleItem::class);
+        return $this->belongsTo(Schedule::class);
     }
 }
