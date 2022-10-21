@@ -43,16 +43,18 @@ class RegistrationSeeder extends Seeder
         $promolist = Promolist::pluck('id');
         $pricelist = Pricelist::pluck('id');
 
-        for ($x = 1; $x <= 10; $x++) {
-            $arr = [
-                'registration_id' => $registrations->random(),
-                'pricelist_id' => $promolist->random(),
-                'promolist_id' => $pricelist->random(),
-                'charges' => fake('id_ID')->text(),
-                'price' => fake('id_ID')->numberBetween($min = 1500, $max = 6000),
-                'discount_amount' => fake('id_ID')->text()
-            ];
-            RegistrationItem::create($arr);
-        }
+        $registrations->each(function ($reg) use ($promolist, $pricelist) {
+            for ($x = 1; $x <= 10; $x++) {
+                $arr = [
+                    'registration_id' => $reg,
+                    'pricelist_id' => $promolist->random(),
+                    'promolist_id' => $pricelist->random(),
+                    'charges' => fake('id_ID')->text(80),
+                    'price' => fake('id_ID')->numberBetween($min = 1500, $max = 6000),
+                    'discount_amount' => fake('id_ID')->text()
+                ];
+                RegistrationItem::create($arr);
+            }
+        });
     }
 }

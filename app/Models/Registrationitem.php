@@ -15,4 +15,11 @@ class RegistrationItem extends Model
     {
         return '#Registration item : ' . $this->id;
     }
+
+    public function registration()
+    {
+        return $this->belongsTo(Registration::class);
+    }
+
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 }

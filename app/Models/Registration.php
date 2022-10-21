@@ -27,7 +27,10 @@ class Registration extends Model
         'status',
         'note'
     ];
-
+    public function items()
+    {
+        return $this->hasMany(RegistrationItem::class);
+    }
     public function student()
     {
         return $this->belongsTo(Student::class);
