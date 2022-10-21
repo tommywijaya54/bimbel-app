@@ -40,8 +40,7 @@ export default ({ label, name, className, errors = [], options, Field, setData, 
         return i[getterProp] == id
     });
 
-    // debugger;
-    return renderItem(item);
+    return item ? renderItem(item) : id;
   }
   
   const renderPeople = (item) => {
