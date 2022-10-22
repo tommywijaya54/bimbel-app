@@ -1,6 +1,6 @@
 import { remove } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import Icon from './Icon';
+import Icon from '../../../Icon';
 
 export default ({ label, name, className, errors = [], options, Field, setData, onChange, value, required, ...props }) => {
   
