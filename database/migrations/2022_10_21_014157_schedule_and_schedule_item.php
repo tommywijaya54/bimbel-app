@@ -31,8 +31,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('schedule_id')->nullable();
-            $table->dateTime('start_at', $precision = 0);
-            $table->dateTime('end_at', $precision = 0);
+            $table->date('date', $precision = 0);
+            $table->time('start_at', $precision = 0);
+            $table->time('end_at', $precision = 0);
         });
 
         /*

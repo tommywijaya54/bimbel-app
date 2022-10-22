@@ -3,6 +3,8 @@ window._ = _;
 window.locale = {
     code: "id-ID",
     dateFormat : { year: 'numeric', month: 'short', day: '2-digit' },
+    dayFormat :  {weekday: 'long'},
+    timeFormat:{hour: '2-digit', minute: '2-digit'},
     currency:{
         sign:'Rp.'
     }

@@ -31,7 +31,7 @@ class ScheduleSeeder extends Seeder
                 'class_subject' => fake('id_ID')->randomElement(['English', 'Math', 'Science']),
                 'class_room' => fake('id_ID')->randomElement(['Room A', 'Room B', 'Room C']),
                 'teacher_id' => $teachers->random(),
-                'students' => fake('id_ID')->randomElement(['12, 23, 35', 'XX, yyy, zzz']),
+                'students' => fake('id_ID')->randomElement(['1, 2, 3', '4, 5, 6, 7']),
                 'week' => $week
             ];
 
@@ -42,10 +42,17 @@ class ScheduleSeeder extends Seeder
                 $y < $week;
                 $y++
             ) {
+
+                $nextDate  = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m"), date("d") + ($y * 7), date("Y")));
+                $startTime = date('Y-m-d H:i:s', mktime(17, 0, 0, date("m"), date("d") + ($y * 7), date("Y")));
+                $endTime = date('Y-m-d H:i:s', mktime(17, 0 + 30, 0, date("m"), date("d") + ($y * 7), date("Y")));
+
                 $item = [
-                    'start_at' => fake('id_ID')->date(),
-                    'end_at' => fake('id_ID')->date()
+                    'date' => $nextDate,
+                    'start_at' => $startTime,
+                    'end_at' => $endTime
                 ];
+
                 $schedule->items()->create($item);
             }
         }
