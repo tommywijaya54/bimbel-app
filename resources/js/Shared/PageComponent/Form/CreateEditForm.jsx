@@ -9,10 +9,12 @@ const CreateEditForm = ({Form, children}) => {
     const { data, setData, errors, post, processing, transform } = useForm(UseFormObject);
     
     transform((data) => {
+        /* 
         Form.fields.filter(f => f.model).forEach(field => {
             data[field.entityname] = document.getElementById(field.entityname).dataset.valueid;
         });
-        
+        */ 
+       
         Form.fields.filter(f => f.inputtype == 'currency').forEach(field => {
             if(typeof data[field.entityname] === 'string'){
                 data[field.entityname] = data[field.entityname].replace(/\D/g, '');

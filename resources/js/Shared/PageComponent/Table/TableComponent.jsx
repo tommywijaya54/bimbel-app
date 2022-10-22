@@ -1,6 +1,8 @@
 import Icon from "@/Shared/Icon";
 import { FieldUtil } from "@/Shared/Util/Field_util";
 import { useForm } from "@inertiajs/inertia-react";
+import { DeleteButton, GoToButton } from "../Button/DeleteButton";
+import InputField from "../Field/InputField";
 import ValueField from "../Field/ValueField";
 
 const columnModifier = (va) => {
@@ -27,24 +29,12 @@ const TableComponent = ({column, data, row_link, delete_item, children, classNam
                     return <tr key={keyId}>
                         {column.map((f,keyf) => {
                             return <td key={keyf}>
-                                <ValueField field={{...f,value:d[f.entityname]}}></ValueField>
+                                <ValueField nowrapper='true' field={{...f,value:d[f.entityname]}}></ValueField>
                             </td>
                         })}
                         <td className="text-right">
-                            {delete_item && 
-                            <button type="button" className='delete-button' onClick={e => delete_item(d.id)}>
-                                <Icon name="trash" className="block w-5 h-5 text-sky-500 fill-current"></Icon>
-                            </button>}
-                            {row_link && 
-                                <a 
-                                    href={row_link.replace('{id}',d['id'])} 
-                                    className="link goto link inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                        <Icon
-                                            name="cheveron-right"
-                                            className="block w-6 h-6 text-gray-400 fill-current"
-                                        />
-                                </a>
-                            }
+                            {delete_item && <DeleteButton onClick={e => delete_item(d.id)} />}
+                            {row_link &&  <GoToButton href={row_link.replace('{id}',d['id'])} />}
                         </td>
                     </tr>
                 })}
@@ -85,15 +75,16 @@ const TableWithInlineForm = ({column, data : table_data, className, create_url, 
                 >
                 <tfoot>
                     <tr className='table-inline-form'>
-                        {columns.map((f,ki) => {
-                            return <td key={ki}>
-                                <input 
-                                    type={f.input_type} 
-                                    value={data[f.entityname]} 
-                                    onChange={e => setData(f.entityname, e.target.value)}
-                                    placeholder={f.label}    
-                                    />
-                                {errors[f.entityname] && <div>{errors[f.entityname]}</div>}
+                        {columns.map((Field,keyId) => {
+                            return <td key={keyId}>
+                                <InputField 
+                                    Field={Field} 
+                                    key={keyId}
+                                    errors={errors}
+                                    data={data}
+                                    setData={setData}   
+                                    nowrapper='true' 
+                                ></InputField>
                             </td>
                         })}
                         <td>

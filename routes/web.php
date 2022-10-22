@@ -105,6 +105,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{id}/salary/{salary_id}', [EmployeeController::class, 'delete_salary'])->name('delete.employee.salary');
     });
 
+
+    Route::group([
+        'prefix' => 'schedule'
+    ], function () {
+        Route::get('/{id}/details', [ScheduleController::class, 'details']);
+        Route::post('/{id}/item', [ScheduleController::class, 'add_item'])->name('add.schedule.item');
+        Route::delete('/{id}/item/{item_id}', [ScheduleController::class, 'delete_item'])->name('delete.schedule.item');
+    });
+
     Route::group([
         'prefix' => 'branch'
     ], function () {

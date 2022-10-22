@@ -23,7 +23,10 @@ const FieldComponents = {
                     </span>
         },
         'datalist' : (field) => {
-            return <a href={route(field.route.show,field.model_value.id)} className={field.model + ' unit link'}>{field.value}</a>
+            if(field.model_value){
+                return <a href={route(field.route.show,field.model_value.id || field.value)} className={field.model + ' unit link'}>{field.model_value.name || field.value}</a>
+            }
+            return <a href={route(field.route.show,field.value)} className={field.model + ' unit link'}>{field.value}</a>  
         },
         'datalist-multiple-value' : (field) => {
             const ListValue = ({ list, getterProp, id}) => {
@@ -45,21 +48,25 @@ const FieldComponents = {
         },
         'color':({value}) => {
             return <input type="color" id="head" name="head" value={value} disabled />
+        },
+        'time':({value}) => {
+            return value.substring(0,5);
+            // return <div className='no-wrap'>{(new Date(''+value)).toLocaleDateString(locale.code,locale.timeFormat)}</div>
         }
     }
 }
 
 const FieldWrapper = ({label, children}) => {
-    return <div className="form-component pr-6 pb-4 w-full lg:w-1/2">
-        <label className="form-label">{label}:</label> 
-        <div className="form-input">
-            {children}
-        </div>
-    </div>
+    return  <div className="form-component pr-6 pb-4 w-full lg:w-1/2">
+                <label className="form-label">{label}:</label> 
+                <div className="form-input">
+                    {children}
+                </div>
+            </div>
 }
 
 // ValueField on accept validation using inputtype NOT entityname
-export default ({field}) => {
+export default ({field, nowrapper}) => {
     const {value, inputtype, element, label} = field;
 
     if(element){
@@ -67,15 +74,19 @@ export default ({field}) => {
     }
 
     if(!value){
-        return <FieldWrapper label={label}>
-            <span className='empty-value'>---</span>
-        </FieldWrapper>
+        return  nowrapper ? 
+                <span className='empty-value'>---</span> :
+                <FieldWrapper label={label}>
+                    <span className='empty-value'>---</span>
+                </FieldWrapper>;
     }
 
     if(inputtype){
-        return <FieldWrapper label={label}>
-            {FieldComponents.inputtype[inputtype] ?  FieldComponents.inputtype[inputtype](field) : value}
-        </FieldWrapper> 
+        return  nowrapper ? 
+                FieldComponents.inputtype[inputtype] ?  FieldComponents.inputtype[inputtype](field) : value :
+                <FieldWrapper label={label}>
+                    {FieldComponents.inputtype[inputtype] ?  FieldComponents.inputtype[inputtype](field) : value}
+                </FieldWrapper> 
     }
 
     return value; 
