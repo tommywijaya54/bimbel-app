@@ -93,7 +93,7 @@ class FormSchema extends CommonSchema
             if (str_contains($field->entityname, '_id')) {
                 $model = str_replace('_id', '', $field->entityname);
                 $field->model_value = $data[$model];
-                $field->value = $field->model_value['name'];
+                $field->value = $field->model_value['id'];
             } else if (isset($field->getValue)) {
                 $field->value = $field->getValue($field, $this->id);
             } else if ($field->entityname && isset($data[$field->entityname])) {

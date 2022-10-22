@@ -10,7 +10,7 @@ import ValueField from './ValueField';
 import CurrencyInput from '@/Shared/CurrencyInput';
 import DataListMultipleValueInput from '@/Shared/DataListMultipleValueInput';
 
-export default ({Field, data, errors, setData}) => {
+export default ({Field, data, setData, errors}) => {
     let {element, inputtype, entityname, label, className, required} = Field;
 
     if(element){
@@ -25,8 +25,8 @@ export default ({Field, data, errors, setData}) => {
         'onChange':(e) => {setData(entityname, e.target.value)},
         'className':'w-full pb-8 pr-6 lg:w-1/2 '+className,
         required,
+        Field,
         ...Field.attr,
-        Field
     }
 
     if(inputtype == 'select'){
@@ -42,6 +42,7 @@ export default ({Field, data, errors, setData}) => {
     if(inputtype == 'datalist'){
         return <DataListInput
             {...inputProps}
+            setData={setData}
             options={Field.options}
         />
     }
@@ -55,14 +56,12 @@ export default ({Field, data, errors, setData}) => {
     }
 
     if(inputtype == 'multiple-checkbox'){
-        
         return <MultipleCheckboxInput
             {...inputProps}
             setData={setData}
             data={data}
             className="w-full pb-8 pr-6"
-        >
-        </MultipleCheckboxInput>
+        />
     }
 
     if(inputtype == 'textarea'){

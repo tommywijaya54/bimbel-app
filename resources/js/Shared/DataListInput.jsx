@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default ({ label, name, className, errors = [], options, Field, ...props }) => {
+export default ({ label, name, className, errors = [], options, Field, setData, onChange, value, required, ...props }) => {
   const handleFocus = (event) => event.target.select();
   const [valueid, setValueid] = useState(Field.model_value?.id || null);
+  const [inputboxValue, setInputboxValue] = useState(Field.model_value?.name || null);
   
   const handleOnInput = (e) => {
     const val = e.target.value;
     const opts = e.target.list.childNodes; 
     setValueid('');
+    setData(name,'');
     for (var i = 0; i < opts.length; i++) {
       if (opts[i].value === val) {
-        setValueid(opts[i].dataset.valueid);
+        const val = opts[i].dataset.valueid;
+        setValueid(val);
+        setData(name,val);
         break;
       }
     }
@@ -24,17 +28,26 @@ export default ({ label, name, className, errors = [], options, Field, ...props 
         </label>
       )}
 
+       <input
+          type="hidden"
+          id={name}
+          name={name}
+          value={valueid}
+          {...props}
+          />
+
       <input
         list={name+'_list'}
         data-valueid={valueid}
 
-        id={name}
-        name={name}
-
-        {...props}
-
+        id={name+"_inputbox"}
+        name={name+"_inputbox"}
+        value={inputboxValue}
+        
         onFocus={handleFocus}
+        
         onInput={handleOnInput}
+        onChange={(e) => {setInputboxValue(e.target.value)}}
 
         className={`input-field form-input ${errors.length ? 'error' : ''}`}        
       />
