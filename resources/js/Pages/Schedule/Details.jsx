@@ -9,7 +9,7 @@ export default (props) => {
     const timeFormat =  {hour: '2-digit', minute: '2-digit'};
 
     props.schedule.items.forEach(i => {
-        i.day = (new Date(i.date)).toLocaleDateString(locale.code,dayFormat);
+        i.day = (new Date(i.session_date)).toLocaleDateString(locale.code,dayFormat);
 
         // console.log(new Date(i.date+' '+i.start_at));
         // console.log((new Date(i.date+' '+i.start_at)).toLocaleDateString(locale.code,timeFormat));

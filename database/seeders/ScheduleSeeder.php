@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Branch;
 use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,19 +20,24 @@ class ScheduleSeeder extends Seeder
     {
         //
         $teachers = User::role('Teacher')->pluck('id');
-
+        $students = User::role('Student')->pluck('id');
+        $branches = Branch::pluck('id');
         for (
             $x = 0;
             $x < 8;
             $x++
         ) {
             $week = fake('id_ID')->randomElement([6, 8, 12]);
+            $studentlist = implode(',', fake('id_ID')->randomElements($students, random_int(3, 5)));
+
+            // dd($studentlist);
 
             $schedule_data = [
                 'class_subject' => fake('id_ID')->randomElement(['English', 'Math', 'Science']),
                 'class_room' => fake('id_ID')->randomElement(['Room A', 'Room B', 'Room C']),
                 'teacher_id' => $teachers->random(),
-                'students' => fake('id_ID')->randomElement(['1, 2, 3', '4, 5, 6, 7']),
+                'branch_id' => $branches->random(),
+                'students' => $studentlist,
                 'week' => $week
             ];
 
@@ -48,9 +54,9 @@ class ScheduleSeeder extends Seeder
                 $endTime = date('Y-m-d H:i:s', mktime(17, 0 + 30, 0, date("m"), date("d") + ($y * 7), date("Y")));
 
                 $item = [
-                    'date' => $nextDate,
-                    'start_at' => $startTime,
-                    'end_at' => $endTime
+                    'session_date' => $nextDate,
+                    'session_start_at' => $startTime,
+                    'session_end_at' => $endTime
                 ];
 
                 $schedule->items()->create($item);

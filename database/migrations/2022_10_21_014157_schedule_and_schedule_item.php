@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('class_subject')->nullable();
             $table->string('class_room')->nullable();
             $table->integer('teacher_id')->nullable();
+            $table->integer('branch_id')->nullable();
             $table->string('students')->nullable();
             $table->integer('week')->nullable();
         });
@@ -31,9 +32,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('schedule_id')->nullable();
-            $table->date('date', $precision = 0);
-            $table->time('start_at', $precision = 0);
-            $table->time('end_at', $precision = 0);
+            $table->date('session_date', $precision = 0);
+            $table->time('session_start_at', $precision = 0);
+            $table->time('session_end_at', $precision = 0);
         });
 
         /*

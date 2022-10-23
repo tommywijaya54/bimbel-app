@@ -16,6 +16,7 @@ class Schedule extends Model
         'class_subject',
         'class_room',
         'teacher_id',
+        'branch_id',
         'students',
         'week'
     ];
@@ -28,6 +29,11 @@ class Schedule extends Model
     public function teacher()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function items()

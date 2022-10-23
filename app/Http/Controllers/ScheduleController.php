@@ -17,8 +17,9 @@ class ScheduleController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,class_subject,class_room,teacher_id',
-            'form' => 'class_subject,class_room,teacher_id:Teacher Name,students:Student Names,week|nr'
+            'form' => 'class_subject,class_room,branch_id,teacher_id:Teacher Name,students:Student Names,week|nr'
         ], true);
+
         $this->list->item_url = 'schedule/{id}/details';
         $this->form->title_format = '{class_subject} / {class_room}';
 
@@ -27,7 +28,6 @@ class ScheduleController extends CommonController
             User::role('Teacher')->get()->toArray(),
             'datalist'
         );
-
         $teacher_field->route['show'] = 'user.show';
 
         $students_field = $this->form->field('students');
@@ -36,14 +36,26 @@ class ScheduleController extends CommonController
             'datalist-multiple-value'
         );
 
-        $items = [];
-        $items['list'] = new ListSchema('start_at,end_at', 'Schedule Item', ScheduleItem::class);
-        $items['list']->order_by = 'ASC';
-
-
-        $this->form->item_form = new FormSchema('day:Hari|ex,date:Tanggal,start_at:Mulai jam,end_at:Selesai jam', 'Schedule Item', ScheduleItem::class);
-        $this->form->item_form->field('start_at')->inputtype = 'time';
-        $this->form->item_form->field('end_at')->inputtype = 'time';
+        $this->form->item_form = new FormSchema('day:Hari|ex,session_date:Tanggal,session_start_at:Mulai jam,session_end_at:Selesai jam', 'Schedule Item', ScheduleItem::class);
+        $this->form->item_form->getField(
+            ['day'],
+            function ($field) {
+                $field->inputtype = 'none';
+                $field->required = false;
+                $field->attr = [
+                    'style' => ['display' =>  'none']
+                ];
+            }
+        );
+        $this->form->item_form->getField(
+            ['session_start_at', 'session_end_at'],
+            function ($field) {
+                $field->inputtype = 'time';
+                $field->attr = [
+                    'style' => ['width' =>  '140px']
+                ];
+            }
+        );
     }
 
     public function details($id)
@@ -61,9 +73,12 @@ class ScheduleController extends CommonController
     public function add_item($id, Request $request)
     {
         $schedule = Schedule::find($id);
+        //dd($request['session_date']);
+
         $schedule->items()->create([
-            'start_at' => $request->start_at,
-            'end_at' => $request->end_at
+            'session_date' => $request['session_date'],
+            'session_start_at' => $request->session_start_at,
+            'session_end_at' => $request->session_end_at
         ]);
     }
 

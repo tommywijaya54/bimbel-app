@@ -20,7 +20,7 @@ export default ({Field, data, setData, errors, nowrapper}) => {
         'errors':errors[entityname],
         'value':data[entityname],
         'onChange':(e) => {setData(entityname, e.target.value)},
-        'className':'w-full pb-8 pr-6 lg:w-1/2 '+className + (nowrapper ? 'no-label' : ''),
+        'className':'w-full pb-8 pr-6 lg:w-1/2 '+className + (nowrapper ? ' no-label ' : ''),
         required,
         Field,
         ...Field.attr,
