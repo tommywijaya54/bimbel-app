@@ -6,26 +6,22 @@ import MultipleCheckboxInput from '@/Shared/PageComponent/Field/InputField/Multi
 import CurrencyInput from '@/Shared/PageComponent/Field/InputField/CurrencyInput';
 import DataListMultipleValueInput from '@/Shared/PageComponent/Field/InputField/DataListMultipleValueInput';
 import ValueField from './ValueField';
+import { Children } from 'react';
 
-export default ({Field, data, setData, errors, nowrapper}) => {
-    let {element, inputtype, entityname, label, className, required} = Field;
+const FieldWrapper = ({ label, name, className, children }) => {
+  return (
+    <div className={className}>
+      {label && (
+        <label className="form-label" htmlFor={name}>
+          {label}:
+        </label>
+      )}
+      {children}
+    </div>
+  );
+};
 
-    if(element){
-        return <ValueField nowrapper={nowrapper} field={Field}></ValueField>
-    }
-
-    let inputProps = { 
-        label, 
-        'name':entityname,
-        'errors':errors[entityname],
-        'value':data[entityname],
-        'onChange':(e) => {setData(entityname, e.target.value)},
-        'className':'w-full pb-8 pr-6 lg:w-1/2 '+className + (nowrapper ? ' no-label ' : ''),
-        required,
-        Field,
-        ...Field.attr,
-    }
-
+const getField = ({inputProps, Field, data, setData, inputtype}) => {
     if(inputtype == 'select'){
         return (
             <SelectInput
@@ -71,7 +67,45 @@ export default ({Field, data, setData, errors, nowrapper}) => {
         return <CurrencyInput {...inputProps}  type={inputtype}/>
     }
 
+    if(inputtype == 'date'){
+        return <>
+            <TextInput {...inputProps}  type={inputtype}/>
+        </>
+    }
+
     return (
         <TextInput {...inputProps} type={inputtype}/>
     )
+}
+
+
+export default ({Field, data, setData, errors, nowrapper}) => {
+    let {element, inputtype, entityname, label, className, required} = Field;
+
+    if(element){
+        return <ValueField nowrapper={nowrapper} Field={Field}></ValueField>
+    }
+    let wrapperProps = {
+        label,
+        'name':entityname,
+        'className':'w-full pb-8 pr-6 lg:w-1/2 '+className + (nowrapper ? ' no-label ' : '')
+    }
+
+    let inputProps = { 
+        'name':entityname,
+        'errors':errors[entityname],
+        'value':data[entityname],
+        'onChange':(e) => {setData(entityname, e.target.value)},
+        required,
+        Field,
+        ...Field.attr,
+    }
+
+    let fieldProps = {
+        inputProps, Field, data, setData, inputtype
+    }
+
+    return nowrapper ? 
+        getField({...fieldProps}) : 
+        <FieldWrapper {...wrapperProps}>{getField({...fieldProps})}</FieldWrapper> 
 }
