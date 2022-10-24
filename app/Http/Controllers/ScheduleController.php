@@ -20,7 +20,7 @@ class ScheduleController extends CommonController
             'form' => 'class_subject,class_room,branch_id,teacher_id:Teacher Name,students:Student Names,week|nr'
         ], true);
 
-        $this->list->item_url = 'schedule/{id}/details';
+        // $this->list->item_url = 'schedule/{id}/details';
         $this->form->title_format = '{class_subject} / {class_room}';
 
         $teacher_field = $this->form->field('teacher_id');
@@ -37,6 +37,8 @@ class ScheduleController extends CommonController
         );
 
         $this->form->item_form = new FormSchema('day:Hari|ex,session_date:Tanggal,session_start_at:Mulai jam,session_end_at:Selesai jam', 'Schedule Item', ScheduleItem::class);
+
+
         $this->form->item_form->getField(
             ['day'],
             function ($field) {
@@ -47,18 +49,16 @@ class ScheduleController extends CommonController
                 ];
             }
         );
+
         $this->form->item_form->getField(
             ['session_start_at', 'session_end_at'],
             function ($field) {
                 $field->inputtype = 'time';
-                $field->attr = [
-                    'style' => ['width' =>  '140px']
-                ];
             }
         );
     }
 
-    public function details($id)
+    public function show($id)
     {
         $schedule = $this->entity::with('items')->find($id);
         $form = $this->form->displayForm($id);
@@ -76,6 +76,17 @@ class ScheduleController extends CommonController
         //dd($request['session_date']);
 
         $schedule->items()->create([
+            'session_date' => $request['session_date'],
+            'session_start_at' => $request->session_start_at,
+            'session_end_at' => $request->session_end_at
+        ]);
+    }
+
+    public function update_item($id, $item_id, Request $request)
+    {
+        $schedule = Schedule::find($id);
+        $item = $schedule->items()->find($item_id);
+        $item->update([
             'session_date' => $request['session_date'],
             'session_start_at' => $request->session_start_at,
             'session_end_at' => $request->session_end_at

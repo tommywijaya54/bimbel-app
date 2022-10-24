@@ -107,11 +107,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::group([
-        'prefix' => 'schedule'
+        'prefix' => 'schedule/{id}'
     ], function () {
-        Route::get('/{id}/details', [ScheduleController::class, 'details']);
-        Route::post('/{id}/item', [ScheduleController::class, 'add_item'])->name('add.schedule.item');
-        Route::delete('/{id}/item/{item_id}', [ScheduleController::class, 'delete_item'])->name('delete.schedule.item');
+        Route::post('/item', [ScheduleController::class, 'add_item'])->name('add.schedule.item');
+        Route::put('/item/{item_id}', [ScheduleController::class, 'update_item'])->name('update.schedule.item');
+        Route::delete('/item/{item_id}', [ScheduleController::class, 'delete_item'])->name('delete.schedule.item');
     });
 
     Route::group([
