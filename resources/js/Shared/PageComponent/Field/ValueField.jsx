@@ -66,8 +66,8 @@ const FieldWrapper = ({label, children}) => {
 }
 
 // ValueField on accept validation using inputtype NOT entityname
-export default ({field, nowrapper}) => {
-    const {value, inputtype, element, label} = field;
+export default ({Field, nowrapper}) => {
+    const {value, inputtype, element, label} = Field;
 
     if(element){
         return FieldComponents.element[element]();
@@ -83,9 +83,9 @@ export default ({field, nowrapper}) => {
 
     if(inputtype){
         return  nowrapper ? 
-                FieldComponents.inputtype[inputtype] ?  FieldComponents.inputtype[inputtype](field) : value :
+                FieldComponents.inputtype[inputtype] ?  FieldComponents.inputtype[inputtype](Field) : value :
                 <FieldWrapper label={label}>
-                    {FieldComponents.inputtype[inputtype] ?  FieldComponents.inputtype[inputtype](field) : value}
+                    {FieldComponents.inputtype[inputtype] ?  FieldComponents.inputtype[inputtype](Field) : value}
                 </FieldWrapper> 
     }
 

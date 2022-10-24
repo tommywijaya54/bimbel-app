@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-export default ({ label, name, className, errors = [], options, Field, setData, onChange, value, required, ...props }) => {
+export default ({name, errors = [], options, Field, setData, onChange, value, required, ...props }) => {
   const handleFocus = (event) => event.target.select();
-  const [valueid, setValueid] = useState(Field.model_value?.id || null);
-  const [inputboxValue, setInputboxValue] = useState(Field.model_value?.name || null);
+  const [valueid, setValueid] = useState(Field.model_value?.id || '');
+  const [inputboxValue, setInputboxValue] = useState(Field.model_value?.name || '');
   
   const handleOnInput = (e) => {
     const val = e.target.value;
@@ -21,13 +21,7 @@ export default ({ label, name, className, errors = [], options, Field, setData, 
   }
 
   return (
-    <div className={className}>
-      {label && (
-        <label className="form-label" htmlFor={name}>
-          {label}:
-        </label>
-      )}
-
+    <>
        <input
           type="hidden"
           id={name}
@@ -58,6 +52,6 @@ export default ({ label, name, className, errors = [], options, Field, setData, 
         </datalist>
     
       {errors && <div className="form-error">{errors}</div>}
-    </div>
+    </>
   );
 };

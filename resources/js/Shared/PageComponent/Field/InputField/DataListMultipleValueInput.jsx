@@ -2,10 +2,10 @@ import { remove } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Icon from '../../../Icon';
 
-export default ({ label, name, className, errors = [], options, Field, setData, onChange, value, required, ...props }) => {
+export default ({name, errors = [], options, Field, setData, onChange, value, required, ...props }) => {
   
   const handleFocus = (event) => event.target.select();
-  const [selectedInput, setSelectedInput] = useState(Field.value.split(','));
+  const [selectedInput, setSelectedInput] = useState(Field.value ? Field.value.split(',') : []);
 
   const handleOnInput = (e) => {
     const val = e.target.value;
@@ -18,8 +18,6 @@ export default ({ label, name, className, errors = [], options, Field, setData, 
       }
     }
   }
-
-  // debugger; 
 
   useEffect(() => {
     setData(name, selectedInput.join(','));
@@ -52,13 +50,7 @@ export default ({ label, name, className, errors = [], options, Field, setData, 
   }
 
   return (
-    <div className={className}>
-      {label && (
-        <label className="form-label" htmlFor={name}>
-          {label}:
-        </label>
-      )}
-
+      <>
         <input
           type="text"
           id={name}
@@ -86,11 +78,11 @@ export default ({ label, name, className, errors = [], options, Field, setData, 
             })}
         </datalist>
 
-        {selectedInput.map((r,k) => {
+        {selectedInput && selectedInput.map((r,k) => {
           return <ListValue id={r} key={k} list={options} getterProp="id" renderItem={renderPeople}></ListValue>
         })}
 
       {errors && <div className="form-error">{errors}</div>}
-    </div>
+    </>
   );
 };
