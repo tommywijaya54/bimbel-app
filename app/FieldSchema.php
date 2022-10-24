@@ -68,7 +68,7 @@ class FieldSchema
                     $this->required = false;
                 }
                 if (str_contains($StringField, '|ex')) {
-                    $this->extrafield = false;
+                    $this->extrafield = true;
                 }
             }
 
