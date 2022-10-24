@@ -1,7 +1,7 @@
 import Icon from "@/Shared/Icon";
 import { FieldUtil } from "@/Shared/Util/Field_util";
 import { useForm } from "@inertiajs/inertia-react";
-import { DeleteButton, GoToButton } from "../Button/DeleteButton";
+import { DeleteButton, GoToButton } from "../Button/Buttons";
 import InputField from "../Field/InputField";
 import ValueField from "../Field/ValueField";
 
