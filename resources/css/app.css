@@ -653,6 +653,10 @@ details summary::-webkit-details-marker {
 }
 */
 
+html.nprogress-busy button.action-button {
+    visibility: hidden;
+}
+
 @layer base{
 
     .dialog{
