@@ -7,25 +7,18 @@ import ValueField from '@/Shared/PageComponent/Field/ValueField';
 import { UpdateButton, DeleteButton } from '@/Shared/PageComponent/Button/Buttons';
 import { TableWithInlineForm } from '@/Shared/PageComponent/Table/TableComponent';
 import { Inertia } from '@inertiajs/inertia';
+import CalenderInput from '@/Shared/PageComponent/Field/InputField/CalenderInput';
 
 const TableRowEditable = ({columns, data:row_data, setFieldData, onUpdate, onDelete, processing}) => {
-    // const fields = columns.filter(f => !f.extrafield);
-    // fields.forEach(f => f.value = row_data[f.entityname]);
     
     let dataSet = columns.filter(f => !f.extrafield).reduce((obj,field) => (obj[field.entityname] = row_data[field.entityname],obj),{});
-    
+    let {errors} = useForm(dataSet);
+
     const {id : item_id} = row_data;
-    
-    let {errors} = useForm(dataSet); 
 
     const setData = (entityname,value) => {
-        setFieldData(item_id, entityname, value)
-    }
-    
-    useEffect(() => {
-        Object.keys(data).forEach(key => setData(key,row_data[key]));
-    },[item_id]) 
-
+        setFieldData(item_id, entityname, value);
+    } 
 
     return <tr>
         {
@@ -53,22 +46,15 @@ const TableRowEditable = ({columns, data:row_data, setFieldData, onUpdate, onDel
 }
 
 const TableEditable = ({column, data:table_data, schedule_id, ...props}) => {
-    let dataSet = {}
-
-    table_data.forEach(d => {
-        dataSet[d.id] = d;
-    });
-
-    const  {data, setData, post, put, delete : destroy , processing, errors} = useForm(dataSet); 
+    const {data, setData, post, put, delete : destroy , processing, errors} = useForm(table_data); 
     
     const setFieldData = (item_id, entityname, value) => {
-        data[item_id][entityname] = value;
-        setData(data);
+        setData(data.find(i => i.id == item_id)[entityname] = value);
     }
 
     const updateItem = (item_id) => {
         Inertia.put(route('delete.schedule.item',{id:schedule_id,item_id}),
-            data[item_id],
+            data.find(i => i.id == item_id),
             {preserveScroll: true})
     }
 
@@ -91,7 +77,7 @@ const TableEditable = ({column, data:table_data, schedule_id, ...props}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {table_data.map((row_data,keyId) => {
+                    {data.map((row_data,keyId) => {
                         return <TableRowEditable 
                             key={keyId} 
                             
@@ -103,7 +89,9 @@ const TableEditable = ({column, data:table_data, schedule_id, ...props}) => {
                             onDelete={deleteItem}
 
                             processing={processing}
-                        {...props}></TableRowEditable>
+
+                            {...props}
+                        ></TableRowEditable>
                     })}
                 </tbody>
             </table>
@@ -123,19 +111,38 @@ export default (props) => {
     return (
         <MainLayout
             {...props}
-        >
+        >   
+            <fieldset className='shadow-lg mb-12'>
+                <legend>Schedule List</legend>
+                <div className='p-6'>
+                     <div className='bg-slate-300'>
+                        <CalenderInput />
+                    </div>
+                </div>
+                <div className='p-6 flex'>
+                    <div className='flex-none w-80'>
+                        Left Pane
+                    </div>
+                    <div className='grow'>Right Pane</div>
+                </div>
+            </fieldset>
+
             <Form
                 {...props.form_schema}
             >
             </Form>
-            <fieldset className='shadow-lg'>
-                <legend>Schedule List</legend>
-                <div className='p-6'>
-                    <TableEditable
-                        column={props.form_schema.item_form.fields}
+        </MainLayout>
+    );
+}
 
+/**
+ * 
+ * <TableEditable
+                        column={props.form_schema.item_form.fields}
+                        
                         schedule_id={props.form_schema.item.id}
                         data={props.schedule.items}
+
                     ></TableEditable>
     
                     <TableWithInlineForm
@@ -145,13 +152,4 @@ export default (props) => {
                         delete_url={'item'}
                     >
                     </TableWithInlineForm>
-
-                </div>
-            </fieldset>
-        </MainLayout>
-    );
-}
-
-/**
- * 
  */
