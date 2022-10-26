@@ -95,14 +95,15 @@ const setDateList = (InitialDate, NumberOfMonths) => {
     return {FirstDate,LastDate,List};
 }
 
-export default ({NumberOfMonths = 3}) => {
+export default ({NumberOfMonths = 3, SelectedDateList, setSelectedDateList}) => {
     let CurrentDate = new Date();
     let DateList = setDateList(CurrentDate, NumberOfMonths);
     
     const [FirstDate, setFirstDate] = useState(DateList.FirstDate);
     const [LastDate, setLastDate] = useState(DateList.LastDate);
     const [CalenderDateList, setCalenderDateList] = useState(DateList.List);
-    const [SelectedDateList, setSelectedDateList] = useState([]);
+    
+    //const [SelectedDateList, setSelectedDateList] = useState([]);
     
     const setNewCalenderPanel = (newInitialDate, NumberOfMonths) => {
         DateList = setDateList(newInitialDate, NumberOfMonths);
@@ -112,15 +113,11 @@ export default ({NumberOfMonths = 3}) => {
     }
 
     const selectDate = (date) => {
-        const ds = date.toDateString();
-        const NewCalenderList = CalenderDateList.map(d => {
-            if (d.toDateString() == ds){
-                d.selected = !d.selected;
-            }
-            return d;
-        })
-        
-        setCalenderDateList(NewCalenderList);
+        if(SelectedDateList.find(d => d.toDateString() == date.toDateString())){
+            setSelectedDateList(SelectedDateList.filter(d => d.toDateString() != date.toDateString()));
+        }else{
+            setSelectedDateList(([...SelectedDateList,date]).sort((date1, date2) => date1 - date2));
+        }
     }
 
     const Panel = {
@@ -136,7 +133,11 @@ export default ({NumberOfMonths = 3}) => {
         }
     }
     
-    const CalenderDate = ({list}) => {
+    const CalenderDate = ({list,selectedList}) => {
+        const isSelected = (d,selectedList) => {
+            return selectedList.find(sd => sd.toDateString() == d.toDateString()) ? true : false;
+        }
+
         const DayNames = (list.slice(0, 7)).map(d => _dn.day(d));
         return (<div className='calender-panel'>
                     <div className='flex p-2 calender-nav'>
@@ -152,6 +153,7 @@ export default ({NumberOfMonths = 3}) => {
                         }
                         {
                             list.map((d,i) => {
+                                d.selected = isSelected(d,selectedList);
                                 return <ItemDate selectDate={selectDate} key={i} date={d}/>
                             })
                         }
@@ -160,35 +162,13 @@ export default ({NumberOfMonths = 3}) => {
                 );
     }
 
-    return <div className='flex'>
-        <div className='flex-none'>
-            <CalenderDate list={CalenderDateList} />
-        </div>
-        <div className='grow'>
-            {
-                CalenderDateList.map((d,i) => {
-                    return (
-                        d.selected && 
-                        <div key={i}>
-                            {d.toLocaleDateString()}
-                            {d.currentmonth && '   => Current Month'}
-                            {d.selected && ' > Selected'}
-                        </div>
-                    )
-                })
-            }
-        </div>
-    </div>
+    return <CalenderDate list={CalenderDateList} selectedList={SelectedDateList} />
 };
 
 
-/*
-
-        
+/*    
         const now = new Date();
         const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
         const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
         return month;
-
-
 */

@@ -8,6 +8,7 @@ import { UpdateButton, DeleteButton } from '@/Shared/PageComponent/Button/Button
 import { TableWithInlineForm } from '@/Shared/PageComponent/Table/TableComponent';
 import { Inertia } from '@inertiajs/inertia';
 import CalenderInput from '@/Shared/PageComponent/Field/InputField/CalenderInput';
+import UnitMapField from '@/Shared/PageComponent/Field/UnitMapField';
 
 const TableRowEditable = ({columns, data:row_data, setFieldData, onUpdate, onDelete, processing}) => {
     
@@ -108,6 +109,8 @@ export default (props) => {
         i.day = i.id +' : '+(new Date(i.session_date)).toLocaleDateString(locale.code,dayFormat);
     });
 
+    const [SelectedDateList, setSelectedDateList] = useState([]);
+    
     return (
         <MainLayout
             {...props}
@@ -116,12 +119,15 @@ export default (props) => {
                 <legend>Schedule List</legend>
                 <div className='p-6'>
                      <div className='bg-slate-300'>
-                        <CalenderInput />
+                        <CalenderInput
+                            SelectedDateList={SelectedDateList}
+                            setSelectedDateList={setSelectedDateList}
+                        />
                     </div>
                 </div>
                 <div className='p-6 flex'>
                     <div className='flex-none w-80'>
-                        Left Pane
+                        <UnitMapField map={SelectedDateList} />
                     </div>
                     <div className='grow'>Right Pane</div>
                 </div>
