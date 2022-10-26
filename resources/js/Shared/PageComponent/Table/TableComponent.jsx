@@ -1,7 +1,7 @@
 import Icon from "@/Shared/Icon";
 import { FieldUtil } from "@/Shared/Util/Field_util";
 import { useForm } from "@inertiajs/inertia-react";
-import { DeleteButton, GoToButton } from "../Button/DeleteButton";
+import { DeleteButton, GoToButton } from "../Button/Buttons";
 import InputField from "../Field/InputField";
 import ValueField from "../Field/ValueField";
 
@@ -29,7 +29,7 @@ const TableComponent = ({column, data, row_link, delete_item, children, classNam
                     return <tr key={keyId}>
                         {column.map((f,keyf) => {
                             return <td key={keyf}>
-                                <ValueField nowrapper='true' field={{...f,value:d[f.entityname]}}></ValueField>
+                                <ValueField nowrapper='true' Field={{...f,value:d[f.entityname]}}></ValueField>
                             </td>
                         })}
                         <td className="text-right">
@@ -83,7 +83,7 @@ const TableWithInlineForm = ({column, data : table_data, className, create_url, 
                                     errors={errors}
                                     data={data}
                                     setData={setData}   
-                                    nowrapper='true' 
+                                    nowrapper='true'
                                 ></InputField>
                             </td>
                         })}

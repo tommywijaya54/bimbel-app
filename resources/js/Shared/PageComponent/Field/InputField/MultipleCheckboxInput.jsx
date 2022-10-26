@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const MultipleCheckboxInput = ({Field, label, name, className, data, setData, errors = [], ...props }) => {
+const MultipleCheckboxInput = ({Field, name, data, setData, errors = [], ...props }) => {
     const [fieldValue, setFieldValue] = useState([...Field.value]);
 
     const handleChange = (e) => {
@@ -29,12 +29,7 @@ const MultipleCheckboxInput = ({Field, label, name, className, data, setData, er
     }
 
     return (
-    <div className={className}>
-        {label && (
-            <label className="form-label" htmlFor={name}>
-            {label}:
-            </label>
-        )}
+    <>
         {Field.groupedOptions &&
         <table>
             <tbody>
@@ -85,7 +80,7 @@ const MultipleCheckboxInput = ({Field, label, name, className, data, setData, er
         })}
 
       {errors && <div className="form-error">{errors}</div>}
-    </div>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export default ({ label, name, className, errors = [],required, Field, ...props }) => {
+export default ({ name, errors = [], required, Field, ...props }) => {
   const handleKeyDown = (e) => {
     e.target.style.height = 'inherit';
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -21,12 +21,7 @@ export default ({ label, name, className, errors = [],required, Field, ...props 
   }, [textAreaRef]);
 
   return (
-    <div className={className}>
-      {label && (
-        <label className="form-label" htmlFor={name}>
-          {label}:
-        </label>
-      )}
+    <>
       <textarea
         id={name}
         name={name}
@@ -39,6 +34,6 @@ export default ({ label, name, className, errors = [],required, Field, ...props 
       >
       </textarea>
       {errors && <div className="form-error">{errors}</div>}
-    </div>
+    </>
   );
 };

@@ -1,7 +1,14 @@
 import Icon from "@/Shared/Icon"
 
+export const UpdateButton = ({onClick}) => {
+    return <button type="button" className='action-button edit-button' onClick={onClick}>
+        Update 
+    </button>
+}
+
+
 export const DeleteButton = ({onClick}) => {
-    return <button type="button" className='delete-button' onClick={onClick}>
+    return <button type="button" className='action-button delete-button' onClick={onClick}>
         <Icon name="trash" className="block w-5 h-5 text-sky-500 fill-current"></Icon>
     </button>
 }

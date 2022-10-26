@@ -647,9 +647,88 @@ details summary::-webkit-details-marker {
     border-radius: 4px;
 }
 
+/*
 .no-label>label {
     display: none;
 }
+*/
+
+html.nprogress-busy button.action-button {
+    visibility: hidden;
+}
+
+.calender-panel{
+    width: 30em; /* 100%; */
+    background-color: antiquewhite;
+}
+.calender-nav{
+    background-color: #e2b471;
+}
+.calender .item{
+    background-color: white;
+    cursor: pointer;
+}
+.calender .item.today {
+    outline: 2px solid #84ab11;
+    font-weight: 700;
+}
+.calender .month-year > .month {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.calender .month-year > .month.new-month {
+    opacity: 1;
+}
+
+.calender .item:hover .month-year > .month {
+    opacity: 0.5;
+}
+
+.calender .item:hover {
+    outline: 2px solid #8e8eff;
+}
+
+.calender .item.even_month {
+    background-color: #a3fba3;
+}
+
+.calender .item.selected {
+    outline: 2px solid #8e8eff;
+    background-color: #9cbeff;
+}
+
+.calender .date {
+    text-align: right;
+}
+
+.calender .day-name {
+    font-weight: 700;
+    text-align: center;
+    background-color: aquamarine;
+    padding: 0.3em;
+}
+
+.calender .not-current-month{
+    opacity: 0.3;
+}
+
+/*
+.calender :is(.last-month,.next-month){
+    opacity: 0.5;
+}
+*/
+
+.simple-button {
+    transition: background 1s;
+}
+
+.simple-button:hover {
+    font-weight: 500;
+    outline: 2px solid #7275ff;
+    background: #c6e4ff;
+}
+
 @layer base{
 
     .dialog{

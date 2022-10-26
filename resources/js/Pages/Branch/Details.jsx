@@ -46,7 +46,7 @@ const TableList = ({header, table_data, className, post_to, delete_url, row_link
                         return <tr key={keyId}>
                             {th.map((f,keyf) => {
                                 return <td key={keyf}>
-                                    <ValueField field={{...f,value:d[f.entityname]}}></ValueField>
+                                    <ValueField Field={{...f,value:d[f.entityname]}}></ValueField>
                                 </td>
                             })}
                             <td className="text-right">
