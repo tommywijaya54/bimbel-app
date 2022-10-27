@@ -33,8 +33,8 @@ return new class extends Migration
             $table->softDeletes();
             $table->integer('schedule_id')->nullable();
             $table->date('session_date', $precision = 0);
-            $table->time('session_start_at', $precision = 0);
-            $table->time('session_end_at', $precision = 0);
+            $table->time('session_start_time', $precision = 0);
+            $table->time('session_end_time', $precision = 0);
         });
 
         /*

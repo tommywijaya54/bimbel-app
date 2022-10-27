@@ -44,6 +44,8 @@ class ScheduleSeeder extends Seeder
             ];
 
             $schedule = Schedule::create($schedule_data);
+
+            /*
             $week = 12;
             for (
                 $y = 0;
@@ -57,12 +59,12 @@ class ScheduleSeeder extends Seeder
 
                 $item = [
                     'session_date' => $nextDate,
-                    'session_start_at' => $startTime,
-                    'session_end_at' => $endTime
+                    'session_start_time' => $startTime,
+                    'session_end_time' => $endTime
                 ];
 
                 $schedule->items()->create($item);
-            }
+            }*/
         }
 
         $schedules = Schedule::all();
@@ -80,8 +82,8 @@ class ScheduleSeeder extends Seeder
 
                 $item = [
                     'session_date' => $nextDate,
-                    'session_start_at' => $startTime,
-                    'session_end_at' => $endTime
+                    'session_start_time' => $startTime,
+                    'session_end_time' => $endTime
                 ];
 
                 $sche->items()->create($item);

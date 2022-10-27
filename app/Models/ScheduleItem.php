@@ -16,8 +16,8 @@ class ScheduleItem extends Model
     protected $fillable = [
         'schedule_id',
         'session_date',
-        'session_start_at',
-        'session_end_at'
+        'session_start_time',
+        'session_end_time'
     ];
 
     public function getModelLabel()
