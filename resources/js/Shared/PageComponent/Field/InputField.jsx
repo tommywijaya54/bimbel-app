@@ -78,7 +78,6 @@ const getField = ({inputProps, Field, data, setData, inputtype}) => {
     )
 }
 
-
 export default ({Field, data, setData, errors, nowrapper}) => {
     let {element, inputtype, entityname, label, className, required} = Field;
 
