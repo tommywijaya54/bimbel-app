@@ -17,7 +17,7 @@ class ScheduleController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,class_subject,class_room,teacher_id',
-            'form' => 'class_subject,class_room,branch_id,teacher_id:Teacher Name,students:Student Names,week|nr'
+            'form' => 'teacher_id:Teacher Name,class_subject,branch_id,class_room,week|nr,students:Student Names'
         ], true);
 
         // $this->list->item_url = 'schedule/{id}/details';
@@ -36,8 +36,7 @@ class ScheduleController extends CommonController
             'datalist-multiple-value'
         );
 
-        $this->form->item_form = new FormSchema('day:Hari|ex,session_date:Tanggal,session_start_at:Mulai jam,session_end_at:Selesai jam', 'Schedule Item', ScheduleItem::class);
-
+        $this->form->item_form = new FormSchema('day:Hari|ex,session_date:Tanggal,session_start_time:Mulai jam,session_end_time:Selesai jam', 'Schedule Item', ScheduleItem::class);
 
         $this->form->item_form->getField(
             ['day'],
@@ -51,7 +50,7 @@ class ScheduleController extends CommonController
         );
 
         $this->form->item_form->getField(
-            ['session_start_at', 'session_end_at'],
+            ['session_start_time', 'session_end_time'],
             function ($field) {
                 $field->inputtype = 'time';
             }
@@ -61,7 +60,7 @@ class ScheduleController extends CommonController
     public function show($id)
     {
         $schedule = $this->entity::with('items')->find($id);
-        $form = $this->form->displayForm($id);
+        $form = $this->form->editForm($id);
 
         return Inertia::render('Schedule/Details', [
             'title' => 'Schedule Details',
@@ -77,8 +76,8 @@ class ScheduleController extends CommonController
 
         $schedule->items()->create([
             'session_date' => $request['session_date'],
-            'session_start_at' => $request->session_start_at,
-            'session_end_at' => $request->session_end_at
+            'session_start_time' => $request->session_start_time,
+            'session_end_time' => $request->session_end_time
         ]);
     }
 
@@ -88,8 +87,8 @@ class ScheduleController extends CommonController
         $item = $schedule->items()->find($item_id);
         $item->update([
             'session_date' => $request['session_date'],
-            'session_start_at' => $request->session_start_at,
-            'session_end_at' => $request->session_end_at
+            'session_start_time' => $request->session_start_time,
+            'session_end_time' => $request->session_end_time
         ]);
     }
 
