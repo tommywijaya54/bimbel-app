@@ -1,3 +1,5 @@
+import React from 'react';
+import cx from 'classnames';
 import Icon from "@/Shared/Icon"
 
 export const UpdateButton = ({onClick}) => {
@@ -5,7 +7,6 @@ export const UpdateButton = ({onClick}) => {
         Update 
     </button>
 }
-
 
 export const DeleteButton = ({onClick}) => {
     return <button type="button" className='action-button delete-button' onClick={onClick}>
@@ -22,4 +23,22 @@ export const GoToButton = ({href}) => {
                 className="block w-6 h-6 text-gray-400 fill-current"
             />
     </a>
+}
+
+
+export const LoadingButton = ({ loading, className, children, ...props }) => {
+  const classNames = cx(
+    'flex items-center',
+    'focus:outline-none',
+    {
+      'pointer-events-none bg-opacity-75 select-none': loading
+    },
+    className
+  );
+  return (
+    <button disabled={loading} className={classNames} {...props}>
+      {loading && <div className="mr-2 btn-spinner" />}
+      {children}
+    </button>
+  );
 }
