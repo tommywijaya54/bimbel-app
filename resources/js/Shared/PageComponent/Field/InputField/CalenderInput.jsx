@@ -29,7 +29,8 @@ const getMonth = (p_date) => {
 
 const completeCalenderDates = dates => {
     const addPrevMonth = (dates) => {
-        const prevMonthDate = dates[0].getDay();
+        const prevMonthDate = dates[0].getDay() || 7;
+        
         for (let i = prevMonthDate; i > 1; i--) {
             const d = new Date(dates[0]);
             d.currentmonth = false;
@@ -40,7 +41,7 @@ const completeCalenderDates = dates => {
     }
 
     const addNextMonth = (dates) =>{
-        const nextMonthDate = 7 - dates[dates.length-1].getDay();
+        const nextMonthDate = (7 - dates[dates.length-1].getDay()) || 7;
         for (let i = nextMonthDate; i > 0; i--) {
             const d = new Date(dates[dates.length-1]);
             d.currentmonth = false;
@@ -69,15 +70,18 @@ const ItemDate = ({date,selectDate}) => {
                 (isNewYear ? ' new-year ' :'')+
                 (date.selected ? ' selected ' : '')
             }>
-                <div className='month-year'>
                 {isNewYear ? 
-                    <>{_dn.month(date) +' '+ date.getFullYear()}<br/></> : 
-                    <div className={(isNewMonth ? 'new-month' : '') + ' month text-md'}>{_dn.month(date)}</div>
+                    <div className='font-semibold text-center'>1 {_dn.month(date) +' '+ date.getFullYear()}</div> 
+                :   <>
+                        <div className='month-year'>
+                            <div className={(isNewMonth ? 'new-month' : '') + ' month text-md'}>{_dn.month(date)}</div>
+                        </div>
+                        <div className='date'>
+                            {date.getDate()} 
+                        </div>
+                    </>
                 }
-                </div>
-                <div className='date'>
-                    {date.getDate()} 
-                </div>
+                
         </div>
     );
 }
@@ -95,7 +99,7 @@ const setDateList = (InitialDate, NumberOfMonths) => {
     return {FirstDate,LastDate,List};
 }
 
-export default ({NumberOfMonths = 3, SelectedDateList, setSelectedDateList}) => {
+export default ({NumberOfMonths = 3, SelectedDateList, setSelectedDateList, onSelectDate}) => {
     let CurrentDate = new Date();
     let DateList = setDateList(CurrentDate, NumberOfMonths);
     
@@ -116,7 +120,7 @@ export default ({NumberOfMonths = 3, SelectedDateList, setSelectedDateList}) => 
         if(SelectedDateList.find(d => d.toDateString() == date.toDateString())){
             setSelectedDateList(SelectedDateList.filter(d => d.toDateString() != date.toDateString()));
         }else{
-            setSelectedDateList(([...SelectedDateList,date]).sort((date1, date2) => date1 - date2));
+            setSelectedDateList(([...SelectedDateList,onSelectDate(date)]).sort((date1, date2) => date1 - date2));
         }
     }
 
