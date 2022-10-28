@@ -30,41 +30,20 @@ class ScheduleSeeder extends Seeder
             $x++
         ) {
             $week = fake('id_ID')->randomElement([6, 8, 12]);
-            $studentlist = implode(',', fake('id_ID')->randomElements($students, random_int(3, 5)));
-
-            // dd($studentlist);
 
             $schedule_data = [
                 'class_subject' => fake('id_ID')->randomElement(['English', 'Math', 'Science']),
                 'class_room' => fake('id_ID')->randomElement(['Room A', 'Room B', 'Room C']),
                 'teacher_id' => $teachers->random(),
-                'branch_id' => $branches->random(),
-                'students' => $studentlist,
-                'week' => $week
+                'branch_id' => $branches->random()
             ];
 
             $schedule = Schedule::create($schedule_data);
-
-            /*
-            $week = 12;
-            for (
-                $y = 0;
-                $y < $week;
-                $y++
-            ) {
-
-                $nextDate  = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m"), date("d") + ($y * 7), date("Y")));
-                $startTime = date('Y-m-d H:i:s', mktime(17, 0 + $week, 0, date("m"), date("d") + ($y * 7), date("Y")));
-                $endTime = date('Y-m-d H:i:s', mktime(17, 0 + 30 + $week, 0, date("m"), date("d") + ($y * 7), date("Y")));
-
-                $item = [
-                    'session_date' => $nextDate,
-                    'session_start_time' => $startTime,
-                    'session_end_time' => $endTime
-                ];
-
-                $schedule->items()->create($item);
-            }*/
+            // createMany
+            $studentlist = $students->random(3)->map(function ($student) {
+                return ['student_id' => $student];
+            });
+            $schedule->students()->createMany($studentlist);
         }
 
         $schedules = Schedule::all();

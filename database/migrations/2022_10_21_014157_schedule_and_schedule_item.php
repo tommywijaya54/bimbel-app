@@ -23,8 +23,14 @@ return new class extends Migration
             $table->string('class_room')->nullable();
             $table->integer('teacher_id')->nullable();
             $table->integer('branch_id')->nullable();
-            $table->string('students')->nullable();
-            $table->integer('week')->nullable();
+        });
+
+        Schema::create('schedule_students', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->integer('schedule_id')->nullable();
+            $table->integer('student_id')->nullable();
         });
 
         Schema::create('schedule_items', function (Blueprint $table) {

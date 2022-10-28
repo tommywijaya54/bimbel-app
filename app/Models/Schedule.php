@@ -16,9 +16,7 @@ class Schedule extends Model
         'class_subject',
         'class_room',
         'teacher_id',
-        'branch_id',
-        'students',
-        'week'
+        'branch_id'
     ];
 
     public function getModelLabel()
@@ -39,5 +37,10 @@ class Schedule extends Model
     public function items()
     {
         return $this->hasMany(ScheduleItem::class);
+    }
+
+    public function students()
+    {
+        return $this->hasMany(ScheduleStudent::class);
     }
 }

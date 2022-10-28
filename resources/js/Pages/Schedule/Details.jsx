@@ -65,17 +65,6 @@ const ScheduleParentForm = ({fields, data, setData, errors}) => {
         </div>
     </>
 }
-
-const Footer = () => {
-    return <>
-        <div className="form-footer">
-            <div className="px-6 py-6 bg-gray-50 flex justify-end">
-                Save / Update
-            </div>
-        </div>
-    </>
-}
-
 export default (props) => {
     
     const ScheduleItems = props.schedule.items.map(i => {
@@ -108,8 +97,6 @@ export default (props) => {
         e.preventDefault();
         post(Form.submit_url);
     }
-   
-    // 
     
     return (
         <MainLayout
@@ -122,14 +109,11 @@ export default (props) => {
                             <h2 className="font-semibold text-xl text-gray-800 leading-tight">Schedule Form</h2>
                         }
                         className={'create-form no-padding'}
-                        footer={<Footer />}
                     >
                         <div className='grow p-6'>
-                            
                             <ScheduleParentForm fields={Form.fields} {...{data, setData, errors}}/>
-                            
                             <fieldset className='shadow-lg bg-slate-200 '>
-                                <legend>Schedule List</legend>
+                                <legend>Schedule Session List</legend>
                                 <div className='p-6'>
                                     <div className='flex'>
                                         <div className='flex-none'>
@@ -176,17 +160,16 @@ export default (props) => {
                                 </div>
                             </fieldset>
                         </div>
+                        <div className="w-full flex items-center px-6 py-4 bg-gray-100 border-t border-gray-200">
+                            <LoadingButton
+                                loading={processing}
+                                type="submit"
+                                className="ml-auto btn-indigo"
+                            >
+                                Save
+                            </LoadingButton>
+                        </div>
                     </Component>
-
-                    <div className="flex items-center px-8 py-4 bg-gray-100 border-t border-gray-200">
-                        <LoadingButton
-                            loading={processing}
-                            type="submit"
-                            className="ml-auto btn-indigo"
-                        >
-                            Save
-                        </LoadingButton>
-                    </div>
                 </form>
             </div>
         </MainLayout>
