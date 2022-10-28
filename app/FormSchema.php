@@ -90,12 +90,12 @@ class FormSchema extends CommonSchema
     public function addValueToField($data)
     {
         foreach ($this->fields as $key => $field) {
-            if (str_contains($field->entityname, '_id')) {
+            if (isset($field->getValue)) {
+                $field->value = $field->getValue($field, $this->id, $data);
+            } else if (str_contains($field->entityname, '_id')) {
                 $model = str_replace('_id', '', $field->entityname);
                 $field->model_value = $data[$model];
                 $field->value = $field->model_value['id'];
-            } else if (isset($field->getValue)) {
-                $field->value = $field->getValue($field, $this->id, $data);
             } else if ($field->entityname && isset($data[$field->entityname])) {
                 $field->value = $data[$field->entityname];
             }
@@ -107,11 +107,11 @@ class FormSchema extends CommonSchema
     {
         // Get Data from model base on their Id
         if (isset($this->with_list)) {
-            $this->item = $this->model::with($this->with_list)->find($id);
-            $this->data = $this->item->toArray();;
+            $this->entity_item = $this->model::with($this->with_list)->find($id);
+            $this->data = $this->entity_item->toArray();;
         } else {
-            $this->item = $this->model::find($id);
-            $this->data = $this->item->toArray();;
+            $this->entity_item = $this->model::find($id);
+            $this->data = $this->entity_item->toArray();;
         }
 
         // set form id
