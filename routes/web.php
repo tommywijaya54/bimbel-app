@@ -95,7 +95,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/' . $model . '/{id}', [$controller, 'show'])->middleware('can:show-' . $model)->name($model . '.show');
 
         Route::get('/' . $model . '/{id}/edit', [$controller, 'edit'])->middleware('can:edit-' . $model);
-        Route::put('/' . $model . '/{id}', [$controller, 'update'])->middleware('can:edit-' . $model);
+        Route::put('/' . $model . '/{id}', [$controller, 'update'])->middleware('can:edit-' . $model)->name('update.' . $model);
     };
 
     Route::group([
@@ -109,9 +109,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group([
         'prefix' => 'schedule/{id}'
     ], function () {
-        Route::put('', [ScheduleController::class, 'update_schedule'])->name('update.schedule');
         Route::delete('', [ScheduleController::class, 'delete_schedule'])->name('delete.schedule');
 
+        // Route::put('', [ScheduleController::class, 'update_schedule'])->name('update.schedule');
         /*
             Route::post('/item', [ScheduleController::class, 'add_item'])->name('add.schedule.item');
             Route::put('/item/{item_id}', [ScheduleController::class, 'update_item'])->name('update.schedule.item');
