@@ -29,7 +29,6 @@ class ScheduleSeeder extends Seeder
             $x < 8;
             $x++
         ) {
-            $week = fake('id_ID')->randomElement([6, 8, 12]);
 
             $schedule_data = [
                 'class_subject' => fake('id_ID')->randomElement(['English', 'Math', 'Science']),
