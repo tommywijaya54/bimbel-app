@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MainLayout from '@/Layouts/MainLayout';
 import CalenderInput from '@/Shared/PageComponent/Field/InputField/CalenderInput';
 import Component from '@/Shared/PageComponent/Form/Component';
-import { LoadingButton } from '@/Shared/PageComponent/Button/Buttons';
+import { DeleteButton, LoadingButton } from '@/Shared/PageComponent/Button/Buttons';
 import { useForm } from '@inertiajs/inertia-react';
 import { FormSchema } from '@/Shared/Util/Form_util';
 import InputField from '@/Shared/PageComponent/Field/InputField';
@@ -22,6 +22,17 @@ const _dn = {
     },
     remove_second (str) {
         return str.substring(0,5);
+    },
+    setTime(date,time) {
+        return new Date(date.getFullYear(),date.getMonth(),date.getDate(),...time.split(':'));
+    },
+    setDateForServer(date){
+        const year = date.getFullYear();
+        const month = date.getMonth()+1;
+        const day = date.getDate();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":00";
     }
 }
 
@@ -65,37 +76,67 @@ const ScheduleParentForm = ({fields, data, setData, errors}) => {
         </div>
     </>
 }
+
 export default (props) => {
-    
-    const ScheduleItems = props.schedule.items.map(i => {
+    let ScheduleItems = props.schedule ? 
+    props.schedule.items.map(i => {
         const d = new Date(i.session_date);
+        d.id = i.id;
+        d.session_date = new Date(i.session_date);
         d.session_start_time = _dn.remove_second(i.session_start_time);
         d.session_end_time = _dn.remove_second(i.session_end_time);
         return d;
-    }).sort((d1,d2) => d1-d2);
+    }).sort((d1,d2) => d1-d2) : [];
     
     const [SelectedDateList, setSelectedDateList] = useState(ScheduleItems);
     const [startTime, setStartTime] = useState('14:00');
     const [endTime, setEndTime] = useState('15:00');
-
+    
     const onSelectDate = (date) => {
+        date.session_date = date;
         date.session_start_time = startTime;
         date.session_end_time = endTime;
         return date;
     }
-    
+
     const Form = new FormSchema(props.form_schema);
     const method = Form.edit_form ? {_method: 'PUT'} : null;
-    const UseFormObject = {...Form.getVariableForUseForm(), ...method};
-    const { data, setData, errors, post, processing, transform } = useForm(UseFormObject);
+    const UseFormObject = {...Form.getVariableForUseForm(), ...method, items: SelectedDateList};
+    const { data, setData, errors, post, put, delete : destroy, processing} = useForm(UseFormObject);
+    
+    const setItems = (name,items) => {
+        const FormatedDatesForServer = items.map(i => {
+            const date = new Date(i);
+            return {
+                id:(i.id || ''),
+                session_date:_dn.setDateForServer(date),
+                session_start_time:_dn.setDateForServer(_dn.setTime(date,i.session_start_time)),
+                session_end_time:_dn.setDateForServer(_dn.setTime(date,i.session_end_time))
+            };
+        });
+        setData(name,FormatedDatesForServer);
+    }
 
-    transform((data) => {
-        return data;
-    })
+    function deleteSchedule(){
+        destroy(route('delete.schedule',{
+            id:props.schedule.id
+        }));
+    }
+    
+    function updateSchedule(){
+        put(route('update.schedule',{
+            id:props.schedule.id
+        }));
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        post(Form.submit_url);
+
+        if(props.schedule){
+            updateSchedule();
+        }else{
+            post(Form.submit_url);
+        }
     }
     
     return (
@@ -112,8 +153,9 @@ export default (props) => {
                     >
                         <div className='grow p-6'>
                             <ScheduleParentForm fields={Form.fields} {...{data, setData, errors}}/>
-                            <fieldset className='shadow-lg bg-slate-200 '>
+                            <fieldset className='shadow-lg bg-slate-200 mt-6'>
                                 <legend>Schedule Session List</legend>
+                                {errors.items && <div className='note error br-1'>Please select calender and fill the start time and end time</div>}
                                 <div className='p-6'>
                                     <div className='flex'>
                                         <div className='flex-none'>
@@ -121,6 +163,9 @@ export default (props) => {
                                                 SelectedDateList={SelectedDateList}
                                                 setSelectedDateList={setSelectedDateList}
                                                 onSelectDate={onSelectDate}
+                                                
+                                                name='items'
+                                                setData={setItems}
                                             />
                                         </div>
                                         <div className='grow'>
@@ -150,7 +195,6 @@ export default (props) => {
                                                 </div>
                                                 <div className='bg-white'>
                                                     <ScheduleItemTable 
-                                                        columns={props.form_schema.item_form.fields}
                                                         data={SelectedDateList}
                                                     />
                                                 </div>
@@ -161,12 +205,14 @@ export default (props) => {
                             </fieldset>
                         </div>
                         <div className="w-full flex items-center px-6 py-4 bg-gray-100 border-t border-gray-200">
+                            {props.schedule && <DeleteButton onClick={deleteSchedule}>Delete</DeleteButton>}
+
                             <LoadingButton
                                 loading={processing}
                                 type="submit"
                                 className="ml-auto btn-indigo"
                             >
-                                Save
+                                {props.schedule ? 'Update Schedule' : 'Create Schedule'}
                             </LoadingButton>
                         </div>
                     </Component>
@@ -175,132 +221,3 @@ export default (props) => {
         </MainLayout>
     );
 }
-
-/**
- * 
- * <Form
-        {...props.form_schema}
-    >
-    </Form>
-    
- * 
- * 
- * 
- * 
-            <TableWithInlineForm
-                column={props.form_schema.item_form.fields}
-                data={props.schedule.items}
-                create_url={'item'}
-                delete_url={'item'}
-            >
-            </TableWithInlineForm>
- */
-/**
- * 
- * <TableEditable
-                        column={props.form_schema.item_form.fields}
-                        
-                        schedule_id={props.form_schema.item.id}
-                        data={props.schedule.items}
-
-                    ></TableEditable>
-    
-                    <TableWithInlineForm
-                        column={props.form_schema.item_form.fields}
-                        data={props.schedule.items}
-                        create_url={'item'}
-                        delete_url={'item'}
-                    >
-                    </TableWithInlineForm>
- */
-
-                    /** 
-const TableRowEditable = ({columns, data:row_data, setFieldData, onUpdate, onDelete, processing}) => {
-    
-    let dataSet = columns.filter(f => !f.extrafield).reduce((obj,field) => (obj[field.entityname] = row_data[field.entityname],obj),{});
-    let {errors} = useForm(dataSet);
-
-    const {id : item_id} = row_data;
-
-    const setData = (entityname,value) => {
-        setFieldData(item_id, entityname, value);
-    } 
-
-    return <tr>
-        {
-            columns.map((field, keyId) => {
-                return <td key={keyId}> 
-                {
-                    field.extrafield ? 
-                    <ValueField Field={{...field, value:row_data[field.entityname]}} nowrapper='true' />:
-                    <InputField Field={field} 
-                        data={row_data}
-                        setData={setData}
-                        errors={errors} 
-                        nowrapper='true' 
-                    />
-                }
-                </td>
-            })
-        }
-        <td>
-            {item_id} 
-            <UpdateButton onClick={e => onUpdate(item_id)}></UpdateButton>
-            <DeleteButton onClick={e => onDelete(item_id)}></DeleteButton>
-        </td>
-    </tr>
-}
-
-const TableEditable = ({column, data:table_data, schedule_id, ...props}) => {
-    const {data, setData, post, put, delete : destroy , processing, errors} = useForm(table_data); 
-    
-    const setFieldData = (item_id, entityname, value) => {
-        setData(data.find(i => i.id == item_id)[entityname] = value);
-    }
-
-    const updateItem = (item_id) => {
-        Inertia.put(route('delete.schedule.item',{id:schedule_id,item_id}),
-            data.find(i => i.id == item_id),
-            {preserveScroll: true})
-    }
-
-    const deleteItem = (item_id) => {
-        destroy(
-            route('delete.schedule.item',{
-                id:schedule_id,
-                item_id}),
-            {preserveScroll: true}
-        );
-    }
-
-    return <>
-        <form>
-            <table className={'table-border-compact w-full '}>
-                <thead>
-                    <tr>
-                        {column.map((t,i) => <th key={i}>{t.label}</th>)}
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((row_data,keyId) => {
-                        return <TableRowEditable 
-                            key={keyId} 
-                            
-                            columns={column} 
-                            data={row_data}
-
-                            setFieldData={setFieldData}
-                            onUpdate={updateItem}
-                            onDelete={deleteItem}
-
-                            processing={processing}
-
-                            {...props}
-                        ></TableRowEditable>
-                    })}
-                </tbody>
-            </table>
-        </form>
-    </>;
-} */
