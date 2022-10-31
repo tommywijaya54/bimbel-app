@@ -8,10 +8,10 @@ export const UpdateButton = ({onClick}) => {
     </button>
 }
 
-export const DeleteButton = ({onClick, text = '', className = '', iconClassName = ''}) => {
-    if(text){
+export const DeleteButton = ({onClick, children, className = '', iconClassName = ''}) => {
+    if(children){
       return <button type="button" className={'action-button delete-button br-1 btn-white '+className} onClick={onClick}>
-        <Icon name="trash" className={'inline-block w-5 h-5 fill-current text-gray-500 ' + iconClassName}></Icon> {text}
+        <Icon name="trash" className={'inline-block w-5 h-5 fill-current text-gray-500 ' + iconClassName}></Icon> {children}
       </button>
     }
 
