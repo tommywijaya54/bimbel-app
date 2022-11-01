@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\FormSchema;
-use App\ListSchema;
 use App\Models\Schedule;
-use App\Models\ScheduleItem;
 use App\Models\User;
+use App\SyncRelatedItem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
 
 class ScheduleController extends CommonController
@@ -83,11 +80,13 @@ class ScheduleController extends CommonController
         $students = collect($request->students_id)->map(function ($item) {
             return ['student_id' => $item];
         })->toArray();
+
         $schedule->students()->createMany($students);
         $schedule->items()->createMany($request->items);
 
         return redirect('/' . $this->modal . '/' . $schedule->id);
     }
+
 
     public function update(Request $request, $id)
     {
@@ -108,49 +107,31 @@ class ScheduleController extends CommonController
             "class_room" => $request->class_room
         ]);
 
-        // 
+        $studentSync = new SyncRelatedItem($schedule, 'students', 'student_id');
+        $studentSync->syncItems($request->students_id);
 
-        // Update Student (Delete & Create)
-        $students_id = $schedule->students->pluck('student_id');
-        $delete_students = $students_id->diff($request->students_id);
-        $schedule->students->filter(function ($item) use ($delete_students) {
-            return $delete_students->first(function ($itemid, $key) use ($item) {
-                return $itemid == $item->student_id;
-            });
-        })->each(function ($item) {
-            $item->forceDelete();
-        });
-        $schedule->students()->createMany((collect($request->students_id)->diff($students_id))->map(function ($item) {
-            return ['student_id' => $item];
+        $itemsSync = new SyncRelatedItem($schedule, 'items', 'id', [
+            'new' => function ($item) {
+                return $item['item'];
+            },
+            'compare' => [
+                'new' => function ($requestItems) {
+                    return $requestItems->filter(function ($item) {
+                        return empty($item['id']);
+                    });
+                }
+            ]
+        ], false);
+        $itemsSync->syncItems(collect($request->items)->map(function ($item) {
+            return [
+                'id' => $item['id'],
+                'session_date' => explode(' ', $item['session_date'])[0],
+                'session_start_time' => explode(' ', $item['session_start_time'])[1],
+                'session_end_time' => explode(' ', $item['session_end_time'])[1],
+                'item' => $item
+            ];
         }));
-
-        // Update Items (Delete)
-        $items_dates = $schedule->items->pluck('session_date');
-        dd($request->items);
-
-        $request_items = collect($request->items);
-        $delete_items = '';
-        $new_items = '';
-
-        echo '<pre>';
-
-        if ($items_dates[0] == $request_items[0]) {
-            echo '\n= = = same date = = =\n';
-        } else {
-            echo "\n not same \n";
-        }
-
-        echo '<strong>items_dates</strong><br>';
-        print_r($items_dates);
-
-
-        echo '<strong>request_items</strong><br>';
-        print_r($request_items);
-
-        echo '</pre>';
-        dd($items_dates);
-
-        // diff -> create new item
+        return redirect('/' . $this->modal . '/' . $schedule->id);
     }
 
     public function delete_schedule($id)
@@ -164,34 +145,5 @@ class ScheduleController extends CommonController
         });
         $schedule->forceDelete();
         return redirect('/' . $this->modal);
-    }
-
-
-    public function add_item($id, Request $request)
-    {
-        $schedule = Schedule::find($id);
-        $schedule->items()->create([
-            'session_date' => $request['session_date'],
-            'session_start_time' => $request->session_start_time,
-            'session_end_time' => $request->session_end_time
-        ]);
-    }
-
-    public function update_item($id, $item_id, Request $request)
-    {
-        $schedule = Schedule::find($id);
-        $item = $schedule->items()->find($item_id);
-        $item->update([
-            'session_date' => $request['session_date'],
-            'session_start_time' => $request->session_start_time,
-            'session_end_time' => $request->session_end_time
-        ]);
-    }
-
-    public function delete_item($id, $item_id)
-    {
-        $schedule = Schedule::find($id);
-        $item = $schedule->items()->find($item_id);
-        $item->delete();
     }
 }
