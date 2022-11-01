@@ -27,11 +27,16 @@ const _dn = {
         return new Date(date.getFullYear(),date.getMonth(),date.getDate(),...time.split(':'));
     },
     setDateForServer(date){
+        const addZero = (d) => {
+            const y = d.toString();
+            return y.length == 1 ? '0'+y : y;
+        }
         const year = date.getFullYear();
-        const month = date.getMonth()+1;
-        const day = date.getDate();
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
+        const month = addZero(date.getMonth()+1);
+        const day = addZero(date.getDate());
+        const hours = addZero(date.getHours());
+        const minutes = addZero(date.getMinutes());
+
         return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":00";
     }
 }
@@ -92,50 +97,56 @@ export default (props) => {
     const [startTime, setStartTime] = useState('14:00');
     const [endTime, setEndTime] = useState('15:00');
     
-    const onSelectDate = (date) => {
-        date.session_date = date;
-        date.session_start_time = startTime;
-        date.session_end_time = endTime;
-        return date;
+    const calenderFn = {
+        formatDataForServer(items){
+            const it =  items.map(i => {
+                const date = new Date(i);
+                return {
+                    id:(i.id || ''),
+                    session_date:_dn.setDateForServer(date),
+                    session_start_time:_dn.setDateForServer(_dn.setTime(date,i.session_start_time)),
+                    session_end_time:_dn.setDateForServer(_dn.setTime(date,i.session_end_time))
+                };
+            });
+            // console.log(it);
+            return it;
+        },
+        onSelectDate(date){
+            date.id = date.id
+            date.session_date = date;
+            date.session_start_time = startTime;
+            date.session_end_time = endTime;
+            
+            return date;
+        }
     }
+
+    calenderFn.setItems = (name,items) => {
+        setData(name,calenderFn.formatDataForServer(items));
+    }
+    
+
 
     const Form = new FormSchema(props.form_schema);
     const method = Form.edit_form ? {_method: 'PUT'} : null;
-    const UseFormObject = {...Form.getVariableForUseForm(), ...method, items: SelectedDateList};
+    const UseFormObject = {...Form.getVariableForUseForm(), ...method, items: calenderFn.formatDataForServer(SelectedDateList)};
     const { data, setData, errors, post, put, delete : destroy, processing} = useForm(UseFormObject);
     
-    const setItems = (name,items) => {
-        const FormatedDatesForServer = items.map(i => {
-            const date = new Date(i);
-            return {
-                id:(i.id || ''),
-                session_date:_dn.setDateForServer(date),
-                session_start_time:_dn.setDateForServer(_dn.setTime(date,i.session_start_time)),
-                session_end_time:_dn.setDateForServer(_dn.setTime(date,i.session_end_time))
-            };
-        });
-        setData(name,FormatedDatesForServer);
-    }
-
-    function deleteSchedule(){
-        destroy(route('delete.schedule',{
-            id:props.schedule.id
-        }));
-    }
-    
-    function updateSchedule(){
-        put(route('update.schedule',{
-            id:props.schedule.id
-        }));
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        if(props.schedule){
-            updateSchedule();
-        }else{
-            post(Form.submit_url);
+    const scheduleFn = {
+        delete(){
+            destroy(route('delete.schedule',{
+                id:props.schedule.id
+            }));
+        },
+        submit(e){
+            e.preventDefault();
+            if(props.schedule){
+                put(route('update.schedule',{
+                    id:props.schedule.id
+                }));
+            }else{
+                post(Form.submit_url);
+            }
         }
     }
     
@@ -144,7 +155,7 @@ export default (props) => {
             {...props}
         >   
             <div className="w-full">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={scheduleFn.submit}>
                     <Component
                         header={
                             <h2 className="font-semibold text-xl text-gray-800 leading-tight">Schedule Form</h2>
@@ -162,10 +173,9 @@ export default (props) => {
                                             <CalenderInput
                                                 SelectedDateList={SelectedDateList}
                                                 setSelectedDateList={setSelectedDateList}
-                                                onSelectDate={onSelectDate}
-                                                
+                                                onSelectDate={calenderFn.onSelectDate}
+                                                setData={calenderFn.setItems}
                                                 name='items'
-                                                setData={setItems}
                                             />
                                         </div>
                                         <div className='grow'>
@@ -205,7 +215,7 @@ export default (props) => {
                             </fieldset>
                         </div>
                         <div className="w-full flex items-center px-6 py-4 bg-gray-100 border-t border-gray-200">
-                            {props.schedule && <DeleteButton onClick={deleteSchedule}>Delete</DeleteButton>}
+                            {props.schedule && <DeleteButton onClick={scheduleFn.delete}>Delete</DeleteButton>}
 
                             <LoadingButton
                                 loading={processing}
