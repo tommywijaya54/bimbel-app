@@ -31,7 +31,7 @@ use App\Http\Controllers\BranchRentalController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScheduleController;
-
+use App\Http\Controllers\TimetableController;
 use App\Models\Permission;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -105,6 +105,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{id}/salary/{salary_id}', [EmployeeController::class, 'delete_salary'])->name('delete.employee.salary');
     });
 
+    Route::get('timetable', [TimetableController::class, 'show']);
 
     Route::group([
         'prefix' => 'schedule/{id}'
