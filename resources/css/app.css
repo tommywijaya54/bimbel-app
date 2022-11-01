@@ -46,7 +46,10 @@ table.table-border-compact th {
 table.table-border-compact tr:hover td {
     background: linen;
 }
-
+tr.highlight td {
+    background-color: aliceblue;
+    font-weight: 700;
+}
 
 tr.table-inline-form {
     background-color: #c1baff;
