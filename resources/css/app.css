@@ -89,6 +89,19 @@ tr.table-inline-form button.post-form {
     @apply bg-orange-500;
 }
 
+
+.btn-white {
+    @apply px-6 py-3 rounded bg-white text-gray-500 text-sm font-bold whitespace-nowrap;
+}
+
+.btn-white:hover {
+    @apply bg-slate-100;
+}
+
+.btn-white:focus {
+    @apply bg-slate-200;
+}
+
 .btn-spinner,
 .btn-spinner:after {
     border-radius: 50%;
@@ -364,7 +377,6 @@ a.button.btn-light:hover {
     background-color: teal;
 }
 
-
 a.button.btn-sm {
     font-size: medium;
 }
@@ -437,6 +449,10 @@ span.empty-value {
     padding: 1em;
     background-color: #ffe6c4;
     margin: 1.5em 1.5em 0 1.5em;
+}
+.note.error {
+    color: red;
+    background-color: #fff;
 }
 
 .form-create .header h2 {
@@ -661,18 +677,20 @@ details summary::-webkit-details-marker {
 .bg-gray{
     background: #f5f5f5;
 }
+
 .br-1{
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
-/*
-.no-label>label {
-    display: none;
+button.action-button {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1s, visibility 2s;
 }
-*/
 
 html.nprogress-busy button.action-button {
+    opacity: 0;
     visibility: hidden;
 }
 

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 export default ({name, errors = [], options, Field, setData, onChange, value, required, ...props }) => {
-  const handleFocus = (event) => event.target.select();
+  const handleFocus = (e) => {
+    e.target.value = '';
+  };
+
   const [valueid, setValueid] = useState(Field.model_value?.id || '');
   const [inputboxValue, setInputboxValue] = useState(Field.model_value?.name || '');
   
@@ -39,10 +42,10 @@ export default ({name, errors = [], options, Field, setData, onChange, value, re
         value={inputboxValue}
         
         onFocus={handleFocus}
-        
         onInput={handleOnInput}
         onChange={(e) => {setInputboxValue(e.target.value)}}
-
+        
+        required={required}
         className={`input-field form-input ${errors.length ? 'error' : ''}`}        
       />
         <datalist id={name+'_list'} >

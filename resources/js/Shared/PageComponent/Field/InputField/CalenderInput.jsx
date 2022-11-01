@@ -99,16 +99,17 @@ const setDateList = (InitialDate, NumberOfMonths) => {
     return {FirstDate,LastDate,List};
 }
 
-export default ({NumberOfMonths = 3, SelectedDateList, setSelectedDateList, onSelectDate}) => {
-    let CurrentDate = new Date();
+export default ({NumberOfMonths = 3, SelectedDateList, setSelectedDateList, onSelectDate, setData, name}) => {
+    const dateAnchor = new Date();
+    let CurrentDate = new Date(dateAnchor.getFullYear(), dateAnchor.getMonth(), dateAnchor.getDate());
     let DateList = setDateList(CurrentDate, NumberOfMonths);
     
     const [FirstDate, setFirstDate] = useState(DateList.FirstDate);
     const [LastDate, setLastDate] = useState(DateList.LastDate);
     const [CalenderDateList, setCalenderDateList] = useState(DateList.List);
     
-    //const [SelectedDateList, setSelectedDateList] = useState([]);
-    
+    let SelectedList = SelectedDateList;
+
     const setNewCalenderPanel = (newInitialDate, NumberOfMonths) => {
         DateList = setDateList(newInitialDate, NumberOfMonths);
         setFirstDate(DateList.FirstDate);
@@ -118,10 +119,13 @@ export default ({NumberOfMonths = 3, SelectedDateList, setSelectedDateList, onSe
 
     const selectDate = (date) => {
         if(SelectedDateList.find(d => d.toDateString() == date.toDateString())){
-            setSelectedDateList(SelectedDateList.filter(d => d.toDateString() != date.toDateString()));
+            SelectedList = SelectedDateList.filter(d => d.toDateString() != date.toDateString());
         }else{
-            setSelectedDateList(([...SelectedDateList,onSelectDate(date)]).sort((date1, date2) => date1 - date2));
+            SelectedList = ([...SelectedDateList,onSelectDate(date)]).sort((date1, date2) => date1 - date2);
         }
+        setSelectedDateList(SelectedList);
+        setData(name,SelectedList)
+
     }
 
     const Panel = {
@@ -141,8 +145,8 @@ export default ({NumberOfMonths = 3, SelectedDateList, setSelectedDateList, onSe
         const isSelected = (d,selectedList) => {
             return selectedList.find(sd => sd.toDateString() == d.toDateString()) ? true : false;
         }
-
         const DayNames = (list.slice(0, 7)).map(d => _dn.day(d));
+        
         return (<div className='calender-panel'>
                     <div className='flex p-2 calender-nav'>
                         <button className='p-2 simple-button flex-none text-center w-14 bg-white' onClick={Panel.prev}>Last</button>

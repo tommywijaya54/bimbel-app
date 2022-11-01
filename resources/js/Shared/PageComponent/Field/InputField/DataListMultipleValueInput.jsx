@@ -5,7 +5,7 @@ import Icon from '../../../Icon';
 export default ({name, errors = [], options, Field, setData, onChange, value, required, ...props }) => {
   
   const handleFocus = (event) => event.target.select();
-  const [selectedInput, setSelectedInput] = useState(Field.value ? Field.value.split(',') : []);
+  const [selectedInput, setSelectedInput] = useState(Field.value || []);
 
   const handleOnInput = (e) => {
     const val = e.target.value;
@@ -20,7 +20,7 @@ export default ({name, errors = [], options, Field, setData, onChange, value, re
   }
 
   useEffect(() => {
-    setData(name, selectedInput.join(','));
+    setData(name, selectedInput);
   },[selectedInput])
 
   const listMg = {
@@ -69,7 +69,7 @@ export default ({name, errors = [], options, Field, setData, onChange, value, re
           
           onFocus={handleFocus}
           onInput={handleOnInput}
-
+          required={selectedInput.length == 0}
           className={`input-field form-input mb-2 ${errors.length ? 'error' : ''}`}        
         />
         <datalist id={name+'_list'} >

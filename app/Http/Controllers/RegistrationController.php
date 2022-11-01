@@ -26,7 +26,7 @@ class RegistrationController extends CommonController
         $renderData = [
             'title' => $form_data->title,
             'form_schema' => $form_data,
-            'items' => $form_data->item->items
+            'items' => $form_data->entity_item->items
         ];
 
         return Inertia::render('Registration/Details', $renderData);
@@ -35,6 +35,6 @@ class RegistrationController extends CommonController
     function add_item($id, $request)
     {
         $registration = Registration::find($id);
-        $registration->item()->create();
+        $registration->entity_item()->create();
     }
 }

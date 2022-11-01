@@ -66,13 +66,13 @@ class EmployeeController extends CommonController
     public function show($id)
     {
         $form = $this->form->displayForm($id);
-        $roles = $form->item->user->roles->pluck('name');
+        $roles = $form->entity_item->user->roles->pluck('name');
 
         return Inertia::render('Employee/Show', [
             'title' => $form->title,
             'form_schema' => $form,
             'roles' => $roles,
-            'salaries' => $form->item->salaries->toArray(),
+            'salaries' => $form->entity_item->salaries->toArray(),
         ]);
     }
 
