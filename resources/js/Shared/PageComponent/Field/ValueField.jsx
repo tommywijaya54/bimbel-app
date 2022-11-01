@@ -51,7 +51,6 @@ const FieldComponents = {
         },
         'time':({value}) => {
             return value.substring(0,5);
-            // return <div className='no-wrap'>{(new Date(''+value)).toLocaleDateString(locale.code,locale.timeFormat)}</div>
         }
     }
 }
