@@ -72,6 +72,14 @@ class User extends Authenticatable
         return static::where('name', $fullname)->first();
     }
 
+    public function schedules()
+    {
+        $ids = ScheduleStudent::where('student_id', $this->id)->pluck('schedule_id');
+        $schedules = Schedule::with(['items', 'branch', 'teacher'])->find($ids);
+        return $schedules;
+    }
+
+
     public function details()
     {
         $type = $this->type;
