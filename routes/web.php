@@ -27,6 +27,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\RoletypeController;
 
 use App\Http\Controllers\ActionhistoryController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BranchRentalController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -106,6 +107,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::get('timetable', [TimetableController::class, 'show']);
+
+    Route::group([
+        'prefix' => 'attendance'
+    ], function () {
+        Route::get('', [AttendanceController::class, 'index']);
+        Route::get('/{id}', [AttendanceController::class, 'show'])->name('attendance');
+    });
 
     Route::group([
         'prefix' => 'schedule/{id}'
