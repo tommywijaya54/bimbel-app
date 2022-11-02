@@ -1,25 +1,10 @@
 import MainLayout from "@/Layouts/MainLayout"
 import Component from "@/Shared/PageComponent/Form/Component"
 
-const dn = {
-    'date':(value)=>{
-        return (new Date(value)).toLocaleDateString(locale.code,locale.dateFormat)
-    },
-    'time':(value)=>{
-        return value.substring(0,5);
-    }
-}
-
-const TodayDate = dn.date(new Date());
-const isToday = (date) => {
-    return TodayDate == date
-}
-
-
 const SessionCard = ({session}) => {
     let {item, schedule} = session;    
     return (
-        <a href={route('attendance',item.id)}>
+        <a href={route('attendance',item.id)} className='link-outline'>
             <div className='schedule br-1' key={schedule.id}>
                 <div className={(item.today ?'bg-orange-100':'') +' px-6 py-4'}>
                     <h2 className='font-semibold text-lg mb-2'>{schedule.class_subject}</h2>
@@ -43,20 +28,28 @@ const SessionCard = ({session}) => {
 const AttendanceList = ({schedules}) => {
     let todaySchedule = [];
     let nextSchedule = [];
-    let nextSession = false;
+    
+    const TodayDate = dn.date(new Date());
+    const Today = dn.getToday();
+    const isToday = (date) => {
+        return TodayDate == date
+    }
+    let next = false;
 
     schedules.forEach(schedule => {
+        next = false;
         schedule.items.forEach(item => {
-            if(nextSession){
+            item.session_date = dn.justDate(item.session_date);
+
+            if(item.session_date > Today && !next){
                 item.next_schedule = true;
                 nextSchedule.push({item,schedule});
-                nextSession = false;
+                next = true;
             }
 
             if(isToday(dn.date(item.session_date))){
                 item.today = true;
                 todaySchedule.push({item,schedule});
-                nextSession = true;
             }
         })
     });
