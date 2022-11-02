@@ -246,6 +246,11 @@ tr.table-inline-form button.post-form {
     text-decoration: underline;
 }
 
+.link-outline:hover{
+    outline: #093eff 1px solid;
+}
+
+
 .list {
     display: block;
     width: 100%;
@@ -348,7 +353,7 @@ tr.table-inline-form button.post-form {
     margin-bottom: 1em;
 }
 
-a.button {
+a.button, .button {
     padding: 0.4em 0.6em;
     border: 1px solid #a299ff;
     margin-left: 1em;
@@ -357,32 +362,33 @@ a.button {
     color: #0228b4;
 }
 
-a.button:hover {
+a.button:hover, .button:hover{
     background-color: #6b7896;
     border-color: #6b7896;
     color: white;
 }
 
-a.button.disabled {
+a.button.disabled, .button.disabled{
     cursor: not-allowed;
     opacity: 0.6;
+}
+a.button.btn-light, .button.btn-light {
+    background-color: aliceblue;
+}
+
+a.button.btn-light:hover,
+.button.btn-light:hover {
+    background-color: teal;
+}
+
+a.button.btn-sm, .button.btn-sm {
+    font-size: medium;
 }
 
 .header-action{
     float:right
 }
 
-a.button.btn-light {
-    background-color: aliceblue;
-}
-
-a.button.btn-light:hover {
-    background-color: teal;
-}
-
-a.button.btn-sm {
-    font-size: medium;
-}
 
 .max-w-7xl>.ui-component,
 .ui-component.no-padding {
