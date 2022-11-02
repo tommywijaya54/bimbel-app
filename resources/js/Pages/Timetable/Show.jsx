@@ -11,14 +11,11 @@ const dn = {
     }
 }
 
-const TodayDate = dn.date(new Date());
-
-const isToday = (date) => {
-    return TodayDate == date;
-}
+const TodayDate = dn.date(new Date())
+const isToday = date => {TodayDate == date}
 
 const Timetable = ({schedule}) => {
-    return <div className="schedules grid gap-4 grid-cols-3">
+    return <div className="schedules grid grid-cols-1 gap-4 md:grid-cols-3">
         {schedule.map((item) => {
             return (
                 <div className='schedule br-1' key={item.id}>
