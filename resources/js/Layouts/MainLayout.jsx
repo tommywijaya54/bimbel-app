@@ -10,6 +10,7 @@ export default function MainLayout({auth, errors, title, children}) {
         <AuthenticatedLayout
             auth={auth}
             errors={errors}
+            hasHeader={title}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">{title}
                     <HeaderAction></HeaderAction>

@@ -9,7 +9,7 @@ import TopNavigationList from '@/Shared/LayoutComponent/TopNavigationList';
 import DebugComponent from '@/Shared/Debug/DebugComponent';
 import AdminTopNav from '@/Shared/LayoutComponent/AdminTopNav';
 
-export default function Authenticated({ auth, header, children }) {
+export default function Authenticated({ auth, header, hasHeader, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -116,10 +116,10 @@ export default function Authenticated({ auth, header, children }) {
                     </div>
                 </div>
             </nav>
-
+            <AdminTopNav></AdminTopNav>
             <AdminTopNav></AdminTopNav>
 
-            {header && (
+            {hasHeader && (
                 <header className="bg-white shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
