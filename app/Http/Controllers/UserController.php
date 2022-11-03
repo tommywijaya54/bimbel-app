@@ -78,7 +78,7 @@ class UserController extends CommonController
     {
         $user = $this->entity::create($this->form->setStoreOrUpdate($request));
 
-        if (isset($request['password'])) {
+        if (isset($request['password']) && $request['password'] != null) {
             $user->password = Hash::make($request->password);
             $user->update();
         }
@@ -92,7 +92,7 @@ class UserController extends CommonController
     {
         $user = User::find($id);
 
-        if (isset($request['password'])) {
+        if (isset($request['password']) && $request['password'] != null) {
             $user->password = Hash::make($request->password);
             $user->update();
         }

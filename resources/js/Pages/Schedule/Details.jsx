@@ -7,40 +7,6 @@ import { useForm } from '@inertiajs/inertia-react';
 import { FormSchema } from '@/Shared/Util/Form_util';
 import InputField from '@/Shared/PageComponent/Field/InputField';
 
-const _dn = {
-    day (date) {
-        return date.toLocaleDateString(locale.code, { weekday: 'long' }); 
-    },
-    date (date) {
-        return date.toLocaleDateString(locale.code, locale.dateFormat); 
-    },
-    month (date) {
-        return date.toLocaleDateString(locale.code, { month: 'short' }); 
-    },
-    long_month (date) {
-        return date.toLocaleDateString(locale.code, { month: 'long' }); 
-    },
-    remove_second (str) {
-        return str.substring(0,5);
-    },
-    setTime(date,time) {
-        return new Date(date.getFullYear(),date.getMonth(),date.getDate(),...time.split(':'));
-    },
-    setDateForServer(date){
-        const addZero = (d) => {
-            const y = d.toString();
-            return y.length == 1 ? '0'+y : y;
-        }
-        const year = date.getFullYear();
-        const month = addZero(date.getMonth()+1);
-        const day = addZero(date.getDate());
-        const hours = addZero(date.getHours());
-        const minutes = addZero(date.getMinutes());
-
-        return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":00";
-    }
-}
-
 const ScheduleItemTable = ({data}) => {
     return <>
             <table className={'table-border-compact w-full '}>
@@ -56,7 +22,7 @@ const ScheduleItemTable = ({data}) => {
                     {data.map((d,keyId) => {
                         return <tr key={keyId}>
                             <td>{keyId+1}</td>
-                            <td>{_dn.day(d)}, {_dn.date(d)}</td>
+                            <td>{dn.day(d)}, {dn.date(d)}</td>
                             <td>{d.session_start_time}</td>
                             <td>{d.session_end_time}</td>
                         </tr>
@@ -88,8 +54,8 @@ export default (props) => {
         const d = new Date(i.session_date);
         d.id = i.id;
         d.session_date = new Date(i.session_date);
-        d.session_start_time = _dn.remove_second(i.session_start_time);
-        d.session_end_time = _dn.remove_second(i.session_end_time);
+        d.session_start_time = dn.remove_second(i.session_start_time);
+        d.session_end_time = dn.remove_second(i.session_end_time);
         return d;
     }).sort((d1,d2) => d1-d2) : [];
     
@@ -103,9 +69,9 @@ export default (props) => {
                 const date = new Date(i);
                 return {
                     id:(i.id || ''),
-                    session_date:_dn.setDateForServer(date),
-                    session_start_time:_dn.setDateForServer(_dn.setTime(date,i.session_start_time)),
-                    session_end_time:_dn.setDateForServer(_dn.setTime(date,i.session_end_time))
+                    session_date:dn.setDateForServer(date),
+                    session_start_time:dn.setDateForServer(dn.setTime(date,i.session_start_time)),
+                    session_end_time:dn.setDateForServer(dn.setTime(date,i.session_end_time))
                 };
             });
             // console.log(it);

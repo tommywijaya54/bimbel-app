@@ -7,9 +7,10 @@ import { Link } from '@inertiajs/inertia-react';
 
 import TopNavigationList from '@/Shared/LayoutComponent/TopNavigationList';
 import DebugComponent from '@/Shared/Debug/DebugComponent';
-import AdminTopNav from '@/Shared/LayoutComponent/AdminTopNav';
+import AdminNav from '@/Shared/LayoutComponent/Nav/AdminNav';
+import MainNav from '@/Shared/LayoutComponent/Nav/MainNav';
 
-export default function Authenticated({ auth, header, children }) {
+export default function Authenticated({ auth, header, hasHeader, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -25,10 +26,7 @@ export default function Authenticated({ auth, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                                <TopNavigationList></TopNavigationList>
+                                <MainNav />
                             </div>
                             
                         </div>
@@ -116,10 +114,10 @@ export default function Authenticated({ auth, header, children }) {
                     </div>
                 </div>
             </nav>
+            
+            <AdminNav />
 
-            <AdminTopNav></AdminTopNav>
-
-            {header && (
+            {hasHeader && (
                 <header className="bg-white shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>

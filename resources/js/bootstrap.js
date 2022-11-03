@@ -10,6 +10,51 @@ window.locale = {
     }
 };
 
+window.dn = {
+    day (date) {
+        return (new Date(date)).toLocaleDateString(locale.code, { weekday: 'long' }); 
+    },
+    date (date) {
+        return (new Date(date)).toLocaleDateString(locale.code, locale.dateFormat); 
+    },
+    time (value) {
+        return value.substring(0,5);
+    },
+    month (date) {
+        return (new Date(date)).toLocaleDateString(locale.code, { month: 'short' }); 
+    },
+    long_month (date) {
+        return (new Date(date)).toLocaleDateString(locale.code, { month: 'long' }); 
+    },
+    remove_second (str) {
+        return str.substring(0,5);
+    },
+    getToday (){
+        const dateAnchor = new Date();
+        return (new Date(dateAnchor.getFullYear(), dateAnchor.getMonth(), dateAnchor.getDate()));
+    },
+    justDate(date){
+        const dateAnchor = new Date(date);
+        return (new Date(dateAnchor.getFullYear(), dateAnchor.getMonth(), dateAnchor.getDate()));
+    },
+    setTime(date,time) {
+        return new Date(date.getFullYear(),date.getMonth(),date.getDate(),...time.split(':'));
+    },
+    setDateForServer(date){
+        const addZero = (d) => {
+            const y = d.toString();
+            return y.length == 1 ? '0'+y : y;
+        }
+        const year = date.getFullYear();
+        const month = addZero(date.getMonth()+1);
+        const day = addZero(date.getDate());
+        const hours = addZero(date.getHours());
+        const minutes = addZero(date.getMinutes());
+
+        return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":00";
+    }
+}
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

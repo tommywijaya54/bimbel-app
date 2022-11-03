@@ -27,11 +27,12 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\RoletypeController;
 
 use App\Http\Controllers\ActionhistoryController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BranchRentalController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScheduleController;
-
+use App\Http\Controllers\TimetableController;
 use App\Models\Permission;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -87,7 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ];
 
     foreach ($routeList as $model => $controller) {
-        Route::get('/' . $model, [$controller, 'index'])->middleware('can:list-' . $model);
+        Route::get('/' . $model, [$controller, 'index'])->middleware('can:list-' . $model)->name($model);
 
         Route::get('/' . $model . '/create', [$controller, 'create'])->middleware('can:create-' . $model);
         Route::post('/' . $model, [$controller, 'store'])->middleware('can:create-' . $model);
@@ -105,6 +106,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{id}/salary/{salary_id}', [EmployeeController::class, 'delete_salary'])->name('delete.employee.salary');
     });
 
+    Route::get('timetable', [TimetableController::class, 'show'])->name('timetable');;
+
+    Route::group([
+        'prefix' => 'attendance'
+    ], function () {
+        Route::get('', [AttendanceController::class, 'index'])->name('attendance');
+        Route::get('/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
+        Route::post('/{id}', [AttendanceController::class, 'add_attendance'])->name('add.attendance');
+        Route::delete('/{id}', [AttendanceController::class, 'delete_attendance'])->name('delete.attendance');
+    });
 
     Route::group([
         'prefix' => 'schedule/{id}'

@@ -46,7 +46,10 @@ table.table-border-compact th {
 table.table-border-compact tr:hover td {
     background: linen;
 }
-
+tr.highlight td {
+    background-color: aliceblue;
+    font-weight: 700;
+}
 
 tr.table-inline-form {
     background-color: #c1baff;
@@ -179,10 +182,13 @@ tr.table-inline-form button.post-form {
     @apply ring-red-400
 }
 
+.active-nav {
+    border-bottom: 2px solid #798fff;
+    color: #000;
+}
 
 
 /* Search Contact Box */
-
 .active {
     background: lightgray;
 }
@@ -242,6 +248,11 @@ tr.table-inline-form button.post-form {
 .link:hover {
     text-decoration: underline;
 }
+
+.link-outline:hover{
+    outline: #093eff 1px solid;
+}
+
 
 .list {
     display: block;
@@ -345,7 +356,7 @@ tr.table-inline-form button.post-form {
     margin-bottom: 1em;
 }
 
-a.button {
+a.button, .button {
     padding: 0.4em 0.6em;
     border: 1px solid #a299ff;
     margin-left: 1em;
@@ -354,32 +365,33 @@ a.button {
     color: #0228b4;
 }
 
-a.button:hover {
+a.button:hover, .button:hover{
     background-color: #6b7896;
     border-color: #6b7896;
     color: white;
 }
 
-a.button.disabled {
+a.button.disabled, .button.disabled{
     cursor: not-allowed;
     opacity: 0.6;
+}
+a.button.btn-light, .button.btn-light {
+    background-color: aliceblue;
+}
+
+a.button.btn-light:hover,
+.button.btn-light:hover {
+    background-color: teal;
+}
+
+a.button.btn-sm, .button.btn-sm {
+    font-size: medium;
 }
 
 .header-action{
     float:right
 }
 
-a.button.btn-light {
-    background-color: aliceblue;
-}
-
-a.button.btn-light:hover {
-    background-color: teal;
-}
-
-a.button.btn-sm {
-    font-size: medium;
-}
 
 .max-w-7xl>.ui-component,
 .ui-component.no-padding {
@@ -764,6 +776,10 @@ html.nprogress-busy button.action-button {
     font-weight: 500;
     outline: 2px solid #7275ff;
     background: #c6e4ff;
+}
+
+.admin-nav{
+    border-bottom: 1px solid #e1e1e1;
 }
 
 @layer base{

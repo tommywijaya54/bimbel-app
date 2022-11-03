@@ -138,12 +138,12 @@ class ScheduleController extends CommonController
     {
         $schedule = Schedule::with(['students', 'items'])->find($id);
         $schedule->students->each(function ($item) {
-            $item->forceDelete();
+            $item->delete();
         });
         $schedule->items->each(function ($item) {
-            $item->forceDelete();
+            $item->delete();
         });
-        $schedule->forceDelete();
+        $schedule->delete();
         return redirect('/' . $this->modal);
     }
 }
