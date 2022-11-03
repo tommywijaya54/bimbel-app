@@ -15,7 +15,7 @@ export const DeleteButton = ({onClick, children, className = '', iconClassName =
       </button>
     }
 
-    return <button type="button" className='action-button delete-button' onClick={onClick}>
+    return <button type="button" className={'action-button delete-button '+className} onClick={onClick}>
         <Icon name="trash" className="block w-5 h-5 text-sky-500 fill-current"></Icon>
     </button>
 }
