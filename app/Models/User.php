@@ -79,6 +79,10 @@ class User extends Authenticatable
         return $schedules;
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'student_id');
+    }
 
     public function details()
     {
