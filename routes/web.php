@@ -88,7 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ];
 
     foreach ($routeList as $model => $controller) {
-        Route::get('/' . $model, [$controller, 'index'])->middleware('can:list-' . $model);
+        Route::get('/' . $model, [$controller, 'index'])->middleware('can:list-' . $model)->name($model);
 
         Route::get('/' . $model . '/create', [$controller, 'create'])->middleware('can:create-' . $model);
         Route::post('/' . $model, [$controller, 'store'])->middleware('can:create-' . $model);
@@ -106,13 +106,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{id}/salary/{salary_id}', [EmployeeController::class, 'delete_salary'])->name('delete.employee.salary');
     });
 
-    Route::get('timetable', [TimetableController::class, 'show']);
+    Route::get('timetable', [TimetableController::class, 'show'])->name('timetable');;
 
     Route::group([
         'prefix' => 'attendance'
     ], function () {
-        Route::get('', [AttendanceController::class, 'index']);
-        Route::get('/{id}', [AttendanceController::class, 'show'])->name('attendance');
+        Route::get('', [AttendanceController::class, 'index'])->name('attendance');
+        Route::get('/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
         Route::post('/{id}', [AttendanceController::class, 'add_attendance'])->name('add.attendance');
         Route::delete('/{id}', [AttendanceController::class, 'delete_attendance'])->name('delete.attendance');
     });

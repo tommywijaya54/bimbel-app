@@ -182,10 +182,13 @@ tr.table-inline-form button.post-form {
     @apply ring-red-400
 }
 
+.active-nav {
+    border-bottom: 2px solid #798fff;
+    color: #000;
+}
 
 
 /* Search Contact Box */
-
 .active {
     background: lightgray;
 }
@@ -773,6 +776,10 @@ html.nprogress-busy button.action-button {
     font-weight: 500;
     outline: 2px solid #7275ff;
     background: #c6e4ff;
+}
+
+.admin-nav{
+    border-bottom: 1px solid #e1e1e1;
 }
 
 @layer base{

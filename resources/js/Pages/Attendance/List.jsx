@@ -4,7 +4,7 @@ import Component from "@/Shared/PageComponent/Form/Component"
 const SessionCard = ({session}) => {
     let {item, schedule} = session;    
     return (
-        <a href={route('attendance',item.id)} className='link-outline'>
+        <a href={route('attendance.show',item.id)} className='link-outline'>
             <div className='schedule br-1' key={schedule.id}>
                 <div className={(item.today ?'bg-orange-100':'') +' px-6 py-4'}>
                     <h2 className='font-semibold text-lg mb-2'>{schedule.class_subject}</h2>

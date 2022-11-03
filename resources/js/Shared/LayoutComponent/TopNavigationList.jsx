@@ -19,7 +19,7 @@ export default function TopNavigationList() {
     const NavList = ({list}) => {
         return <>
         <Nav href='/chat'>Chat</Nav>
-        <Nav href='/timetable'>Timetable</Nav>
+        <Nav href='/timetable'>My Timetable</Nav>
         <Nav href='/attendance'>Attendance</Nav>
         {
             list.map(((listonly,i) => {
