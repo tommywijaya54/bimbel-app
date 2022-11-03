@@ -113,6 +113,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ], function () {
         Route::get('', [AttendanceController::class, 'index']);
         Route::get('/{id}', [AttendanceController::class, 'show'])->name('attendance');
+        Route::post('/{id}', [AttendanceController::class, 'add_attendance'])->name('add.attendance');
+        Route::delete('/{id}', [AttendanceController::class, 'delete_attendance'])->name('delete.attendance');
     });
 
     Route::group([
