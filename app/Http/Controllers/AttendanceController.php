@@ -23,15 +23,32 @@ class AttendanceController extends Controller
 
     public function show($session_id)
     {
-        // show current session
-        // 
         $session = ScheduleItem::find($session_id);
-        $schedule = Schedule::with(['students'])->find($session->schedule_id);
-        $students = User::find($schedule->students->pluck('student_id'))->pluck('id', 'name');
+        $schedule = Schedule::with('students', 'teacher')->find($session->schedule_id);
+        $students = User::find($schedule->students->pluck('student_id'));
+        $attendance = Attendance::where('schedule_item_id', $session_id)->get();
+
         return Inertia::render('Attendance/Show', [
             'session' => $session,
             'schedule' => $schedule,
-            'students' => $students
+            'students' => $students,
+            'attendance' => $attendance
         ]);
+    }
+
+    public function add_attendance($session_id, Request $request)
+    {
+        Attendance::create([
+            'student_id' => $request['student_id'],
+            'present' => $request['present'],
+            'schedule_item_id' => $session_id,
+            'teacher_id' => auth()->user()->id
+        ]);
+    }
+
+    public function delete_attendance($id)
+    {
+        $attendance = Attendance::find($id);
+        $attendance->delete();
     }
 }
