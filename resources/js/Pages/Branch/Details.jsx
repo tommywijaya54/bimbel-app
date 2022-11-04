@@ -120,7 +120,7 @@ export default function Show(props) {
             {...props}
         >
             <Component
-                header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                header={<h2 className="font-semibold text-xl text-white leading-tight">
                             <a href={'/branch/'+props.branch.id}>
                                 {props.branch.name}
                                 <span className='info'>{props.branch.address}

@@ -80,7 +80,7 @@ export default (props) => {
             <div className="w-full">
                 <Component
                     header={
-                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">Attendance List</h2>
+                        <h2 className="font-semibold text-xl text-white leading-tight">Attendance List</h2>
                     }
                     className={'create-form no-padding'}
                 >
@@ -91,7 +91,7 @@ export default (props) => {
 
                 <Component
                     header={
-                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">Full schedules</h2>
+                        <h2 className="font-semibold text-xl text-white leading-tight">Full schedules</h2>
                     }
                     className={'no-padding'}
                 >

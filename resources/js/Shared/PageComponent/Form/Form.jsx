@@ -36,7 +36,7 @@ export default (form_schema) => {
 
     return (<Component
                 header={
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">{component_header}</h2>
+                    <h2 className="font-semibold text-xl text-white leading-tight">{component_header}</h2>
                 }
                 note={form_note}
                 className={form_type+'-form'}
