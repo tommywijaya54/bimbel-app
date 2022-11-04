@@ -80,15 +80,13 @@ tr.table-inline-form button.post-form {
     margin-right: 0.6em;
 }
 
-.btn-indigo {
+
+.btn-indigo, .btn {
     @apply px-6 py-3 rounded bg-indigo-700 text-white text-sm font-bold whitespace-nowrap;
 }
 
-.btn-indigo:hover {
-    @apply bg-orange-500;
-}
-
-.btn-indigo:focus {
+.btn-indigo:hover, .btn:hover,
+.btn-indigo:focus, .btn:focus {
     @apply bg-orange-500;
 }
 
@@ -365,6 +363,7 @@ a.button, .button {
     color: #0228b4;
 }
 
+/*-*/
 a.button:hover, .button:hover{
     background-color: #6b7896;
     border-color: #6b7896;

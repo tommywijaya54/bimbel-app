@@ -32,6 +32,14 @@ export const GoToButton = ({href}) => {
     </a>
 }
 
+export const CancelButton = ({onClick,className, children}) => {
+  return (
+    <button type='button' onClick={onClick} className={'btn-white '+className}>
+      {children}
+    </button>
+  )
+}
+
 export const LoadingButton = ({ loading, className, children, ...props }) => {
   const classNames = cx(
     'flex items-center',

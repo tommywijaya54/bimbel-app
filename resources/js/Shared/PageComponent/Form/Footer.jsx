@@ -9,7 +9,7 @@ const FormFooter = ({form, obj, link, children}) => {
     if(link){
         const linkvar = link.permission.split('-');
         user.hasPermission(link.permission) ? 
-            component.push(<a href={'/'+linkvar[1]+'/'+link.id+'/edit'} className={'button '}>{linkvar[0].cap()} {linkvar[1].cap()}</a>) : ''
+            component.push(<a href={'/'+linkvar[1]+'/'+link.id+'/edit'} className={'btn '}>{linkvar[0].cap()} {linkvar[1].cap()}</a>) : ''
     }
 
     if(form && obj){
@@ -19,7 +19,7 @@ const FormFooter = ({form, obj, link, children}) => {
 
         if(form.display_form){
             user.hasPermission('edit-'+model) ? 
-                component.push(<a href={'/'+model+'/'+obj.id+'/edit'} className={'button '}>Edit {model.cap()}</a>) : ''
+                component.push(<a href={'/'+model+'/'+obj.id+'/edit'} className={'btn '}>Edit {model.cap()}</a>) : ''
         }
     }
 
@@ -27,7 +27,7 @@ const FormFooter = ({form, obj, link, children}) => {
         return <>
             <div className="form-footer">
                 <div className="px-6 py-6 bg-gray-50 flex justify-end">
-                    {form.urls.map((url, keyId) => <a href={url.link} className='button' key={keyId}>{url.label}</a>)}
+                    {form.urls.map((url, keyId) => <a href={url.link} className='btn' key={keyId}>{url.label}</a>)}
                 </div>
             </div>
         </>
