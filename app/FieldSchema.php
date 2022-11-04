@@ -54,6 +54,8 @@ class FieldSchema
                 $this->inputtype = 'email';
             } else if (str_contains($this->entityname, 'note')) {
                 $this->inputtype = 'textarea';
+            } else if (str_contains($this->entityname, 'address')) {
+                $this->inputtype = 'textarea';
             } else if (str_contains($this->entityname, '_id')) {
                 $this->label = ucwords(str_replace('_id', '', $this->entityname));
                 $this->inputtype = 'datalist';
