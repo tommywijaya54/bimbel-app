@@ -1,5 +1,6 @@
 import MainLayout from "@/Layouts/MainLayout"
 import Component from "@/Shared/PageComponent/Form/Component"
+import Timetable from "@/Shared/PageComponent/Timetable";
 
 const SessionCard = ({session}) => {
     let {item, schedule} = session;    
@@ -71,7 +72,6 @@ const AttendanceList = ({schedules}) => {
                 })}
             </div>
         </div>
-        
     </>
 }
 export default (props) => {
@@ -86,6 +86,17 @@ export default (props) => {
                 >
                     <div className='grow p-6'>
                         <AttendanceList schedules={props.schedules} />
+                    </div>
+                </Component>
+
+                <Component
+                    header={
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">Full schedules</h2>
+                    }
+                    className={'no-padding'}
+                >
+                    <div className='grow'>
+                        <Timetable schedules={props.schedules} />
                     </div>
                 </Component>
             </div>

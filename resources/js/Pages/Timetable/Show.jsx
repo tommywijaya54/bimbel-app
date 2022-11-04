@@ -1,41 +1,7 @@
 import MainLayout from "@/Layouts/MainLayout"
 import Component from "@/Shared/PageComponent/Form/Component"
-import { useState } from "react"
-
+import Timetable from "@/Shared/PageComponent/Timetable";
 const TodayDate = dn.date(new Date());
-const isToday = (date) => {
-    return TodayDate == date
-}
-
-const Timetable = ({schedules}) => {
-    return <>
-        <div className="schedules grid grid-cols-1 gap-4 md:grid-cols-3">
-            {schedules.map((schedule) => {
-                return (
-                    <div className='schedule br-1' key={schedule.id}>
-                        <div className=' bg-orange-100 px-6 py-4'>
-                            <h2 className='font-semibold text-lg mb-2'>{schedule.class_subject}</h2>
-                            <span>{schedule.class_room}</span>
-                            <span className="float-right">{schedule.teacher.name}</span>
-                        </div>
-                        
-                        <table className="w-full table-padding-row">
-                            <tbody>
-                            {schedule.items.map(item => {
-                                return <tr key={item.id} className={isToday(dn.date(item.session_date)) ? 'highlight' : ''}>
-                                    <td>{dn.date(item.session_date)}</td>
-                                    <td className="text-right">{dn.time(item.session_start_time)}</td>
-                                    <td className="text-right">{dn.time(item.session_end_time)}</td>
-                                </tr>
-                            })}
-                            </tbody>
-                        </table>
-                    </div>
-                )
-            })}
-        </div>
-    </>
-}
 
 export default (props) => {
     return (

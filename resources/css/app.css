@@ -762,12 +762,6 @@ html.nprogress-busy button.action-button {
     opacity: 0.3;
 }
 
-/*
-.calender :is(.last-month,.next-month){
-    opacity: 0.5;
-}
-*/
-
 .simple-button {
     transition: background 1s;
 }
