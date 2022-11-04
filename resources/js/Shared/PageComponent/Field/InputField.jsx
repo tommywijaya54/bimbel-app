@@ -84,10 +84,13 @@ export default ({Field, data, setData, errors, nowrapper}) => {
     if(element){
         return <ValueField nowrapper={nowrapper} Field={Field}></ValueField>
     }
+
+    const inputWidth = className ? (className.includes('w-full') ? '' : ' lg:w-1/2 ') : ' lg:w-1/2 ';
+
     let wrapperProps = {
         label,
         'name':entityname,
-        'className':'w-full pb-8 pr-6 lg:w-1/2 '+className + (nowrapper ? ' no-label ' : '')
+        'className':'w-full pb-8 pr-6 '+ inputWidth + className + (nowrapper ? ' no-label ' : '')
     }
 
     let inputProps = { 

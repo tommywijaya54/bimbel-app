@@ -44,7 +44,7 @@ class EmployeeController extends CommonController
 
         $rolesField->value = [];
         $rolesField->extrafield = true;
-        $rolesField->className = 'full-width';
+        $rolesField->className = 'w-full';
 
         $controller = $this;
         $rolesField->getValue = function ($field, $id) use ($controller) {
