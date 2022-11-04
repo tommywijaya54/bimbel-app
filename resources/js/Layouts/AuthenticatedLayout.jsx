@@ -114,7 +114,7 @@ export default function Authenticated({ auth, header, hasHeader, children }) {
                 </div>
             </nav>
             
-            <AdminNav />
+            { (auth.user.type == 'Employee') && <AdminNav />}
 
             {hasHeader && (
                 <header className="bg-white shadow">
