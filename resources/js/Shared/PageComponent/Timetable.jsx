@@ -1,5 +1,7 @@
 export default ({schedules}) => {
     const Today = dn.getToday();
+    let allowFirstFutureHightlight = false;
+
     const isToday = (date) => {
         if(dn.date(Today) == dn.date(dn.justDate(date))){
             return 'today highlight';
@@ -8,6 +10,11 @@ export default ({schedules}) => {
         if(Today > dn.justDate(date)){
             return 'past opacity-60';
         }
+
+        if(allowFirstFutureHightlight){
+            allowFirstFutureHightlight = false;
+            return 'future bt-1';
+        }
         
         return 'future';
     }
@@ -15,6 +22,8 @@ export default ({schedules}) => {
     return <>
         <div className="schedules grid grid-cols-1 gap-4 md:grid-cols-3">
             {schedules.map((schedule) => {
+                allowFirstFutureHightlight = true;
+
                 return (
                     <div className='schedule br-1' key={schedule.id}>
                         <div className=' bg-orange-100 px-6 py-4'>

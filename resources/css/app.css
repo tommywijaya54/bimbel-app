@@ -776,6 +776,10 @@ html.nprogress-busy button.action-button {
     border-bottom: 1px solid #e1e1e1;
 }
 
+.schedule .bt-1 > td {
+    border-top:1px solid #aaa;
+}
+
 @layer base{
 
     .dialog{
