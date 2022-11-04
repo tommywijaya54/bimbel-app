@@ -116,6 +116,8 @@ class CparentController extends CommonController
 
                 $cparent->user_id = $user->id;
                 $cparent->update();
+
+                $user->syncRoles('Parent');
             }
         );
 
@@ -141,11 +143,13 @@ class CparentController extends CommonController
             $user->name = $request->name;
             $user->email = $request->email;
 
-            if (isset($request->password)) {
+            if (isset($request['password']) && $request['password'] != null) {
                 $user->password = bcrypt($request['password']);
             }
 
             $user->update();
+
+            $user->syncRoles('Parent');
         });
 
         return redirect('/' . $this->modal . '/' . $id);

@@ -17,7 +17,10 @@ class StudentController extends CommonController
     {
         parent::__construct([
             'list' => 'id:ID,name:Student Name,grade,phone,email',
-            'form' => 'name,grade,address,phone,email,join_date,exit_date,note,exit_reason,birth_date,type,health_condition,cparent_id:Parent,school_id,password:User login password'
+            'form' => 'name,address,phone,email,birth_date,health_condition,_,
+                    type,,school_id,grade,_,
+                    cparent_id:Parent,_,
+                    join_date,exit_date|nr,note|nr,exit_reason|nr,_,password:Password for user login|nr'
         ], true);
 
         $this->form->title_format = '{name}';
@@ -26,6 +29,7 @@ class StudentController extends CommonController
             ['TKA', 'TKB', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'],
             'select'
         );
+
         $this->form->field('cparent_id')->route['show'] = 'parent.show';
 
 
@@ -53,6 +57,8 @@ class StudentController extends CommonController
                 $user->password = bcrypt($request['password']);
                 $user->save();
 
+                $user->syncRoles('Student');
+
                 $student->user_id = $user->id;
                 $student->update();
             }
@@ -79,10 +85,12 @@ class StudentController extends CommonController
             $user = User::find($student->user_id);
             $user->name = $request->name;
             $user->email = $request->email;
-            if (isset($request->password)) {
+            if (isset($request['password']) && $request['password'] != null) {
                 $user->password = bcrypt($request['password']);
             }
             $user->update();
+
+            $user->syncRoles('Student');
         });
 
         return redirect('/' . $this->modal . '/' . $id);
