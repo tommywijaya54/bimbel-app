@@ -18,18 +18,15 @@ class EmployeeController extends CommonController
         parent::__construct([
             'list' => 'id:ID,nik:NIK,name:Employee Name,phone,branch_id',
             'form' =>  '
-                    nik:NIK,,
+                    nik:NIK,branch_id,_,
                     name,
                     address,
-                    phone,
-                    email,
-                    emergency_name,
-                    emergency_phone,
+                    phone,_,
+                    email:Email for user login,password:Password for user login,_,
+                    emergency_name,emergency_phone,_,
                     join_date,
-                    exit_date,
-                    note,
-                    branch_id,
-                    password:User login password,
+                    exit_date|nr,
+                    note|nr,
                     roles'
         ], true);
 
@@ -39,18 +36,23 @@ class EmployeeController extends CommonController
         $exceptRole = ['Owner', 'super-admin', 'Parent', 'Student'];
         $employee_only_role = array_values(array_diff(Role::pluck('name')->toArray(), $exceptRole));
 
-        $this->form->field('roles')->hasOptions(
+        $rolesField = $this->form->field('roles');
+        $rolesField->hasOptions(
             $employee_only_role,
             'multiple-checkbox'
         );
 
-        $this->form->field('roles')->value = [];
-        $this->form->field('roles')->extrafield = true;
+        $rolesField->value = [];
+        $rolesField->extrafield = true;
+        $rolesField->className = 'full-width';
 
         $controller = $this;
-        $this->form->field('roles')->getValue = function ($field, $id) use ($controller) {
+        $rolesField->getValue = function ($field, $id) use ($controller) {
             return $controller->entity::find($id)->user->getRoleNames();
         };
+
+
+
 
         $this->form->beforeRender['create'] = function ($renderData) {
             $renderData['form_schema']->field('roles')->value = ['Employee'];

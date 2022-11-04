@@ -20,20 +20,18 @@ class CparentController extends CommonController
         parent::__construct(
             [
                 'list' => 'id:ID,nik:NIK,name:Parent Name,phone,blacklist',
-                'form' => '
-                        nik:NIK,
+                'form' =>
+                '
+                        nik:NIK,_,
                         name,
                         address|nr,
                         phone,
-                        email,
-                        birth_date|nr,
-                        emergency_name|nr,
-                        emergency_phone|nr,
-                        bank_account_name|nr,
-                        virtual_account_name|nr,
-                        note|nr,
-                        blacklist|nr,
-                        password:User login password|nr',
+                        birth_date|nr,_,
+                        email:Email for user login,password:Password for user login|nr,_,
+                        emergency_name|nr,emergency_phone|nr,_,
+                        bank_account_name|nr,virtual_account_name|nr,_,
+                        blacklist|nr,note|nr
+                        '
             ],
             true
         );
