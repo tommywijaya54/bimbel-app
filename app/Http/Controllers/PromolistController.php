@@ -15,8 +15,10 @@ class PromolistController extends CommonController
         parent::__construct([
             'list' => 'id:ID,label:Promotion Label,discount_value,branch_id,start_date,end_date',
             'form' => '
+                branch_id,_,
+
                 label:Promotion Label,
-                branch_id,
+
                 discount_value,
                 _,
                 start_date,
