@@ -796,14 +796,13 @@ html.nprogress-busy button.action-button {
         animation: .4s ease fade !important;
     }
 
-
     @keyframes slidein {
         from {
             transform: translate3d(0, 5px, 0);
         }
 
         to {
-            transfrom: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
         }
     }
 
